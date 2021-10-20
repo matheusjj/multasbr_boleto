@@ -2,31 +2,33 @@ import cv2
 import imutils
 import numpy as np
 
-class Quadrilatero:
+class Retangulo:
     def __init__(self) -> None:
-        self.te = [None, None]
-        self.td = [None, None]
-        self.bd = [None, None]
-        self.be = [None, None]
+        self.ponto = (0, 0)
+        self.lar = 0
+        self.alt = 0
 
-    def retornarPontos(self) -> list:
-        return [self.te, self.td, self.bd, self.be]
+    def retornarPontos(self) -> tuple:
+        x_offset = self.x_offset
+        y_offset = self.y_offset
 
-    def eQuadrilatero(self) -> bool:
-        return not (self.te == self.td and self.te == self.bd and self.te == self.be)
+        return self.ponto, (x_offset, self.ponto[1]), (x_offset, y_offset), (self.ponto[0], y_offset)
 
-    def printar(self):
-        texto = ''
-        for (idx, (x, y)) in enumerate([self.te, self.td, self.bd, self.be]):
-            texto += 'Ponto {}: {} {} \n'.format(idx, x, y)
-        print(texto)
+    def eQuad(self) -> bool:
+        return not (self.lar == 0 and self.alt == 0)
+
+    def x_offset(self) -> int:
+        return self.ponto[0] + self.lar
+
+    def y_offset(self) -> int:
+        return self.ponto[1] + self.alt
 
 class RoiAjustavel:
     # Dimensões do canvas
-    dimensoesCanvas = Quadrilatero()
+    dimensoesCanvas = Retangulo()
 
     # Dimensões do ROI
-    dimensoesRoi = Quadrilatero()
+    dimensoesRoi = Retangulo()
 
     # Imagem
     imagem = None
@@ -37,7 +39,7 @@ class RoiAjustavel:
     # Valores
     raio = 5
     ponto_id = None
-    primeiro_ponto = [None, None]
+    primeiro_ponto = (None, None)
 
     # Flags
     return_flag = False
@@ -49,15 +51,13 @@ class RoiAjustavel:
         self.imagem = img
         self.nome_janela = nome_janela
 
-        self.dimensoesCanvas.te = [0, 0]
-        self.dimensoesCanvas.td = [lar_janela, 0]
-        self.dimensoesCanvas.bd = [lar_janela, alt_janela]
-        self.dimensoesCanvas.be = [0, alt_janela]
+        self.dimensoesCanvas.ponto = (0, 0)
+        self.dimensoesCanvas.lar = lar_janela
+        self.dimensoesCanvas.alt = alt_janela
 
-        self.dimensoesRoi.te = [0, 0]
-        self.dimensoesRoi.td = [0, 0]
-        self.dimensoesRoi.bd = [0, 0]
-        self.dimensoesRoi.be = [0, 0]
+        self.dimensoesRoi.ponto = (0, 0)
+        self.dimensoesRoi.lar = 0
+        self.dimensoesRoi.alt = 0
 
 def arrastarQuad(event, x, y, flags, quad_roi):
     # print(event, x, y)
@@ -82,7 +82,7 @@ def cliqueEsquerdo(mX, mY, quad_roi):
 
         quad_roi.segurar = True
     else:
-        quad_roi.primeiro_ponto = [mX, mY]
+        quad_roi.primeiro_ponto = (mX, mY)
         quad_roi.arrastar = True
         quad_roi.ativo = True
 
@@ -98,7 +98,7 @@ def soltarClique(quad_roi):
         atualizar_canvas(quad_roi)
 
 def mouseMoveu(mX, mY, quad_roi):
-    if mX > quad_roi.dimensoesCanvas.bd[0]:
+    if mX > quad_roi.dimensoesCanvas.ponto[0]:
         mX = quad_roi.dimensoesCanvas.bd[0] - 5
     elif mX < quad_roi.dimensoesCanvas.te[0]:
         mX = quad_roi.dimensoesCanvas.te[0] + 5
@@ -155,8 +155,18 @@ def atualizar_canvas(quad_roi):
     cv2.waitKey(0)
 
 def desenhaMarcadores(img, quad_roi):
-    for coord in quad_roi.dimensoesRoi.retornarPontos():
-        cv2.circle(img, (coord[0], coord[1]), quad_roi.raio, (0, 255, 0), -1)
+    pontos = [quad_roi.dimensoesRoi.retornarPontos()]
+
+    for ponto in pontos:
+        cv2.circle(img, (ponto[0][0], ponto[0][1]), quad_roi.raio, (0, 255, 0), -1)
+
+    for idx in range(len(pontos)):
+        if idx == 3:
+            cv2.circle(img, (int((pontos[idx][0] + pontos[0][0]) / 2), 
+            int((pontos[idx][1] + pontos[0][1]) / 2)), quad_roi.raio, (0, 255, 0), -1)
+        else:
+            cv2.circle(img, (int((pontos[idx][0] + pontos[idx+1][0]) / 2), 
+            int((pontos[idx][1] + pontos[idx+1][1]) / 2)), quad_roi.raio, (0, 255, 0), -1)
 
 def ordenar_pontos(pts):
     # Cria uma matriz onde serão armazenadas as coordenadas das vértices
