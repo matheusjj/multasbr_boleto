@@ -2,33 +2,54 @@ import cv2
 import imutils
 import numpy as np
 
-class Retangulo:
+class Quadrilatero:
     def __init__(self) -> None:
-        self.ponto = (0, 0)
-        self.lar = 0
-        self.alt = 0
+        self.te = (0, 0)
+        self.td = (0, 0)
+        self.bd = (0, 0)
+        self.be = (0, 0)
 
     def retornarPontos(self) -> tuple:
-        x_offset = self.x_offset
-        y_offset = self.y_offset
-
-        return self.ponto, (x_offset, self.ponto[1]), (x_offset, y_offset), (self.ponto[0], y_offset)
+        return self.te, self.td, self.bd, self.be
 
     def eQuad(self) -> bool:
-        return not (self.lar == 0 and self.alt == 0)
+        return not (self.te == self.td or self.te == self.bd or self.te == self.be)
 
-    def x_offset(self) -> int:
-        return self.ponto[0] + self.lar
+    def x_diff(self) -> tuple:
+        return self.td[0] - self.te[0], self.bd[0] - self.td[0], self.be[0] - self.bd[0], self.te[0] - self.be[0]
 
-    def y_offset(self) -> int:
-        return self.ponto[1] + self.alt
+    def y_diff(self) -> tuple:
+        return self.td[1] - self.te[1], self.bd[1] - self.td[1], self.be[1] - self.bd[1], self.te[1] - self.be[1]
+
+    def eColinear(self, ponto_id) -> bool:
+        if ponto_id == 0:
+            dist_te_td = int(np.sqrt(((self.td[0] - self.te[0]) ** 2) + ((self.td[1] - self.te[1]) ** 2)))
+            dist_te_be = int(np.sqrt(((self.be[0] - self.te[0]) ** 2) + ((self.be[1] - self.te[1]) ** 2)))
+            dist_be_td = int(np.sqrt(((self.td[0] - self.be[0]) ** 2) + ((self.td[1] - self.be[1]) ** 2)))
+            return dist_te_td + dist_te_be == dist_be_td 
+        elif ponto_id == 1:
+            dist_td_bd = int(np.sqrt(((self.bd[0] - self.td[0]) ** 2) + ((self.bd[1] - self.td[1]) ** 2)))
+            dist_td_te = int(np.sqrt(((self.te[0] - self.td[0]) ** 2) + ((self.te[1] - self.td[1]) ** 2)))
+            dist_te_bd = int(np.sqrt(((self.bd[0] - self.te[0]) ** 2) + ((self.bd[1] - self.te[1]) ** 2)))
+            # print(int(dist_td_bd), int(dist_td_te), int(dist_te_bd), int(dist_td_bd) + int(dist_td_te) == int(dist_te_bd))
+            return dist_td_bd + dist_td_te == dist_te_bd
+        elif ponto_id == 2:
+            dist_bd_be = int(np.sqrt(((self.be[0] - self.bd[0]) ** 2) + ((self.be[1] - self.bd[1]) ** 2)))
+            dist_bd_td = int(np.sqrt(((self.td[0] - self.bd[0]) ** 2) + ((self.td[1] - self.bd[1]) ** 2)))
+            dist_td_be = int(np.sqrt(((self.be[0] - self.td[0]) ** 2) + ((self.be[1] - self.td[1]) ** 2)))
+            return dist_bd_be + dist_bd_td == dist_td_be 
+        else:
+            dist_be_te = int(np.sqrt(((self.te[0] - self.be[0]) ** 2) + ((self.te[1] - self.be[1]) ** 2)))
+            dist_be_bd = int(np.sqrt(((self.bd[0] - self.be[0]) ** 2) + ((self.bd[1] - self.be[1]) ** 2)))
+            dist_bd_te = int(np.sqrt(((self.te[0] - self.bd[0]) ** 2) + ((self.te[1] - self.bd[1]) ** 2)))
+            return dist_be_te + dist_be_bd == dist_bd_te
 
 class RoiAjustavel:
     # Dimensões do canvas
-    dimensoesCanvas = Retangulo()
+    dimensoesCanvas = Quadrilatero()
 
     # Dimensões do ROI
-    dimensoesRoi = Retangulo()
+    dimensoesRoi = Quadrilatero()
 
     # Imagem
     imagem = None
@@ -42,7 +63,7 @@ class RoiAjustavel:
     primeiro_ponto = (None, None)
 
     # Flags
-    return_flag = False
+    returnFlag = False
     ativo = False
     arrastar = False
     segurar = False
@@ -51,54 +72,78 @@ class RoiAjustavel:
         self.imagem = img
         self.nome_janela = nome_janela
 
-        self.dimensoesCanvas.ponto = (0, 0)
-        self.dimensoesCanvas.lar = lar_janela
-        self.dimensoesCanvas.alt = alt_janela
+        self.dimensoesCanvas.te = (0, 0)
+        self.dimensoesCanvas.td = (lar_janela, 0)
+        self.dimensoesCanvas.bd = (lar_janela, alt_janela)
+        self.dimensoesCanvas.be = (0, alt_janela)
 
-        self.dimensoesRoi.ponto = (0, 0)
-        self.dimensoesRoi.lar = 0
-        self.dimensoesRoi.alt = 0
+        self.dimensoesRoi.te = (0, 0)
+        self.dimensoesRoi.td = (0, 0)
+        self.dimensoesRoi.bd = (0, 0)
+        self.dimensoesRoi.be = (0, 0)
 
 def arrastarQuad(event, x, y, flags, quad_roi):
-    # print(event, x, y)
     if event == cv2.EVENT_LBUTTONDOWN:
-        cliqueEsquerdo(x, y, quad_roi)
-    if event == cv2.EVENT_LBUTTONUP:
-        soltarClique(quad_roi)
-    if event == cv2.EVENT_MOUSEMOVE:
+        # cliqueEsquerdo(x, y, quad_roi)
         if quad_roi.ativo:
-            mouseMoveu(x, y, quad_roi)
+            quad_roi.ponto_id = determinarMarcador(x, y, quad_roi)
+
+            if quad_roi.ponto_id == -1:
+                return
+
+            quad_roi.segurar = True
+        else:
+            quad_roi.primeiro_ponto = (x, y)
+            quad_roi.arrastar = True
+            quad_roi.ativo = True
+
+    if event == cv2.EVENT_LBUTTONUP:
+        # soltarClique(quad_roi)
+        eQuad = quad_roi.dimensoesRoi.eQuad()
+        quad_roi.arrastar = not eQuad
+        quad_roi.ativo = eQuad
+
+        quad_roi.segurar = False
+        quad_roi.ponto_id = None
+
+        if eQuad:
+            atualizar_canvas(quad_roi)
+
+    if quad_roi.ativo and event == cv2.EVENT_MOUSEMOVE:
+        mouseMoveu(x, y, quad_roi)
     if event == cv2.EVENT_LBUTTONDBLCLK:
-        duploClique(quad_roi)
+        # duploClique(quad_roi)
+        quad_roi.return_flag = True
+        cv2.destroyWindow(quad_roi.nome_janela)
 
     return
 
-def cliqueEsquerdo(mX, mY, quad_roi):
-    if quad_roi.ativo:
-        quad_roi.ponto_id = determinarMarcador(mX, mY, quad_roi)
+# def cliqueEsquerdo(mX, mY, quad_roi):
+#     if quad_roi.ativo:
+#         quad_roi.ponto_id = determinarMarcador(mX, mY, quad_roi)
 
-        if quad_roi.ponto_id == -1:
-            return
+#         if quad_roi.ponto_id == -1:
+#             return
 
-        quad_roi.segurar = True
-    else:
-        quad_roi.primeiro_ponto = (mX, mY)
-        quad_roi.arrastar = True
-        quad_roi.ativo = True
+#         quad_roi.segurar = True
+#     else:
+#         quad_roi.primeiro_ponto = (mX, mY)
+#         quad_roi.arrastar = True
+#         quad_roi.ativo = True
 
-def soltarClique(quad_roi):
-    eQuad = quad_roi.dimensoesRoi.eQuadrilatero()
-    quad_roi.arrastar = not eQuad
-    quad_roi.ativo = eQuad
+# def soltarClique(quad_roi):
+#     eQuad = quad_roi.dimensoesRoi.eQuad()
+#     quad_roi.arrastar = not eQuad
+#     quad_roi.ativo = eQuad
 
-    quad_roi.segurar = False
-    quad_roi.ponto_id = None
+#     quad_roi.segurar = False
+#     quad_roi.ponto_id = None
 
-    if eQuad:
-        atualizar_canvas(quad_roi)
+#     if eQuad:
+#         atualizar_canvas(quad_roi)
 
 def mouseMoveu(mX, mY, quad_roi):
-    if mX > quad_roi.dimensoesCanvas.ponto[0]:
+    if mX > quad_roi.dimensoesCanvas.bd[0]:
         mX = quad_roi.dimensoesCanvas.bd[0] - 5
     elif mX < quad_roi.dimensoesCanvas.te[0]:
         mX = quad_roi.dimensoesCanvas.te[0] + 5
@@ -110,25 +155,36 @@ def mouseMoveu(mX, mY, quad_roi):
 
     if quad_roi.arrastar:
         quad_roi.dimensoesRoi.te = quad_roi.primeiro_ponto
-        quad_roi.dimensoesRoi.td = [mX, quad_roi.dimensoesRoi.te[1]]
-        quad_roi.dimensoesRoi.bd = [mX, mY]
-        quad_roi.dimensoesRoi.be = [quad_roi.dimensoesRoi.te[0], mY]
+        quad_roi.dimensoesRoi.td = (mX, quad_roi.dimensoesRoi.te[1])
+        quad_roi.dimensoesRoi.bd = (mX, mY)
+        quad_roi.dimensoesRoi.be = (quad_roi.dimensoesRoi.te[0], mY)
         atualizar_canvas(quad_roi)
 
     elif quad_roi.segurar:
+        if quad_roi.dimensoesRoi.eColinear(quad_roi.ponto_id):
+            if quad_roi.ponto_id == 0:
+                mX, mY = mX - 5, mY - 5
+            elif quad_roi.ponto_id == 1:
+                mX, mY = mX + 5, mY - 5
+            elif quad_roi.ponto_id == 2:
+                mX, mY = mX + 5, mY + 5
+            elif quad_roi.ponto_id == 3:
+                mX, mY = mX - 5, mY + 5
+            quad_roi.segurar = False
+
         if quad_roi.ponto_id == 0:
-            quad_roi.dimensoesRoi.te = [mX, mY]
+            quad_roi.dimensoesRoi.te = (mX, mY)
         elif quad_roi.ponto_id == 1:
-            quad_roi.dimensoesRoi.td = [mX, mY]
+            quad_roi.dimensoesRoi.td = (mX, mY)
         elif quad_roi.ponto_id == 2:
-            quad_roi.dimensoesRoi.bd = [mX, mY]
+            quad_roi.dimensoesRoi.bd = (mX, mY)
         elif quad_roi.ponto_id == 3:
-            quad_roi.dimensoesRoi.be = [mX, mY]
+            quad_roi.dimensoesRoi.be = (mX, mY)
         atualizar_canvas(quad_roi)
 
-def duploClique(quad_roi):
-    quad_roi.return_flag = True
-    cv2.destroyWindow(quad_roi.nome_janela)
+# def duploClique(quad_roi):
+#     quad_roi.return_flag = True
+#     cv2.destroyWindow(quad_roi.nome_janela)
 
 def determinarMarcador(mX, mY, quad_roi):
     for idx, ponto in enumerate(quad_roi.dimensoesRoi.retornarPontos()):
@@ -142,31 +198,52 @@ def determinarMarcador(mX, mY, quad_roi):
 def atualizar_canvas(quad_roi):
     temp = quad_roi.imagem.copy()
     pts = np.array(quad_roi.dimensoesRoi.retornarPontos())
-
-    (te, _, bd, _) = pts
-    mask = np.zeros(temp.shape[:2], dtype = 'uint8')
-    mask[te[1]:bd[1]+1, te[0]:bd[0]+1] = 1
-
+    # (te, td, bd, be) = pts
+    # min_x, max_x = np.min(pts, axis = 0)[0], np.max(pts, axis = 0)[0]
+    # min_y, max_y = np.min(pts, axis = 0)[1], np.max(pts, axis = 0)[1]
+    # mask = np.zeros(temp.shape[:2], dtype = 'uint8')
+    # mask[te[1]:bd[1]+1, te[0]:bd[0]+1] = 1
     cv2.polylines(temp, [pts], True, (0, 255, 0), 2) 
-    temp = cv2.bitwise_and(temp, temp, mask = mask)
-    desenhaMarcadores(temp, quad_roi)
+    # temp = cv2.bitwise_and(temp, temp, mask = mask)
+    # desenhaMarcadores(temp, quad_roi)
 
+    (te, td, bd, be) = quad_roi.dimensoesRoi.retornarPontos()
+
+    for ponto in (te, td, bd, be):
+        cv2.circle(temp, (ponto[0], ponto[1]), quad_roi.raio, (0, 255, 0), -1)
+
+    dx_te, dx_td, dx_bd, dx_be = quad_roi.dimensoesRoi.x_diff() 
+    dy_te, dy_td, dy_bd, dy_be = quad_roi.dimensoesRoi.y_diff()
+
+    cv2.line(temp, 
+            (te[0] + int(dx_te / 2), te[1] + int(dy_te / 2)),
+            (bd[0] + int(dx_bd / 2), bd[1] + int(dy_bd / 2)),
+            (0, 255, 0), 2)
+    cv2.line(temp, 
+            (be[0] + int(dx_be / 2), be[1] + int(dy_be / 2)),
+            (td[0] + int(dx_td / 2), td[1] + int(dy_td / 2)),
+            (0, 255, 0), 2)
+            
     cv2.imshow(quad_roi.nome_janela, temp)
     cv2.waitKey(0)
 
-def desenhaMarcadores(img, quad_roi):
-    pontos = [quad_roi.dimensoesRoi.retornarPontos()]
+# def desenhaMarcadores(img, quad_roi):
+#     (te, td, bd, be) = quad_roi.dimensoesRoi.retornarPontos()
 
-    for ponto in pontos:
-        cv2.circle(img, (ponto[0][0], ponto[0][1]), quad_roi.raio, (0, 255, 0), -1)
+#     for ponto in (te, td, bd, be):
+#         cv2.circle(img, (ponto[0], ponto[1]), quad_roi.raio, (0, 255, 0), -1)
 
-    for idx in range(len(pontos)):
-        if idx == 3:
-            cv2.circle(img, (int((pontos[idx][0] + pontos[0][0]) / 2), 
-            int((pontos[idx][1] + pontos[0][1]) / 2)), quad_roi.raio, (0, 255, 0), -1)
-        else:
-            cv2.circle(img, (int((pontos[idx][0] + pontos[idx+1][0]) / 2), 
-            int((pontos[idx][1] + pontos[idx+1][1]) / 2)), quad_roi.raio, (0, 255, 0), -1)
+#     dx_te, dx_td, dx_bd, dx_be = quad_roi.dimensoesRoi.x_diff() 
+#     dy_te, dy_td, dy_bd, dy_be = quad_roi.dimensoesRoi.y_diff()
+
+#     cv2.line(img, 
+#             (te[0] + int(dx_te / 2), te[1] + int(dy_te / 2)),
+#             (bd[0] + int(dx_bd / 2), bd[1] + int(dy_bd / 2)),
+#             (0, 255, 0), 2)
+#     cv2.line(img, 
+#             (be[0] + int(dx_be / 2), be[1] + int(dy_be / 2)),
+#             (td[0] + int(dx_td / 2), td[1] + int(dy_td / 2)),
+#             (0, 255, 0), 2)
 
 def ordenar_pontos(pts):
     # Cria uma matriz onde serão armazenadas as coordenadas das vértices

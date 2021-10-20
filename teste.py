@@ -1,21 +1,20 @@
+import sys
 import cv2
-import sys 
 import extrator_info as ext
 
 sys.setrecursionlimit(10 ** 9)
 
+nome_janela = 'teste'
 img = cv2.imread('imagens/folha_2.jpeg')
-nome_janela = 'Teste'
-t = ext.RoiAjustavel(img, nome_janela = nome_janela, 
-                     lar_janela = img.shape[1], alt_janela = img.shape[0])
-cv2.namedWindow(t.nome_janela)
+t = ext.RoiAjustavel(img, nome_janela, img.shape[1], img.shape[0])
+cv2.namedWindow(nome_janela)
 cv2.setMouseCallback(nome_janela, ext.arrastarQuad, t)
 
 while True:
-    cv2.imshow(t.nome_janela, t.imagem)
-    key = cv2.waitKey(1) and 0xFF
-    
-    if t.return_flag:
+    cv2.imshow(nome_janela, t.imagem)
+    key = cv2.waitKey(1) & 0xFF
+
+    if t.returnFlag:
         break
 
 cv2.destroyAllWindows()
