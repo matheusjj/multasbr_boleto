@@ -1,6 +1,7 @@
 import cv2
 import imutils
 import numpy as np
+from skimage.filters import threshold_local
 
 class Quadrilatero:
     def __init__(self) -> None:
@@ -68,7 +69,7 @@ class RoiAjustavel:
     arrastar = False
     segurar = False
 
-    def __init__(self, img, nome_janela, lar_janela, alt_janela) -> None:
+    def __init__(self, img, nome_janela, lar_janela, alt_janela, pontos) -> None:
         self.imagem = img
         self.nome_janela = nome_janela
 
@@ -77,206 +78,79 @@ class RoiAjustavel:
         self.dimensoesCanvas.bd = (lar_janela, alt_janela)
         self.dimensoesCanvas.be = (0, alt_janela)
 
-        self.dimensoesRoi.te = (0, 0)
-        self.dimensoesRoi.td = (0, 0)
-        self.dimensoesRoi.bd = (0, 0)
-        self.dimensoesRoi.be = (0, 0)
-
-def arrastarQuad(event, x, y, flags, quad_roi):
-    if event == cv2.EVENT_LBUTTONDOWN:
-        # cliqueEsquerdo(x, y, quad_roi)
-        if quad_roi.ativo:
-            quad_roi.ponto_id = determinarMarcador(x, y, quad_roi)
-
-            if quad_roi.ponto_id == -1:
-                return
-
-            quad_roi.segurar = True
+        if pontos is not None:
+            self.dimensoesRoi.te = (pontos[0][0], pontos[0][1])
+            self.dimensoesRoi.td = (pontos[1][0], pontos[1][1])
+            self.dimensoesRoi.bd = (pontos[2][0], pontos[2][1])
+            self.dimensoesRoi.be = (pontos[3][0], pontos[3][1])
+            if self.dimensoesRoi.eQuad():
+                self.ativo = True
         else:
-            quad_roi.primeiro_ponto = (x, y)
-            quad_roi.arrastar = True
-            quad_roi.ativo = True
+            self.dimensoesRoi.te = (0, 0)
+            self.dimensoesRoi.td = (0, 0)
+            self.dimensoesRoi.bd = (0, 0)
+            self.dimensoesRoi.be = (0, 0)
 
-    if event == cv2.EVENT_LBUTTONUP:
-        # soltarClique(quad_roi)
-        eQuad = quad_roi.dimensoesRoi.eQuad()
-        quad_roi.arrastar = not eQuad
-        quad_roi.ativo = eQuad
+    def selecionarROI(self):
+        key = 0
 
-        quad_roi.segurar = False
-        quad_roi.ponto_id = None
+        while not key == 32:
+            cor = (0, 255, 0)
+            temp = self.imagem.copy()
+            pts = np.array(self.dimensoesRoi.retornarPontos())
+            cv2.polylines(temp, [pts], True, cor, 2) 
 
-        if eQuad:
-            atualizar_canvas(quad_roi)
+            (te, td, bd, be) = self.dimensoesRoi.retornarPontos()
 
-    if quad_roi.ativo and event == cv2.EVENT_MOUSEMOVE:
-        mouseMoveu(x, y, quad_roi)
-    if event == cv2.EVENT_LBUTTONDBLCLK:
-        # duploClique(quad_roi)
-        quad_roi.return_flag = True
-        cv2.destroyWindow(quad_roi.nome_janela)
+            for ponto in (te, td, bd, be):
+                cv2.circle(temp, (ponto[0], ponto[1]), self.raio, cor, -1)
 
-    return
+            dx_te, dx_td, dx_bd, dx_be = self.dimensoesRoi.x_diff() 
+            dy_te, dy_td, dy_bd, dy_be = self.dimensoesRoi.y_diff()
 
-# def cliqueEsquerdo(mX, mY, quad_roi):
-#     if quad_roi.ativo:
-#         quad_roi.ponto_id = determinarMarcador(mX, mY, quad_roi)
+            cv2.line(temp, 
+                    (te[0] + int(dx_te / 2), te[1] + int(dy_te / 2)),
+                    (bd[0] + int(dx_bd / 2), bd[1] + int(dy_bd / 2)),
+                    cor, 2)
+            cv2.line(temp, 
+                    (be[0] + int(dx_be / 2), be[1] + int(dy_be / 2)),
+                    (td[0] + int(dx_td / 2), td[1] + int(dy_td / 2)),
+                    cor, 2)
 
-#         if quad_roi.ponto_id == -1:
-#             return
+            cv2.imshow(self.nome_janela, temp)
 
-#         quad_roi.segurar = True
-#     else:
-#         quad_roi.primeiro_ponto = (mX, mY)
-#         quad_roi.arrastar = True
-#         quad_roi.ativo = True
+            key = cv2.waitKey(30)
+            if key == 'c' or key == 'C' or self.returnFlag:
+                break
 
-# def soltarClique(quad_roi):
-#     eQuad = quad_roi.dimensoesRoi.eQuad()
-#     quad_roi.arrastar = not eQuad
-#     quad_roi.ativo = eQuad
+        # cv2.setMouseCallback(self.nome_janela, vazio, None)
+        cv2.destroyAllWindows()
 
-#     quad_roi.segurar = False
-#     quad_roi.ponto_id = None
+    def __ordenar_pontos(self, pts):
+        # Cria uma matriz onde serão armazenadas as coordenadas das vértices
+        # do retângulo
+        vertices_ret = np.zeros((4, 2), dtype = 'float32')
+        
+        # As maiores e menores somas correspondem, respectivamente, ao vértice
+        # do topo mais à esquerda e na parte de baixo mais à direita
+        s = pts.sum(axis = 1)
+        vertices_ret[0] = pts[np.argmin(s)]
+        vertices_ret[2] = pts[np.argmax(s)]
 
-#     if eQuad:
-#         atualizar_canvas(quad_roi)
+        # Os maiores e menores valores da diferenças entre a coordenada X e Y dos 
+        # vértices correspondem, respectivamente, aos vértices da parte de baixa à
+        # esquerda e no topo mais à direita
+        diff = np.diff(pts, axis = 1)
+        vertices_ret[1] = pts[np.argmin(diff)]
+        vertices_ret[3] = pts[np.argmax(diff)]
 
-def mouseMoveu(mX, mY, quad_roi):
-    if mX > quad_roi.dimensoesCanvas.bd[0]:
-        mX = quad_roi.dimensoesCanvas.bd[0] - 5
-    elif mX < quad_roi.dimensoesCanvas.te[0]:
-        mX = quad_roi.dimensoesCanvas.te[0] + 5
+        return vertices_ret
 
-    if mY > quad_roi.dimensoesCanvas.bd[1]:
-        mY = quad_roi.dimensoesCanvas.bd[1] - 5
-    elif mY < quad_roi.dimensoesCanvas.te[1]:
-        mY = quad_roi.dimensoesCanvas.te[1] + 5
-
-    if quad_roi.arrastar:
-        quad_roi.dimensoesRoi.te = quad_roi.primeiro_ponto
-        quad_roi.dimensoesRoi.td = (mX, quad_roi.dimensoesRoi.te[1])
-        quad_roi.dimensoesRoi.bd = (mX, mY)
-        quad_roi.dimensoesRoi.be = (quad_roi.dimensoesRoi.te[0], mY)
-        atualizar_canvas(quad_roi)
-
-    elif quad_roi.segurar:
-        if quad_roi.dimensoesRoi.eColinear(quad_roi.ponto_id):
-            if quad_roi.ponto_id == 0:
-                mX, mY = mX - 5, mY - 5
-            elif quad_roi.ponto_id == 1:
-                mX, mY = mX + 5, mY - 5
-            elif quad_roi.ponto_id == 2:
-                mX, mY = mX + 5, mY + 5
-            elif quad_roi.ponto_id == 3:
-                mX, mY = mX - 5, mY + 5
-            quad_roi.segurar = False
-
-        if quad_roi.ponto_id == 0:
-            quad_roi.dimensoesRoi.te = (mX, mY)
-        elif quad_roi.ponto_id == 1:
-            quad_roi.dimensoesRoi.td = (mX, mY)
-        elif quad_roi.ponto_id == 2:
-            quad_roi.dimensoesRoi.bd = (mX, mY)
-        elif quad_roi.ponto_id == 3:
-            quad_roi.dimensoesRoi.be = (mX, mY)
-        atualizar_canvas(quad_roi)
-
-# def duploClique(quad_roi):
-#     quad_roi.return_flag = True
-#     cv2.destroyWindow(quad_roi.nome_janela)
-
-def determinarMarcador(mX, mY, quad_roi):
-    for idx, ponto in enumerate(quad_roi.dimensoesRoi.retornarPontos()):
-        dist = np.sqrt(((ponto[0] - mX) ** 2) + ((ponto[1] - mY) ** 2))
-
-        if dist <= quad_roi.raio:
-            return idx
-
-    return -1
-
-def atualizar_canvas(quad_roi):
-    temp = quad_roi.imagem.copy()
-    pts = np.array(quad_roi.dimensoesRoi.retornarPontos())
-    # (te, td, bd, be) = pts
-    # min_x, max_x = np.min(pts, axis = 0)[0], np.max(pts, axis = 0)[0]
-    # min_y, max_y = np.min(pts, axis = 0)[1], np.max(pts, axis = 0)[1]
-    # mask = np.zeros(temp.shape[:2], dtype = 'uint8')
-    # mask[te[1]:bd[1]+1, te[0]:bd[0]+1] = 1
-    cv2.polylines(temp, [pts], True, (0, 255, 0), 2) 
-    # temp = cv2.bitwise_and(temp, temp, mask = mask)
-    # desenhaMarcadores(temp, quad_roi)
-
-    (te, td, bd, be) = quad_roi.dimensoesRoi.retornarPontos()
-
-    for ponto in (te, td, bd, be):
-        cv2.circle(temp, (ponto[0], ponto[1]), quad_roi.raio, (0, 255, 0), -1)
-
-    dx_te, dx_td, dx_bd, dx_be = quad_roi.dimensoesRoi.x_diff() 
-    dy_te, dy_td, dy_bd, dy_be = quad_roi.dimensoesRoi.y_diff()
-
-    cv2.line(temp, 
-            (te[0] + int(dx_te / 2), te[1] + int(dy_te / 2)),
-            (bd[0] + int(dx_bd / 2), bd[1] + int(dy_bd / 2)),
-            (0, 255, 0), 2)
-    cv2.line(temp, 
-            (be[0] + int(dx_be / 2), be[1] + int(dy_be / 2)),
-            (td[0] + int(dx_td / 2), td[1] + int(dy_td / 2)),
-            (0, 255, 0), 2)
-            
-    cv2.imshow(quad_roi.nome_janela, temp)
-    cv2.waitKey(0)
-
-# def desenhaMarcadores(img, quad_roi):
-#     (te, td, bd, be) = quad_roi.dimensoesRoi.retornarPontos()
-
-#     for ponto in (te, td, bd, be):
-#         cv2.circle(img, (ponto[0], ponto[1]), quad_roi.raio, (0, 255, 0), -1)
-
-#     dx_te, dx_td, dx_bd, dx_be = quad_roi.dimensoesRoi.x_diff() 
-#     dy_te, dy_td, dy_bd, dy_be = quad_roi.dimensoesRoi.y_diff()
-
-#     cv2.line(img, 
-#             (te[0] + int(dx_te / 2), te[1] + int(dy_te / 2)),
-#             (bd[0] + int(dx_bd / 2), bd[1] + int(dy_bd / 2)),
-#             (0, 255, 0), 2)
-#     cv2.line(img, 
-#             (be[0] + int(dx_be / 2), be[1] + int(dy_be / 2)),
-#             (td[0] + int(dx_td / 2), td[1] + int(dy_td / 2)),
-#             (0, 255, 0), 2)
-
-def ordenar_pontos(pts):
-    # Cria uma matriz onde serão armazenadas as coordenadas das vértices
-    # do retângulo
-    vertices_ret = np.zeros((4, 2), dtype = 'float32')
-    
-    # As maiores e menores somas correspondem, respectivamente, ao vértice
-    # do topo mais à esquerda e na parte de baixo mais à direita
-    s = pts.sum(axis = 1)
-    vertices_ret[0] = pts[np.argmin(s)]
-    vertices_ret[2] = pts[np.argmax(s)]
-
-    # Os maiores e menores valores da diferenças entre a coordenada X e Y dos 
-    # vértices correspondem, respectivamente, aos vértices da parte de baixa à
-    # esquerda e no topo mais à direita
-    diff = np.diff(pts, axis = 1)
-    vertices_ret[1] = pts[np.argmin(diff)]
-    vertices_ret[3] = pts[np.argmax(diff)]
-
-    return vertices_ret
-
-class ExtratorInfo:
-    def __init__(self):
-        return self
-
-    def carregar_imagem(self, caminho):
-        self.img = cv2.imread(caminho)
-        self.pts = []
-
-    def __tranformacao_quatro_vertices(self, img, pts):
-        # Ordena os pontos da fronteira detectada
-        self.pts = self.__ordenar_pontos(pts)
-        (tl, tr, br, bl) = self.pts
+    def __transformacao_quatro_vertices(self, org_img, ratio):
+        pontosAjustados = self.__ordenar_pontos(
+                np.array(self.dimensoesRoi.retornarPontos()).reshape(4, 2))
+                # np.array(self.dimensoesRoi.retornarPontos()).reshape(4, 2) * ratio)
+        (tl, tr, br, bl) = pontosAjustados
 
         # Determina as larguras do retângulo e determina o maior
         largura_baixo = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
@@ -295,81 +169,127 @@ class ExtratorInfo:
                             [largura_max - 1, altura_max - 1],
                             [0, altura_max - 1]], dtype = 'float32')
 
-        M = cv2.getPerspectiveTransform(self.pts, mtz_transf)
-        deslocado = cv2.warpPerspective(img, M, (largura_max, altura_max))
+        M = cv2.getPerspectiveTransform(pontosAjustados, mtz_transf)
+        deslocado = cv2.warpPerspective(self.imagem, M, (largura_max, altura_max))
 
         return deslocado
 
-    def __auto_canny(self, img, sigma = 0.33):
-        media_intensidade = np.median(img)
+    def imagemProcessada(self, org_img, ratio):
+        ajus = self.__transformacao_quatro_vertices(org_img, ratio)
 
-        limite_menor = int(max(0, (1.0 - sigma) * media_intensidade))
-        limite_maior = int(max(255, (1.0 + sigma) * media_intensidade))
-        fronteiras = cv2.Canny(img, limite_menor, limite_maior)
+        ajus = cv2.cvtColor(ajus, cv2.COLOR_BGR2GRAY)
+        _, ajus = cv2.threshold(ajus, 0, 256, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+        ajus = imutils.resize(ajus, height = int(ajus.shape[0] * 1.2), 
+                            inter = cv2.INTER_CUBIC)
+        # T = threshold_local(ajus, 11, offset = 10, method = "gaussian")
+        # ajus = (ajus > T).astype("uint8") * 255
 
-        return fronteiras
-
-    def __mouseCallback(self, event, x, y, flags, param):
-        pass
-        # if event == cv2.EVENT_LBUTTONDOWN:
-        #     self.pts.append((x, y))
-        #     img_copy = self.img.copy()
-        #     for pt in self.pts:
-        #         (pX, pY) = pt
-        #         cv2.circle(img_copy, (pX, pY), 10, (0, 255, 0), -1)
-        #         if (len(pts) == 4):
-        #             pts_np = np.array(pts, dtype = 'float32')
-        #             warped = four_point_transform(im.copy(), pts_np)
-        #             warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
-        #             # warped = cv2.GaussianBlur(warped, (3, 3), 0)
-        #             cv2.imshow('Warped', imutils.resize(warped, height=600))
-        #     cv2.imshow('Imagem', img_copy)
-
-    def selecionar_manualmente(self):
-        self.nome_janela = 'Selecao'
-        cv2.imshow(self.nome_janela, self.img)
-        
-        if len(self.pts) > 0:
-            img_copy = self.img.copy()
-            for (pX, pY) in self.pts:
-                cv2.circle(img_copy, (int(pX), int(pY)), 10, (0, 255, 0), -1)
-            cv2.imshow(self.nome_janela, img_copy)
-        # cv2.setMouseCallback(self.nome_janela, self.__mouseCallback)
+        cv2.imshow(self.nome_janela, ajus)
         cv2.waitKey(0)
 
-    def detectar_automaticamente(self, caminho):
-        self.carregar_imagem(caminho)
+class ExtratorInfo:
+    def __init__(self) -> None:
+        self
 
-        altura = 800
-        (im_alt, im_lar) = self.img.shape[:2]
-        ratio = im_alt / float(altura)
-
-        img = imutils.resize(self.img, height = altura, inter = cv2.INTER_CUBIC)
+    def detectar_automaticamente(self, img):
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = cv2.GaussianBlur(img, (7, 7), 0)
-        img = self.__auto_canny(img)
+        img = imutils.auto_canny(img)
 
         cnts = cv2.findContours(img.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
         cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
 
         for con in cnts:
-            perimeter = cv2.arcLength(con, True)
-            approx = cv2.approxPolyDP(con, 0.02 * perimeter, True)
+            perimetro = cv2.arcLength(con, True)
+            approx = cv2.approxPolyDP(con, 0.02 * perimetro, True)
 
             if len(approx) == 4:
                 contorno = approx
                 break
 
-        if 'contorno' not in locals():
-            self.selecionar_manualmente()
-        else:
-            # vertices = self.__tranformacao_quatro_vertices(self.img,
-            #                                         contorno.reshape(4, 2) * ratio)
-            self.pts = self.__ordenar_pontos(contorno.reshape(4, 2) * ratio)
-            self.selecionar_manualmente()
+        if 'contorno' in locals():
+            return contorno.reshape(4, 2)
 
-    def teste(self, caminho):
-        nome_janelo = 'o'
-        img = cv2.imread(caminho)
-        cv2.selectROI(nome_janelo, img, showCrosshair = False, fromCenter = True)
+        return None
+
+
+
+
+
+# Funções complementares
+def arrastarQuad(event, x, y, flags, quad_roi):
+
+    if event == cv2.EVENT_LBUTTONDOWN:
+        if quad_roi.ativo:
+            quad_roi.ponto_id = determinarMarcador(x, y, quad_roi)
+
+            if quad_roi.ponto_id == -1:
+                return
+
+            quad_roi.segurar = True
+        else:
+            quad_roi.primeiro_ponto = (x, y)
+            quad_roi.arrastar = True
+            quad_roi.ativo = True
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        eQuad = quad_roi.dimensoesRoi.eQuad()
+        quad_roi.arrastar = not eQuad
+        quad_roi.ativo = eQuad
+
+        quad_roi.segurar = False
+        quad_roi.ponto_id = None
+
+    elif quad_roi.ativo and event == cv2.EVENT_MOUSEMOVE:
+        mouseMoveu(x, y, quad_roi)
+
+    elif event == cv2.EVENT_LBUTTONDBLCLK:
+        quad_roi.returnFlag = True
+
+def mouseMoveu(mX, mY, quad_roi):
+    if mX > quad_roi.dimensoesCanvas.bd[0]:
+        mX = quad_roi.dimensoesCanvas.bd[0] - 5
+    elif mX < quad_roi.dimensoesCanvas.te[0]:
+        mX = quad_roi.dimensoesCanvas.te[0] + 5
+
+    if mY > quad_roi.dimensoesCanvas.bd[1]:
+        mY = quad_roi.dimensoesCanvas.bd[1] - 5
+    elif mY < quad_roi.dimensoesCanvas.te[1]:
+        mY = quad_roi.dimensoesCanvas.te[1] + 5
+
+    if quad_roi.arrastar:
+        quad_roi.dimensoesRoi.te = quad_roi.primeiro_ponto
+        quad_roi.dimensoesRoi.td = (mX, quad_roi.dimensoesRoi.te[1])
+        quad_roi.dimensoesRoi.bd = (mX, mY)
+        quad_roi.dimensoesRoi.be = (quad_roi.dimensoesRoi.te[0], mY)
+
+    elif quad_roi.segurar:
+        if quad_roi.dimensoesRoi.eColinear(quad_roi.ponto_id):
+            if quad_roi.ponto_id == 0:
+                mX, mY = mX - 10, mY - 10
+            elif quad_roi.ponto_id == 1:
+                mX, mY = mX + 10, mY - 10
+            elif quad_roi.ponto_id == 2:
+                mX, mY = mX + 10, mY + 10
+            elif quad_roi.ponto_id == 3:
+                mX, mY = mX - 10, mY + 10
+            quad_roi.segurar = False
+
+        if quad_roi.ponto_id == 0:
+            quad_roi.dimensoesRoi.te = (mX, mY)
+        elif quad_roi.ponto_id == 1:
+            quad_roi.dimensoesRoi.td = (mX, mY)
+        elif quad_roi.ponto_id == 2:
+            quad_roi.dimensoesRoi.bd = (mX, mY)
+        elif quad_roi.ponto_id == 3:
+            quad_roi.dimensoesRoi.be = (mX, mY)
+
+def determinarMarcador(mX, mY, quad_roi):
+    for idx, ponto in enumerate(quad_roi.dimensoesRoi.retornarPontos()):
+        dist = np.sqrt(((ponto[0] - mX) ** 2) + ((ponto[1] - mY) ** 2))
+
+        if dist <= quad_roi.raio:
+            return idx
+
+    return -1
