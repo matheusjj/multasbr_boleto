@@ -1,28 +1,42 @@
-import cv2
-import imutils
-import argparse
-import extrator_info as ext
+# import argparse
+# from extrator_info import ExtratorInfo
+#
+# ap = argparse.ArgumentParser()
+# ap.add_argument('-i', '--imagem', type=str, default='imagens/folha_1.jpeg',
+#                 help='caminho da imagem')
+# ap.add_argument('-m', '--modo', type=str, default='auto',
+#                 help='modo detecção das fronteiras')
+# args = vars(ap.parse_args())
 
-ap = argparse.ArgumentParser()
-ap.add_argument('-i', '--imagem', type = str, default = 'imagens/folha_1.jpeg',
-                help = 'caminho da imagem')
-ap.add_argument('-m', '--modo', type = str, default = 'auto',
-                help = 'modo detecção das fronteiras')
-args = vars(ap.parse_args())
+import cv2.cv2 as cv2
+import pytesseract
+from pre_processadores import PreProcessador
+from extratores.extrator_documento import ExtratorDocumento
+from detectores.detector_documento import DetectorDocumentoHough
+from detectores.detector_texto import DetectorPrimeiroPixelTexto
 
-pontos = None
-nova_altura = 800
-nome_janela = 'Selecao'
-org_img = cv2.imread(args['imagem']) 
-ratio = org_img.shape[0] / float(nova_altura)
-img = imutils.resize(org_img, height = nova_altura, inter = cv2.INTER_CUBIC)
 
-if args['modo'] == 'auto':
-    pontos = ext.ExtratorInfo().detectar_automaticamente(img)
+class DevolveTexto:
+    def __init__(self):
+        self.pre_processamento = PreProcessador()  # Operações morfológicas de pre-processamento da imagem
+        self.detector_documento = DetectorDocumentoHough()  # Instância do Detector de documento por Hough
+        self.extrator_documento = ExtratorDocumento()  # Instância do extrator do documento da imagem
+        self.detector_texto = DetectorPrimeiroPixelTexto()  # Instância do detector de texto no documento
 
-cv2.imshow(nome_janela, img)
-roi = ext.RoiAjustavel(img, nome_janela, img.shape[1], img.shape[0], pontos)
-cv2.setMouseCallback(nome_janela, ext.arrastarQuad, roi)
-cv2.namedWindow(nome_janela)
-roi.selecionarROI()
-roi.imagemProcessada(org_img, ratio)
+    def __call__(self, caminho):
+        img_original = cv2.imread(caminho)
+
+        img, ratio = self.pre_processamento(img_original)
+        vertices = self.detector_documento(img.copy())
+        documento = self.extrator_documento(img, vertices, img_original, ratio)
+        limite_texto = self.detector_texto(documento)
+
+        return documento[limite_texto[0][1]:limite_texto[1][1], limite_texto[0][0]:limite_texto[1][0]]
+
+
+t = DevolveTexto()
+t = t('imagens/pdf_2.png')
+t = cv2.cvtColor(t, cv2.COLOR_BGR2RGB)
+options = '-l {} --psm {}'.format('por', '4')
+text = pytesseract.image_to_string(t, config=options)
+print(text)
