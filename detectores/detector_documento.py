@@ -86,8 +86,17 @@ class DetectorDocumentoHough:
                 if x_no_intervalo(int_point[0][0]) and y_no_intervalo(int_point[0][1]):
                     intersecoes.append(int_point)
 
+        # TODO: Vértices estão no formato [[[1, 1]], [[1, 1]]]. Mudar para [[1, 1], [1, 1]].
         vertices = self.__encontrar_vertices(intersecoes)
         vertices = self.__determinar_vertices_proximos(vertices)
+
+        for vertice in vertices:
+            vertice = vertice[0]
+            print(vertice)
+            cv2.circle(imagem, (int(vertice[0]), int(vertice[1])), 10, 255, -1)
+
+        cv2.imshow('A', imagem)
+        cv2.waitKey(0)
 
         if vertices is None:
             return None
@@ -196,7 +205,8 @@ class DetectorDocumentoHough:
             random_state=0
         ).fit(x)
 
-        return [[centro.tolist()] for centro in kmeans.cluster_centers_]
+        return [centro.tolist() for centro in kmeans.cluster_centers_]
+        # return [[centro.tolist()] for centro in kmeans.cluster_centers_]
 
     @staticmethod
     def __intersecao(linha_1, linha_2):
