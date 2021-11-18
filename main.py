@@ -8,11 +8,11 @@
 #                 help='modo detecção das fronteiras')
 # args = vars(ap.parse_args())
 
-import cv2.cv2 as cv2
-import pytesseract
+import cv2
 from pre_processadores import PreProcessador
 from extratores.extrator_documento import ExtratorDocumento
 from detectores.detector_documento import DetectorDocumentoHough
+from detectores.detector_informacao import DetectorInformacao
 from detectores.detector_texto import DetectorPrimeiroPixelTexto
 
 
@@ -26,17 +26,18 @@ class DevolveTexto:
     def __call__(self, caminho):
         img_original = cv2.imread(caminho)
 
-        img, ratio = self.pre_processamento(img_original)
-        vertices = self.detector_documento(img.copy())
-        documento = self.extrator_documento(img, vertices, img_original, ratio)
-        limite_texto = self.detector_texto(documento)
+        # img, ratio = self.pre_processamento(img_original)
+        # vertices = self.detector_documento(img.copy())
+        # documento = self.extrator_documento(img, vertices, img_original, ratio)
+        # limite_texto = self.detector_texto(documento)
+        limite_texto = self.detector_texto(img_original)
 
-        return documento[limite_texto[0][1]:limite_texto[1][1], limite_texto[0][0]:limite_texto[1][0]]
+        return img_original[limite_texto[0][1]:limite_texto[1][1], limite_texto[0][0]:limite_texto[1][0]]
+        # return documento[limite_texto[0][1]:limite_texto[1][1], limite_texto[0][0]:limite_texto[1][0]]
 
 
-t = DevolveTexto()
-t = t('imagens/pdf_2.png')
-t = cv2.cvtColor(t, cv2.COLOR_BGR2RGB)
-options = '-l {} --psm {}'.format('por', '4')
-text = pytesseract.image_to_string(t, config=options)
-print(text)
+devolve = DevolveTexto()
+imagem_processada = devolve('imagens/pdf_2.png')
+
+t = DetectorInformacao()
+t(imagem_processada)
