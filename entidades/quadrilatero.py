@@ -19,27 +19,27 @@ class Quadrilatero:
         self.bd = vertices[2]
         self.be = vertices[3]
 
-    def e_colinear(self, ponto_id) -> bool:
+    def e_concavo(self, ponto_id) -> bool:
         if ponto_id == 0:
             dist_te_td = int(np.sqrt(((self.td[0] - self.te[0]) ** 2) + ((self.td[1] - self.te[1]) ** 2)))
             dist_te_be = int(np.sqrt(((self.be[0] - self.te[0]) ** 2) + ((self.be[1] - self.te[1]) ** 2)))
             dist_be_td = int(np.sqrt(((self.td[0] - self.be[0]) ** 2) + ((self.td[1] - self.be[1]) ** 2)))
-            return dist_te_td + dist_te_be == dist_be_td
+            return dist_te_td + dist_te_be <= dist_be_td
         elif ponto_id == 1:
             dist_td_bd = int(np.sqrt(((self.bd[0] - self.td[0]) ** 2) + ((self.bd[1] - self.td[1]) ** 2)))
             dist_td_te = int(np.sqrt(((self.te[0] - self.td[0]) ** 2) + ((self.te[1] - self.td[1]) ** 2)))
             dist_te_bd = int(np.sqrt(((self.bd[0] - self.te[0]) ** 2) + ((self.bd[1] - self.te[1]) ** 2)))
-            return dist_td_bd + dist_td_te == dist_te_bd
+            return dist_td_bd + dist_td_te <= dist_te_bd
         elif ponto_id == 2:
             dist_bd_be = int(np.sqrt(((self.be[0] - self.bd[0]) ** 2) + ((self.be[1] - self.bd[1]) ** 2)))
             dist_bd_td = int(np.sqrt(((self.td[0] - self.bd[0]) ** 2) + ((self.td[1] - self.bd[1]) ** 2)))
             dist_td_be = int(np.sqrt(((self.be[0] - self.td[0]) ** 2) + ((self.be[1] - self.td[1]) ** 2)))
-            return dist_bd_be + dist_bd_td == dist_td_be
+            return dist_bd_be + dist_bd_td <= dist_td_be
         else:
             dist_be_te = int(np.sqrt(((self.te[0] - self.be[0]) ** 2) + ((self.te[1] - self.be[1]) ** 2)))
             dist_be_bd = int(np.sqrt(((self.bd[0] - self.be[0]) ** 2) + ((self.bd[1] - self.be[1]) ** 2)))
             dist_bd_te = int(np.sqrt(((self.te[0] - self.bd[0]) ** 2) + ((self.te[1] - self.bd[1]) ** 2)))
-            return dist_be_te + dist_be_bd == dist_bd_te
+            return dist_be_te + dist_be_bd <= dist_bd_te
 
     def e_quad(self) -> bool:
         combinacoes = combinations(range(4), 2)

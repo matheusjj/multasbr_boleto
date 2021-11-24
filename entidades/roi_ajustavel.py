@@ -149,7 +149,7 @@ def mouse_moveu(mouse_x, mouse_y, quad_roi):
         quad_roi.dimensoes_roi.be = (quad_roi.dimensoes_roi.te[0], mouse_y)
 
     elif quad_roi.segurar_flag:
-        if quad_roi.dimensoes_roi.e_colinear(quad_roi.ponto_id):
+        if quad_roi.dimensoes_roi.e_concavo(quad_roi.ponto_id):
             # if quad_roi.ponto_id == 0:
             #     mouse_x, mouse_y = mouse_x - 10, mouse_y - 10
             # elif quad_roi.ponto_id == 1:

@@ -492,13 +492,13 @@ class DetectorLRDECustomizado:
             quad = Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
             vertices = quad.retornar_vertices()
 
-            if quad.e_colinear(0):
+            if quad.e_concavo(0):
                 vertices = self.completar_vertices(vertices[1], vertices[2], vertices[3])
-            elif quad.e_colinear(1):
+            elif quad.e_concavo(1):
                 vertices = self.completar_vertices(vertices[0], vertices[2], vertices[3])
-            elif quad.e_colinear(2):
+            elif quad.e_concavo(2):
                 vertices = self.completar_vertices(vertices[0], vertices[1], vertices[3])
-            elif quad.e_colinear(3):
+            elif quad.e_concavo(3):
                 vertices = self.completar_vertices(vertices[0], vertices[1], vertices[2])
 
             vertices = self.corrigir_vertices(vertices, img)
