@@ -1,11 +1,21 @@
-import numpy as np
+from entidades.palavra import Palavra
+from doctr.models import ocr_predictor
 
 
-class ExtratorTexto:
+class TorchOCR:
     def __init__(self):
-        pass
+        None
 
-    def __call__(self, imagem, vertices, ratio):
-        vertices = np.array(vertices * ratio, dtype='uint32').reshape(2, 2)
+    def __call__(self, img):
+        model = ocr_predictor(det_arch='db_resnet50', reco_arch='crnn_vgg16_bn', pretrained=True)
 
-        return imagem[vertices[0][1]:vertices[1][1], vertices[0][0]:vertices[1][0]]
+        result = model([img])
+        # result.show(doc)
+
+        palavras = []
+        for bloco in result.export()['pages'][0]['blocks']:
+            for num_linha, linha in enumerate(bloco['lines']):
+                for palavra in linha['words']:
+                    palavras.append(Palavra(palavra['value'], palavra['geometry'], num_linha, linha['geometry']))
+
+        return palavras
