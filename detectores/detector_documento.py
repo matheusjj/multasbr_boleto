@@ -277,13 +277,117 @@ class DetectorLRDECustomizado:
         self.ang_diagonal_inf = 40
         self.ang_diagonal_sup = 50
 
+    def __call__(self, img) -> Quadrilatero:
+        # Pré-processamento
+        mean = cv2.pyrMeanShiftFiltering(img, 21, 51)
+        lab = cv2.split(cv2.cvtColor(mean, cv2.COLOR_BGR2LAB))
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
+        morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        morph_a = cv2.morphologyEx(lab[1], cv2.MORPH_ERODE, kernel)
+
+        # Segmentação de Fronteiras
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        morph_l_grad = cv2.morphologyEx(morph_l, cv2.MORPH_GRADIENT, kernel)
+        morph_a_grad = cv2.morphologyEx(morph_a, cv2.MORPH_GRADIENT, kernel)
+        morph_b_grad = cv2.morphologyEx(lab[2], cv2.MORPH_GRADIENT, kernel)
+
+        morph_grad = morph_l_grad + morph_a_grad + morph_b_grad
+        grad = cv2.morphologyEx(morph_grad, cv2.MORPH_CLOSE, kernel)
+        thresh = cv2.threshold(grad, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+
+        # Determinar retas
+        retas = cv2.HoughLines(thresh, 1, np.pi / 180, 90)
+
+        if retas is None:
+            return Quadrilatero()
+
+        retas_verticais, retas_horizontais = self.determinar_retas(retas)
+
+        # Determinar interseções
+        intersecoes_gradiente = self.determinar_intersecoes(img, retas_verticais,
+                                                            retas_horizontais)
+
+        if len(intersecoes_gradiente) == 0:
+            return Quadrilatero()
+
+        ponto_label = self.encontrar_vertices(intersecoes_gradiente)
+
+        # Segmentação em regiões (Watershed)
+        markers = rank.gradient(grad, disk(5)) < 10
+        markers = ndi.label(markers)[0]
+        gradiente = rank.gradient(grad, disk(2))
+        labels = watershed(gradiente, markers)
+
+        label_documento = np.unique(labels[int(ponto_label[0][1]) - self.regiao_label:
+                                           int(ponto_label[0][1]) + self.regiao_label,
+                                           int(ponto_label[0][0]) - self.regiao_label:
+                                           int(ponto_label[0][0]) + self.regiao_label]
+                                    .flatten())
+
+        labels_relevantes = []
+        for idx, num in enumerate(label_documento):
+            labels_relevantes.append([idx, np.count_nonzero(labels == num)])
+        labels_relevantes.sort(key=lambda n: n[1], reverse=True)
+
+        # Máscaras retirar regiões dentro e fora do documento
+        gradiente_sem_noise = np.zeros(img.shape[:2], dtype='uint8')
+        for label in np.unique(labels):
+            if label != label_documento[labels_relevantes[0][0]]:
+                continue
+
+            mask = np.zeros(img.shape[:2], dtype="uint8")
+            mask[labels == label] = 255
+
+            cnts, hier = cv2.findContours(mask.copy(),
+                                          cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            cv2.drawContours(gradiente_sem_noise, cnts, -1, 255, -1)
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        mascara_erode = cv2.morphologyEx(gradiente_sem_noise,
+                                         cv2.MORPH_ERODE, kernel, iterations=7)
+        mascara_erode = cv2.bitwise_and(grad, grad,
+                                        mask=cv2.bitwise_not(mascara_erode))
+
+        mascara_dilate = cv2.morphologyEx(gradiente_sem_noise,
+                                          cv2.MORPH_DILATE, kernel, iterations=7)
+        mascara_dilate = cv2.bitwise_and(mascara_erode, mascara_erode,
+                                         mask=mascara_dilate)
+
+        gradiente_sem_noise = cv2.threshold(mascara_dilate, 0, 255,
+                                            cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+
+        # Determinar retas de grad sem áreas internas e externas
+        retas = cv2.HoughLines(gradiente_sem_noise, 1, np.pi / 180, 90)
+
+        if retas is None:
+            vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4)
+            vertices = self.determinar_vertices_proximos(vertices)
+            return self.otimizar_vertices(vertices, img)
+
+        retas_verticais, retas_horizontais = self.determinar_retas(retas)
+        intersecoes_grad_sem_noise = self.determinar_intersecoes(img, retas_verticais,
+                                                                 retas_horizontais)
+
+        if len(intersecoes_grad_sem_noise) == 0:
+            vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4)
+            vertices = self.determinar_vertices_proximos(vertices)
+            return self.otimizar_vertices(vertices, img)
+
+        vertices_grad_sem_noise = self.encontrar_vertices(intersecoes_grad_sem_noise,
+                                                          clusters=4)
+        vertices_grad_sem_noise = self.determinar_vertices_proximos(vertices_grad_sem_noise)
+        return self.otimizar_vertices(vertices_grad_sem_noise, img)
+
     def determinar_retas(self, retas):
         retas_verticais = []
         retas_horizontais = []
 
         for reta in retas:
             r, theta = reta[0][0], reta[0][1]
-            if np.rad2deg(theta) <= self.angulo_reta_vertical_inf\
+            if np.rad2deg(theta) <= self.angulo_reta_vertical_inf \
                     or np.rad2deg(theta) >= self.angulo_reta_vertical_sup:
                 retas_verticais.append([r, theta])
             else:
@@ -317,7 +421,7 @@ class DetectorLRDECustomizado:
             for horizontal in retas_horizontais:
                 ponto = self.intersecao(vertical, horizontal)
 
-                if self.no_intervalo(ponto[0], img.shape[1])\
+                if self.no_intervalo(ponto[0], img.shape[1]) \
                         and self.no_intervalo(ponto[1], img.shape[0]):
                     intersecoes.append(ponto)
 
@@ -501,106 +605,3 @@ class DetectorLRDECustomizado:
 
         return vertices_final
 
-    def __call__(self, img) -> Quadrilatero:
-        # Pré-processamento
-        mean = cv2.pyrMeanShiftFiltering(img, 21, 51)
-        lab = cv2.split(cv2.cvtColor(mean, cv2.COLOR_BGR2LAB))
-
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-        morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
-
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        morph_a = cv2.morphologyEx(lab[1], cv2.MORPH_ERODE, kernel)
-
-        # Segmentação de Fronteiras
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        morph_l_grad = cv2.morphologyEx(morph_l, cv2.MORPH_GRADIENT, kernel)
-        morph_a_grad = cv2.morphologyEx(morph_a, cv2.MORPH_GRADIENT, kernel)
-        morph_b_grad = cv2.morphologyEx(lab[2], cv2.MORPH_GRADIENT, kernel)
-
-        morph_grad = morph_l_grad + morph_a_grad + morph_b_grad
-        grad = cv2.morphologyEx(morph_grad, cv2.MORPH_CLOSE, kernel)
-        thresh = cv2.threshold(grad, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-
-        # Determinar retas
-        retas = cv2.HoughLines(thresh, 1, np.pi / 180, 90)
-
-        if retas is None:
-            return Quadrilatero()
-
-        retas_verticais, retas_horizontais = self.determinar_retas(retas)
-
-        # Determinar interseções
-        intersecoes_gradiente = self.determinar_intersecoes(img, retas_verticais,
-                                                            retas_horizontais)
-
-        if len(intersecoes_gradiente) == 0:
-            return Quadrilatero()
-
-        ponto_label = self.encontrar_vertices(intersecoes_gradiente)
-
-        # Segmentação em regiões (Watershed)
-        markers = rank.gradient(grad, disk(5)) < 10
-        markers = ndi.label(markers)[0]
-        gradiente = rank.gradient(grad, disk(2))
-        labels = watershed(gradiente, markers)
-
-        label_documento = np.unique(labels[int(ponto_label[0][1]) - self.regiao_label:
-                                           int(ponto_label[0][1]) + self.regiao_label,
-                                           int(ponto_label[0][0]) - self.regiao_label:
-                                           int(ponto_label[0][0]) + self.regiao_label]
-                                    .flatten())
-
-        labels_relevantes = []
-        for idx, num in enumerate(label_documento):
-            labels_relevantes.append([idx, np.count_nonzero(labels == num)])
-        labels_relevantes.sort(key=lambda n: n[1], reverse=True)
-
-        # Máscaras retirar regiões dentro e fora do documento
-        gradiente_sem_noise = np.zeros(img.shape[:2], dtype='uint8')
-        for label in np.unique(labels):
-            if label != label_documento[labels_relevantes[0][0]]:
-                continue
-
-            mask = np.zeros(img.shape[:2], dtype="uint8")
-            mask[labels == label] = 255
-
-            cnts, hier = cv2.findContours(mask.copy(),
-                                          cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            cv2.drawContours(gradiente_sem_noise, cnts, -1, 255, -1)
-
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-        mascara_erode = cv2.morphologyEx(gradiente_sem_noise,
-                                         cv2.MORPH_ERODE, kernel, iterations=7)
-        mascara_erode = cv2.bitwise_and(grad, grad,
-                                        mask=cv2.bitwise_not(mascara_erode))
-
-        mascara_dilate = cv2.morphologyEx(gradiente_sem_noise,
-                                          cv2.MORPH_DILATE, kernel, iterations=7)
-        mascara_dilate = cv2.bitwise_and(mascara_erode, mascara_erode,
-                                         mask=mascara_dilate)
-
-        gradiente_sem_noise = cv2.threshold(mascara_dilate, 0, 255,
-                                            cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-
-        # Determinar retas de grad sem áreas internas e externas
-        retas = cv2.HoughLines(gradiente_sem_noise, 1, np.pi / 180, 90)
-
-        if retas is None:
-            vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4)
-            vertices = self.determinar_vertices_proximos(vertices)
-            return self.otimizar_vertices(vertices, img)
-
-        retas_verticais, retas_horizontais = self.determinar_retas(retas)
-        intersecoes_grad_sem_noise = self.determinar_intersecoes(img, retas_verticais,
-                                                                 retas_horizontais)
-
-        if len(intersecoes_grad_sem_noise) == 0:
-            vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4)
-            vertices = self.determinar_vertices_proximos(vertices)
-            return self.otimizar_vertices(vertices, img)
-
-        vertices_grad_sem_noise = self.encontrar_vertices(intersecoes_grad_sem_noise,
-                                                          clusters=4)
-        vertices_grad_sem_noise = self.determinar_vertices_proximos(vertices_grad_sem_noise)
-        return self.otimizar_vertices(vertices_grad_sem_noise, img)
