@@ -3,7 +3,6 @@ import numpy as np
 import cv2.cv2 as cv2
 from itertools import combinations
 
-from scipy import stats
 from scipy import ndimage as ndi
 
 from sklearn.cluster import KMeans
@@ -35,40 +34,6 @@ def pre_processamento_deteccao(imagem):
 
     blur = cv2.GaussianBlur(thresh_gauss, (5, 5), 0)
     return imutils.auto_canny(blur, sigma=0.5)
-
-    # def adjust_gamma(image, gamma=1.0):
-    #     inv_gamma = 1.0 / gamma
-    #     table = np.array([((i / 255.0) ** inv_gamma) * 255
-    #                       for i in np.arange(0, 256)]).astype("uint8")
-    #     return cv2.LUT(image, table)
-    #
-    # # yuv = cv2.split(cv2.cvtColor(imagem, cv2.COLOR_BGR2YUV))
-    # # t = cv2.equalizeHist(yuv[0])
-    #
-    # # eq = cv2.merge([t, yuv[1], yuv[2]])
-    # # yuv = cv2.cvtColor(eq, cv2.COLOR_YUV2BGR)
-    # # gamma = adjust_gamma(yuv, 0.9)
-    # # hsv = cv2.cvtColor(gamma, cv2.COLOR_BGR2HSV)
-    # # hsv = cv2.cvtColor(yuv, cv2.COLOR_BGR2HSV)
-    # hsv = cv2.cvtColor(imagem, cv2.COLOR_BGR2HSV)
-    #
-    # lower = np.array([0, 0, 220])
-    # upper = np.array([180, 100, 255])
-    #
-    # mask = cv2.inRange(hsv, lower, upper)
-    # result = cv2.bitwise_and(imagem, imagem, mask=mask)
-    #
-    # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-    # result = cv2.morphologyEx(result, cv2.MORPH_ERODE, kernel)
-    # result = cv2.morphologyEx(result, cv2.MORPH_CLOSE, kernel, iterations=20)
-    #
-    # # thresh = cv2.threshold(cv2.split(result)[2], 0, 255, cv2.THRESH_OTSU)[1]
-    # thresh = cv2.threshold(cv2.split(result)[2], 0, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C)[1]
-    #
-    # cv2.imshow('Mask', thresh)
-    # cv2.waitKey(0)
-    #
-    # return imutils.auto_canny(thresh, sigma=0.5)
 
 
 class DetectorDocumentoCanny:
@@ -110,11 +75,8 @@ class DetectorDocumentoHough:
         canny = pre_processamento_deteccao(imagem)
         linhas = cv2.HoughLines(canny, 1, np.pi / 180, self.votos_hough)
 
-        cv2.imshow('A', canny)
-        cv2.waitKey(0)
-
         if linhas is None:
-            return None
+            return Quadrilatero()
 
         intersecoes = []
         linhas_agrupadas = combinations(range(len(linhas)), 2)
@@ -130,41 +92,31 @@ class DetectorDocumentoHough:
                 if x_no_intervalo(int_point[0]) and y_no_intervalo(int_point[1]):
                     intersecoes.append(int_point)
 
+        if len(intersecoes) == 0:
+            return Quadrilatero()
+
         vertices = self.encontrar_vertices(intersecoes, clusters=len(intersecoes) if len(intersecoes) < 4 else 4)
-        for vertice in vertices:
-            vertice = vertice
-            print(vertice)
-            cv2.circle(imagem, (int(vertice[0]), int(vertice[1])), 10, 255, -1)
-
-        cv2.imshow('A', imagem)
-        cv2.waitKey(0)
-
         vertices = self.__determinar_vertices_proximos(vertices)
 
         if vertices is None:
-            return None
+            return Quadrilatero()
 
         if len(vertices) <= 1:
-            return Quadrilatero(np.array([[0, 0], [0, 0], [0, 0], [0, 0]], dtype='float32').reshape(4, 2))
+            return Quadrilatero()
+
         elif len(vertices) == 2:
             vertices = self.completar_diagonal(vertices[0], vertices[1])
 
             if vertices is None:
-                return Quadrilatero(np.array([[0, 0], [0, 0], [0, 0], [0, 0]], dtype='float32').reshape(4, 2))
+                return Quadrilatero()
             else:
                 return Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
 
         elif len(vertices) == 3:
-            print(vertices)
             vertices = self.completar_vertices(vertices[0], vertices[1], vertices[2])
-            print(vertices)
 
-            for vertice in vertices:
-                vertice = vertice
-                cv2.circle(imagem, (int(vertice[0]), int(vertice[1])), 10, 255, -1)
-
-            cv2.imshow('A', imagem)
-            cv2.waitKey(0)
+            if len(vertices) == 3:
+                return Quadrilatero()
 
             return Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
         else:
@@ -197,35 +149,50 @@ class DetectorDocumentoHough:
 
         return ang
 
-    def completar_vertices(self, vert_1, vert_2, vert_3):
-        ang_vert1_vert2 = self.angulo_reta_entre_dois_pontos(vert_1, vert_2)
-        ang_vert1_vert3 = self.angulo_reta_entre_dois_pontos(vert_1, vert_3)
-        # ang_vert3_vert2 = self.angulo_reta_entre_dois_pontos(vert_3, vert_2)
-        #
-        # ang_vert2_vert3 = self.angulo_reta_entre_dois_pontos(vert_2, vert_3)
-        # ang_vert2_vert1 = self.angulo_reta_entre_dois_pontos(vert_2, vert_1)
+    @staticmethod
+    def completar_vertices(vert_1, vert_2, vert_3):
+        t = np.array([vert_1, vert_2, vert_3])
+        media_coord = np.average(t, axis=0)
 
-        if self.ang_diagonal_inf <= abs(ang_vert1_vert2) <= self.ang_diagonal_sup:
-            vert_4 = [vert_1[0] + vert_2[0] - vert_3[0], vert_1[1] + vert_2[1] - vert_3[1]]
-            return [vert_1, vert_2, vert_3, vert_4]
-        elif self.ang_diagonal_inf <= abs(ang_vert1_vert3) <= self.ang_diagonal_sup:
-            vert_4 = [vert_1[0] + vert_3[0] - vert_2[0], vert_1[1] + vert_3[1] - vert_2[1]]
-            return [vert_1, vert_2, vert_3, vert_4]
+        pontos_esq = []
+        pontos_dir = []
+        for ponto in [vert_1, vert_2, vert_3]:
+            if ponto[0] <= media_coord[0]:
+                pontos_esq.append(ponto)
+            else:
+                pontos_dir.append(ponto)
+
+        te, td, bd, be = None, None, None, None
+
+        for ponto in pontos_esq:
+            if ponto[1] <= media_coord[1]:
+                te = ponto
+            else:
+                be = ponto
+
+        for ponto in pontos_dir:
+            if ponto[1] <= media_coord[1]:
+                td = ponto
+            else:
+                bd = ponto
+
+        if sum(x is None for x in [te, td, bd, be]) > 1:
+            return [vert_1, vert_2, vert_3]
+
+        if te is None:
+            delta_x = td[0] - bd[0]
+            te = [be[0] + delta_x, td[1]]
+        elif td is None:
+            delta_x = te[0] - be[0]
+            td = [bd[0] + delta_x, te[1]]
+        elif bd is None:
+            delta_x = be[0] - te[0]
+            bd = [td[0] + delta_x, be[1]]
         else:
-            # distancias = []
-            # distancias.append(int(np.sqrt(((vert_1[0] - 0) ** 2) + ((vert_1[1] - 0) ** 2))))
-            # distancias.append(int(np.sqrt(((vert_2[0] - 0) ** 2) + ((vert_2[1] - 0) ** 2))))
-            # distancias.append(int(np.sqrt(((vert_3[0] - 0) ** 2) + ((vert_3[1] - 0) ** 2))))
-            #
-            # if min(distancias) == distancias[0]:
-            #     vert_4 = [vert_2[0] + (vert_1[0] - vert_3[0]), vert_3[1] + (vert_1[1] - vert_2[1])]
-            # else:
-            #     vert_4 = [vert_3[0] + (vert_1[0] - vert_2[0]), vert_2[1] + (vert_1[1] - vert_3[1])]
+            delta_x = bd[0] - td[0]
+            be = [te[0] + delta_x, bd[1]]
 
-
-            vert_4 = []
-
-            return [vert_1, vert_2, vert_3, vert_4]
+        return [te, td, bd, be]
 
     def __determinar_vertices_proximos(self, vertices):
         combinacao_vertices = combinations(range(len(vertices)), 2)
