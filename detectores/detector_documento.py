@@ -558,6 +558,8 @@ class DetectorLRDECustomizado:
             vertices = self.completar_vertices(vertices[0], vertices[1], vertices[2])
             vertices = self.corrigir_vertices(vertices, img)
 
+            if len(vertices) != 4:
+                return Quadrilatero()
             return Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
         else:
             quad = Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
