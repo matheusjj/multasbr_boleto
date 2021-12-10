@@ -52,6 +52,9 @@ class Quadrilatero:
 
         return True
 
+    def e_zerado(self) -> bool:
+        return np.sum(self.retornar_vertices()) == 0
+
     def retornar_vertices(self) -> tuple:
         vertices = self.ordenar_pontos(np.array([self.te, self.td, self.bd, self.be]).reshape(4, 2))
         self.atualizar_vertices(vertices)

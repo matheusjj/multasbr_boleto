@@ -38,7 +38,7 @@ class RoiAjustavel:
         self.dimensoes_canvas.bd = [lar_janela, alt_janela]
         self.dimensoes_canvas.be = [0, alt_janela]
 
-        if quadrilatero is not None:
+        if not quadrilatero.e_zerado():
             vertices = quadrilatero.retornar_vertices()
             self.dimensoes_roi.te = vertices[0]
             self.dimensoes_roi.td = vertices[1]
@@ -49,9 +49,13 @@ class RoiAjustavel:
                 self.ativo_flag = True
         else:
             self.dimensoes_roi.te = [0, 0]
-            self.dimensoes_roi.td = [0, 0]
-            self.dimensoes_roi.bd = [0, 0]
-            self.dimensoes_roi.be = [0, 0]
+            self.dimensoes_roi.td = [lar_janela, 0]
+            self.dimensoes_roi.bd = [lar_janela, alt_janela]
+            self.dimensoes_roi.be = [0, alt_janela]
+            # self.dimensoes_roi.te = [0, 0]
+            # self.dimensoes_roi.td = [0, 0]
+            # self.dimensoes_roi.bd = [0, 0]
+            # self.dimensoes_roi.be = [0, 0]
 
     def selecionar_roi(self, imagem):
         key = 0
@@ -93,7 +97,6 @@ class RoiAjustavel:
         cv2.destroyAllWindows()
 
         return self.dimensoes_roi
-        # return self.__transformacao_quatro_vertices(imagem)
 
 
 # Funções complementares
@@ -150,14 +153,6 @@ def mouse_moveu(mouse_x, mouse_y, quad_roi):
 
     elif quad_roi.segurar_flag:
         if quad_roi.dimensoes_roi.e_concavo(quad_roi.ponto_id):
-            # if quad_roi.ponto_id == 0:
-            #     mouse_x, mouse_y = mouse_x - 10, mouse_y - 10
-            # elif quad_roi.ponto_id == 1:
-            #     mouse_x, mouse_y = mouse_x + 10, mouse_y - 10
-            # elif quad_roi.ponto_id == 2:
-            #     mouse_x, mouse_y = mouse_x + 10, mouse_y + 10
-            # elif quad_roi.ponto_id == 3:
-            #     mouse_x, mouse_y = mouse_x - 10, mouse_y + 10
             quad_roi.segurar_flag = False
 
         if quad_roi.ponto_id == 0:
