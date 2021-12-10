@@ -1,140 +1,203 @@
-import cv2
-import pytesseract
-from pytesseract import Output
-from entidades.informacao_relevante import InformacaoRelevante
+import re
+import unicodedata
 
 
-class DetectorInformacao:
-    def __init__(self, psm='4'):
-        self.psm = psm
+class IERegrado:
+    def __init__(self):
+        self.e_pesquisa_vertical = None
+        self.cpf_re = re.compile(r"\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}")
+        self.cnpj_re = re.compile(r"\d{2}[.]?\d{3}[.]?\d{3}[/]?\d{4}[-]?\d{2}")
+        self.placa_re = re.compile(r"\D{3}[-]?\d{4}|\D{3}\d\D\d{2}")
+        self.estado_re = re.compile(r"[A-Z]{2}\b")
+        # self.estado_re = re.compile(r"\b[I]?[A-Z]{2}")
+        self.estados_brasileiros = ['RR', 'AP', 'AM', 'PA', 'AC', 'RO', 'TO', 'MA', 'PI', 'CE', 'RN',
+                                    'PB', 'PE', 'AL', 'SE', 'BA', 'MT', 'DF', 'GO', 'MS', 'MG', 'ES',
+                                    'RJ', 'SP', 'PR', 'SC', 'RS']
         self.informacoes_relevantes = {
-            'proprietário': {'nome': None, 'cpf': None, 'cnpj': None, 'pessoa': None},
+            'proprietario': {'nome': None, 'cpf': None, 'cnpj': None, 'pessoa': None},
             'condutor': {'nome': None, 'cpf': None, 'cnpj': None, 'pessoa': None},
+            'veiculo': {'placa': None, 'marca': None, 'renavam': None},
+            'local': {'uf': None},
             'uf': None,
-            'categoria': None,
-            'natureza': None,
+            # 'categoria': None,
+            # 'natureza': None,
         }
 
-    def __call__(self, imagem):
-        imagem = cv2.cvtColor(imagem, cv2.COLOR_BGR2RGB)
-        options = '-l {} --psm {}'.format('por', self.psm)
-        palavras_capturadas = pytesseract.image_to_data(imagem,
-                                                        output_type=Output.DICT, config=options)
+    def __call__(self, palavras, img):
+        self.palavras = palavras
+        self.img = img
 
-        palavras = {
-            'text': [],
-            'line_num': [],
-            'word_num': [],
-            'top': [],
-            'left': [],
-            'width': [],
-        }
+        for info_primaria in self.informacoes_relevantes:
+            if type(self.informacoes_relevantes[info_primaria]) is dict:
+                for info_secundaria in self.informacoes_relevantes[info_primaria]:
+                    self.buscar_informacoes(info_primaria, info_secundaria)
+            else:
+                self.buscar_informacoes(info_primaria)
 
-        for idx in range(0, len(palavras_capturadas['text'])):
-            if len(palavras_capturadas['text'][idx].strip()) != 0:
-                palavras['text'].append(palavras_capturadas['text'][idx])
-                palavras['line_num'].append(palavras_capturadas['line_num'][idx])
-                palavras['word_num'].append(palavras_capturadas['word_num'][idx])
-                palavras['top'].append(palavras_capturadas['top'][idx])
-                palavras['left'].append(palavras_capturadas['left'][idx])
-                palavras['width'].append(palavras_capturadas['width'][idx])
+    def buscar_informacoes(self, info_primaria, info_secundaria=None):
+        self.e_pesquisa_vertical = True
+        # self.e_pesquisa_vertical = False
+        self.pesquisa(info_primaria, info_secundaria)
 
-        self.__informacoes_proprietario(palavras)
-        self.__informacoes_condutor(palavras)
+    def pesquisa(self, assunto, campo=None):
+        locais_assunto = self.filtrar_palavras_encontradas(assunto)
 
-    def __buscar_informacao_abaixo(self, palavras_encontradas, assunto, info):
-        locais_assunto = []
-        locais_info = []
+        if campo is not None:
+            locais_campo = self.filtrar_palavras_encontradas(campo)
 
-        for idx in range(0, len(palavras_encontradas['text'])):
-            texto, num_linha, num_palavra, topo, esquerda, largura = \
-                palavras_encontradas['text'][idx], palavras_encontradas['line_num'][idx], \
-                palavras_encontradas['word_num'][idx], palavras_encontradas['top'][idx], \
-                palavras_encontradas['left'][idx], palavras_encontradas['width'][idx]
+            if len(locais_campo) != 0:
+                locais_palavras_interesse = self.determinar_conjunto_proximo(locais_assunto, locais_campo)
+                self.preenche_informacao(locais_palavras_interesse, assunto, campo)
 
-            if texto.lower().strip().__contains__(assunto):
-                locais_assunto.append(InformacaoRelevante(texto, num_linha, num_palavra, topo, esquerda, largura))
-            elif texto.lower().strip().__contains__(info):
-                locais_info.append(InformacaoRelevante(texto, num_linha, num_palavra, topo, esquerda, largura))
+            return
 
-        # TODO: E se uma ou ambas as listas forem vazias
-        locais_assunto.sort(key=lambda val: val.topo)
-        locais_info.sort(key=lambda val: val.topo)
+        if len(locais_assunto) != 0:
+            locais_palavras_interesse = {i: locais_assunto[i] for i in range(0, len(locais_assunto))}
+            self.preenche_informacao(locais_palavras_interesse, assunto)
 
-        dict_locais = {}
+    def preenche_informacao(self, locais_interesse, assunto, campo=None):
+        if campo is None:
+            frases_selecionadas = self.coletar_resultados(locais_interesse, assunto, assunto)
+        else:
+            frases_selecionadas = self.coletar_resultados(locais_interesse, campo, campo)
 
-        for val_assunto in locais_assunto:
+        if len(frases_selecionadas) != 0:
+            frases_selecionadas = frases_selecionadas[0]
+            resultado = ''
+            for palavra in frases_selecionadas:
+                resultado += palavra.texto + ' '
+
+            resultado = resultado.strip()
+            if campo is None:
+                resultado = self.extrair_palavras(assunto, resultado)
+                self.informacoes_relevantes[assunto] = resultado
+            else:
+                resultado = self.extrair_palavras(campo, resultado)
+                self.informacoes_relevantes[assunto][campo] = resultado
+
+    def coletar_resultados(self, locais, campo, campo_verificar):
+        frases_selecionadas = list()
+
+        for campo in locais.values():
+            if self.e_pesquisa_vertical:
+                palavras_proxima_linha = list(filter(lambda palavra:
+                                                     palavra.linha == campo.linha + 1
+                                                     and palavra.bloco == campo.bloco,
+                                                     self.palavras))
+            else:
+                palavras_proxima_linha = list(filter(lambda palavra:
+                                                     palavra.linha == campo.linha
+                                                     and palavra.bloco == campo.bloco
+                                                     and palavra.localizacao[0] != campo.localizacao[0],
+                                                     self.palavras))
+
+            palavras_proxima_linha = self.verificar_palavras(campo_verificar, palavras_proxima_linha)
+
+            if len(palavras_proxima_linha) == 0:
+                continue
+
+            frases = self.separar_em_frases(palavras_proxima_linha)
+
+            temp = []
+            for idx, frase in enumerate(frases):
+                temp.append((idx, abs((frase[0].localizacao[0][0] / campo.localizacao[0][0]) - 1)))
+
+            temp.sort(key=lambda val: val[1])
+            frases_selecionadas.append(frases[temp[0][0]])
+
+        return frases_selecionadas
+
+    def verificar_palavras(self, campo, palavras):
+        if campo == 'cpf':
+            return list(filter(lambda val: self.cpf_re.search(val.texto), palavras))
+        elif campo == 'cnpj':
+            return list(filter(lambda val: self.cnpj_re.search(val.texto), palavras))
+        elif campo == 'placa':
+            return list(filter(lambda val: self.placa_re.search(val.texto), palavras))
+        elif campo == 'uf':
+            return list(filter(lambda val: self.estado_re.search(val.texto), palavras))
+        else:
+            return palavras
+
+    def extrair_palavras(self, campo, texto):
+        if campo == 'cpf':
+            return self.cpf_re.search(texto).group()
+        elif campo == 'cnpj':
+            return self.cnpj_re.search(texto).group()
+        elif campo == 'placa':
+            return self.placa_re.search(texto).group()
+        elif campo == 'uf':
+            resultado = list(filter(lambda val:
+                                    val in self.estados_brasileiros,
+                                    self.estado_re.findall(texto)))
+
+            if len(resultado) == 0:
+                return None
+            elif len(resultado) > 1:
+                return resultado[-1]
+            else:
+                return resultado[0]
+
+        else:
+            return texto
+
+    def filtrar_palavras_encontradas(self, word):
+        resultado = list(filter(lambda palavra:
+                                unicodedata
+                                .normalize('NFD', palavra.texto)
+                                .encode('ascii', 'ignore')
+                                .decode('utf-8')
+                                .lower()
+                                .strip()
+                                .__contains__(word),
+                                self.palavras))
+
+        resultado.sort(key=lambda palavra: palavra.localizacao[0][0])
+        return resultado
+
+    @staticmethod
+    def determinar_conjunto_proximo(locais_assunto, locais_campo):
+        locais = {}
+
+        for assunto in locais_assunto:
             temp = []
 
-            for (idx, val_info) in enumerate(locais_info):
-                temp.append((idx, val_info.topo - val_assunto.topo))
+            for idx, campo in enumerate(locais_campo):
+                temp.append((
+                    idx,
+                    campo.localizacao[0][1] - assunto.localizacao[0][1]
+                ))
 
-            # TODO: E se todos os valores forem negativos
             temp = list(filter(lambda val: val[1] > 0, temp))
             if len(temp) == 0:
                 continue
 
             temp.sort(key=lambda val: val[1])
-            dict_locais[val_assunto.topo] = temp[0]
+            locais[assunto.localizacao[0][1]] = locais_campo[temp[0][0]]
 
-        minima_distancia = min([val[1] for val in list(dict_locais.values())])
-        chaves_valor_minimo = [chave for chave in dict_locais if dict_locais[chave][1] == minima_distancia]
-        posicao_relevante = (chaves_valor_minimo[0], locais_info[dict_locais[chaves_valor_minimo[0]][0]])
+        return locais
 
-        linhas_possiveis = list(filter(lambda val: val > posicao_relevante[1].topo,
-                                       list(dict.fromkeys(palavras_encontradas['top']))))[:5]
+    @staticmethod
+    def separar_em_frases(palavras):
+        espaco = 20
+        palavras = palavras.copy()
+        palavras.sort(key=lambda p: p.localizacao[0][0])
 
-        palavras_selecionadas = []
-        for idx in range(0, len(palavras_encontradas['text'])):
-            if palavras_encontradas['top'][idx] in linhas_possiveis:
-                informacao = InformacaoRelevante(
-                    palavras_encontradas['text'][idx], palavras_encontradas['line_num'][idx],
-                    palavras_encontradas['word_num'][idx], palavras_encontradas['top'][idx],
-                    palavras_encontradas['left'][idx], palavras_encontradas['width'][idx])
+        resultado = []
+        frase = list()
+        for idx, palavra in enumerate(palavras):
+            if len(frase) == 0:
+                frase.append(palavra)
 
-                palavras_selecionadas.append(informacao)
+            if idx + 1 == len(palavras):
+                resultado.append(frase.copy())
+                frase.clear()
+                break
 
-        palavras_selecionadas = InformacaoRelevante.retirar_vazios(palavras_selecionadas)
-        palavras_selecionadas = InformacaoRelevante.selecionar_mesma_linha(palavras_selecionadas)
-        resultado = InformacaoRelevante.determinar_frases(palavras_selecionadas, posicao_relevante[1].esquerda)
-        print('oi')
+            if palavras[idx + 1].localizacao[0][0] - palavra.localizacao[1][0] <= espaco:
+                frase.append(palavras[idx + 1])
+            else:
+                resultado.append(frase.copy())
+                frase.clear()
 
-
-
-    def __informacoes_proprietario(self, palavras_encontradas):
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'infração', 'uf')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'infração', 'categoria')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'infração', 'natureza')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'condutor', 'pessoa')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'condutor', 'nome')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'condutor', 'cpf')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'proprietário', 'pessoa')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'proprietário', 'nome')
-        self.__buscar_informacao_abaixo(palavras_encontradas, 'proprietário', 'cpf')
-
-        # limite_superior = None
-        # limite_inferior = None
-
-        # chaves = list(palavras_encontradas.keys())
-        # for idx in range(0, len(chaves)):
-        #     print(chaves[idx], palavras_encontradas[chaves[idx]])
-        # for idx in range(0, len(palavras_encontradas['text'])):
-        #     if palavras_encontradas['text'][idx].lower() == 'dados' or palavras_encontradas['text'][idx].lower() == 'do' or palavras_encontradas['text'][idx].lower() == 'proprietário':
-        #         print(palavras_encontradas['text'][idx], palavras_encontradas['line_num'][idx], palavras_encontradas['top'][idx])
-
-        # for idx in range(0, len(palavras_encontradas['text'])):
-        #     if palavras_encontradas['text'][idx].lower() == 'proprietário':
-        #         limite_superior = (idx, palavras_encontradas['top'][idx])
-        #     elif palavras_encontradas['text'][idx].lower() == 'condutor':
-        #         limite_inferior = (idx, palavras_encontradas['top'][idx])
-        #     elif limite_superior is not None and limite_inferior is not None:
-        #         break
-        #
-        # print(limite_superior, limite_inferior)
-        #
-        # for idx in range(0, len(palavras_encontradas['text'])):
-        #     pass
-        #
-
-    def __informacoes_condutor(self, palavras_encontradas):
-        pass
+        return resultado
