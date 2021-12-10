@@ -12,13 +12,23 @@ class TorchOCR:
     def __call__(self, img):
         model = ocr_predictor(det_arch='db_resnet50', reco_arch='crnn_vgg16_bn', pretrained=True)
 
-        result = model([img])
+        resultado = model([img])
 
         palavras = []
-        for bloco in result.export()['pages'][0]['blocks']:
+        resultado = resultado.export()
+        page_alt, page_lar = resultado['pages'][0]['dimensions']
+        for num_bloco, bloco in enumerate(resultado['pages'][0]['blocks']):
             for num_linha, linha in enumerate(bloco['lines']):
                 for palavra in linha['words']:
-                    palavras.append(Palavra(palavra['value'], palavra['geometry'], num_linha, linha['geometry']))
+                    palavras.append(Palavra(
+                        palavra['value'],
+                        ((int(palavra['geometry'][0][0] * page_lar), int(palavra['geometry'][0][1] * page_alt)),
+                         (int(palavra['geometry'][1][0] * page_lar), int(palavra['geometry'][1][1] * page_alt))),
+                        num_linha,
+                        ((int(linha['geometry'][0][0] * page_lar), int(linha['geometry'][0][1] * page_alt)),
+                         (int(linha['geometry'][1][0] * page_lar), int(linha['geometry'][1][1] * page_alt))),
+                        num_bloco
+                    ))
 
         return palavras
 
