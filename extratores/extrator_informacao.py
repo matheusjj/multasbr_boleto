@@ -5,11 +5,10 @@ import unicodedata
 class IERegrado:
     def __init__(self):
         self.e_pesquisa_vertical = None
+        self.estado_re = re.compile(r"[A-Z]{2}\b")
         self.cpf_re = re.compile(r"\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}")
         self.cnpj_re = re.compile(r"\d{2}[.]?\d{3}[.]?\d{3}[/]?\d{4}[-]?\d{2}")
         self.placa_re = re.compile(r"\D{3}[-]?\d{4}|\D{3}\d\D\d{2}")
-        self.estado_re = re.compile(r"[A-Z]{2}\b")
-        # self.estado_re = re.compile(r"\b[I]?[A-Z]{2}")
         self.estados_brasileiros = ['RR', 'AP', 'AM', 'PA', 'AC', 'RO', 'TO', 'MA', 'PI', 'CE', 'RN',
                                     'PB', 'PE', 'AL', 'SE', 'BA', 'MT', 'DF', 'GO', 'MS', 'MG', 'ES',
                                     'RJ', 'SP', 'PR', 'SC', 'RS']
