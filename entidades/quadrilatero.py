@@ -81,5 +81,3 @@ class Quadrilatero:
         vertices_ret[2] = vertices_lista[3] if vertices_lista[2][1] <= vertices_lista[3][1] else vertices_lista[2]
 
         return vertices_ret
-
-
