@@ -1,6 +1,6 @@
 import imutils
+import cv2 as cv2
 import numpy as np
-import cv2.cv2 as cv2
 from itertools import combinations
 
 from scipy import ndimage as ndi
@@ -11,7 +11,10 @@ from skimage.morphology import disk
 from skimage.segmentation import watershed
 
 from entidades.quadrilatero import Quadrilatero
+from entidades.saturacao import Saturacao
+from detectores.detector_texto import DetectorProjecao
 
+import matplotlib.pyplot as plt
 '''
 Classes responsáveis para a determinação da região do documento na imagem.
 Retorna uma instância da classe Quadrilatero ou None. 
@@ -274,52 +277,138 @@ class DetectorLRDECustomizado:
         self.angulo_reta_vertical_inf = 45
         self.angulo_reta_vertical_sup = 135
         self.regiao_label = 20
-        self.ang_diagonal_inf = 40
-        self.ang_diagonal_sup = 50
+        self.ang_diagonal_inf = 35
+        self.ang_diagonal_sup = 55
 
     def __call__(self, img) -> Quadrilatero:
         # Pré-processamento
+        nivel_saturacao = self.avaliar_saturacao(img)
+
+        if nivel_saturacao is Saturacao.BAIXISSIMA:
+            cinza = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            gx = cv2.Sobel(cinza, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=3)
+            gx = cv2.convertScaleAbs(gx)
+
+            detector = DetectorProjecao()
+            pontos = detector(cv2.cvtColor(gx, cv2.COLOR_GRAY2BGR))
+
+            return self.otimizar_vertices(np.array(pontos, dtype='uint16'), img)
+
         mean = cv2.pyrMeanShiftFiltering(img, 21, 51)
         lab = cv2.split(cv2.cvtColor(mean, cv2.COLOR_BGR2LAB))
 
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-        morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
+        if nivel_saturacao is Saturacao.BAIXA:
+            # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
+            # morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
+            morph_l = ndi.binary_fill_holes(
+                cv2.threshold(lab[0], 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+            ).astype(int)
+            morph_l = np.array(morph_l, dtype='uint8')
+            # morph_l[morph_l == 1] = 255
 
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        morph_a = cv2.morphologyEx(lab[1], cv2.MORPH_ERODE, kernel)
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+            morph_a = cv2.morphologyEx(lab[1], cv2.MORPH_ERODE, kernel)
+
+            # morph_b = cv2.GaussianBlur(lab[2], (5, 5), 0)
+            morph_b = ndi.binary_fill_holes(
+                cv2.threshold(lab[2], 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
+            ).astype(int)
+            morph_b = np.array(morph_b, dtype='uint8')
+            # morph_b[morph_b == 1] = 255
+
+            l_somado = np.sum(morph_l) / (img.shape[0] * img.shape[1])
+            b_somado = np.sum(morph_b) / (img.shape[0] * img.shape[1])
+
+            if abs(b_somado - l_somado) >= 0.3:
+                if l_somado <= 0.1:
+                    morph_l = morph_b
+                elif b_somado <= 0.1:
+                    pass
+                else:
+                    lb_somado = np.ones(img.shape[:2], dtype='uint8')
+                    lb_somado = cv2.bitwise_and(
+                        lb_somado, lb_somado,
+                        mask=cv2.bitwise_and(
+                            np.array(morph_l, dtype='uint8'),
+                            np.array(morph_b, dtype='uint8'))
+                        )
+                    lb_somado = np.sum(lb_somado) / (img.shape[0] * img.shape[1])
+
+                    l_lb_razao, b_lb_razao = abs(l_somado / lb_somado - 1), \
+                                             abs(b_somado / lb_somado - 1)
+                    minimo = min([l_lb_razao, b_lb_razao])
+
+                    if minimo == l_lb_razao:
+                        morph_l = morph_l
+                    else:
+                        morph_l = morph_b
+            else:
+                morph_l = cv2.bitwise_and(morph_l, morph_b)
+
+            # fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 8), sharex=True, sharey=True)
+            # ax = axes.ravel()
+            # ax[0].imshow(morph_l, cmap=plt.cm.gray)
+            # ax[0].set_title("Morph L")
+            # for a in ax:
+            #     a.axis('off')
+            # fig.tight_layout()
+            # plt.savefig('Teste.png', format='png')
+        elif nivel_saturacao is Saturacao.ALTA:
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
+            morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
+
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+            morph_a = cv2.morphologyEx(lab[1], cv2.MORPH_ERODE, kernel)
+
+            morph_b = cv2.GaussianBlur(lab[2], (5, 5), 0)
 
         # Segmentação de Fronteiras
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         morph_l_grad = cv2.morphologyEx(morph_l, cv2.MORPH_GRADIENT, kernel)
         morph_a_grad = cv2.morphologyEx(morph_a, cv2.MORPH_GRADIENT, kernel)
-        morph_b_grad = cv2.morphologyEx(lab[2], cv2.MORPH_GRADIENT, kernel)
+        morph_b_grad = cv2.morphologyEx(morph_b, cv2.MORPH_GRADIENT, kernel)
 
-        morph_grad = morph_l_grad + morph_a_grad + morph_b_grad
+        if nivel_saturacao is Saturacao.BAIXA:
+            morph_grad = morph_l_grad
+        elif nivel_saturacao is Saturacao.ALTA:
+            morph_grad = morph_l_grad + morph_b_grad
+
         grad = cv2.morphologyEx(morph_grad, cv2.MORPH_CLOSE, kernel)
         thresh = cv2.threshold(grad, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
+        # Segmentação em regiões (Watershed)
+        gradiente = rank.gradient(grad, disk(2))
+
+        markers = rank.gradient(gradiente, disk(5)) < 10
+        markers = ndi.label(markers)[0]
+
+        labels = watershed(gradiente, markers)
+
+        areas = thresh if \
+            np.min(markers) == np.max(markers) else \
+            np.array(
+                (markers - np.min(markers)) / (np.max(markers) - np.min(markers)) * 255,
+                dtype='uint8'
+            )
+
         # Determinar retas
-        retas = cv2.HoughLines(thresh, 1, np.pi / 180, 90)
+        retas = cv2.HoughLines(areas, 1, np.pi / 180, 140)
 
         if retas is None:
             return Quadrilatero()
 
         retas_verticais, retas_horizontais = self.determinar_retas(retas)
+        retas_verticais, retas_horizontais = retas_verticais[:75], retas_horizontais[:75]
 
         # Determinar interseções
-        intersecoes_gradiente = self.determinar_intersecoes(img, retas_verticais,
-                                                            retas_horizontais)
+        intersecoes_gradiente = self.determinar_intersecoes(img, retas_verticais, retas_horizontais)
 
         if len(intersecoes_gradiente) == 0:
             return Quadrilatero()
 
         ponto_label = self.encontrar_vertices(intersecoes_gradiente)
 
-        # Segmentação em regiões (Watershed)
-        markers = rank.gradient(grad, disk(5)) < 10
-        markers = ndi.label(markers)[0]
-        gradiente = rank.gradient(grad, disk(2))
-        labels = watershed(gradiente, markers)
+        # cv2.circle(img, (int(ponto_label[0][0]), int(ponto_label[0][1])), 10, 255, -1)
 
         label_documento = np.unique(labels[int(ponto_label[0][1]) - self.regiao_label:
                                            int(ponto_label[0][1]) + self.regiao_label,
@@ -346,24 +435,63 @@ class DetectorLRDECustomizado:
             cv2.drawContours(gradiente_sem_noise, cnts, -1, 255, -1)
 
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-        mascara_erode = cv2.morphologyEx(gradiente_sem_noise,
-                                         cv2.MORPH_ERODE, kernel, iterations=7)
-        mascara_erode = cv2.bitwise_and(grad, grad,
-                                        mask=cv2.bitwise_not(mascara_erode))
+        mascara_erode = cv2.morphologyEx(gradiente_sem_noise, cv2.MORPH_ERODE, kernel, iterations=7)
+        mascara_erode = cv2.bitwise_and(grad, grad, mask=cv2.bitwise_not(mascara_erode))
 
-        mascara_dilate = cv2.morphologyEx(gradiente_sem_noise,
-                                          cv2.MORPH_DILATE, kernel, iterations=7)
-        mascara_dilate = cv2.bitwise_and(mascara_erode, mascara_erode,
-                                         mask=mascara_dilate)
+        mascara_dilate = cv2.morphologyEx(gradiente_sem_noise, cv2.MORPH_DILATE, kernel, iterations=7)
+        mascara_dilate = cv2.bitwise_and(mascara_erode, mascara_erode, mask=mascara_dilate)
 
         gradiente_sem_noise = cv2.threshold(mascara_dilate, 0, 255,
                                             cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+
+        # fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(8, 8), sharex=True, sharey=True)
+        # ax = axes.ravel()
+        #
+        # ax[0].imshow(morph_l, cmap=plt.cm.gray)
+        # ax[0].set_title("Morph L")
+        #
+        # ax[1].imshow(morph_a, cmap=plt.cm.gray)
+        # ax[1].set_title("Morph A")
+        #
+        # ax[2].imshow(morph_b, cmap=plt.cm.gray)
+        # ax[2].set_title("Morph B")
+        #
+        # ax[3].imshow(morph_l_grad, cmap=plt.cm.gray)
+        # ax[3].set_title("Morph L Grad")
+        #
+        # ax[4].imshow(morph_a_grad, cmap=plt.cm.gray)
+        # ax[4].set_title("Morph A Grad")
+        #
+        # ax[5].imshow(morph_b_grad, cmap=plt.cm.gray)
+        # ax[5].set_title("Morph B Grad")
+        #
+        # ax[6].imshow(markers, cmap=plt.cm.nipy_spectral)
+        # ax[6].set_title("Markers")
+        #
+        # ax[7].imshow(img, cmap=plt.cm.gray)
+        # ax[7].imshow(labels, cmap=plt.cm.nipy_spectral, alpha=.5)
+        # ax[7].set_title("Labels")
+        #
+        # # ty = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # # ty = cv2.GaussianBlur(ty, (7, 7), 0)
+        # # ty = imutils.auto_canny(ty)
+        # # b = cv2.morphologyEx(b, cv2.MORPH_CLOSE, (28, 7))
+        # ax[8].imshow(b, cmap=plt.cm.gray)
+        # ax[8].set_title("Gradiente Final")
+        #
+        # for a in ax:
+        #     a.axis('off')
+        #
+        # fig.tight_layout()
+        # plt.savefig('Teste.png', format='png')
 
         # Determinar retas de grad sem áreas internas e externas
         retas = cv2.HoughLines(gradiente_sem_noise, 1, np.pi / 180, 90)
 
         if retas is None:
-            vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4)
+            vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4) if \
+                len(intersecoes_gradiente) >=4 else \
+                self.encontrar_vertices(intersecoes_gradiente, clusters=len(intersecoes_gradiente))
             vertices = self.determinar_vertices_proximos(vertices)
             return self.otimizar_vertices(vertices, img)
 
@@ -376,10 +504,71 @@ class DetectorLRDECustomizado:
             vertices = self.determinar_vertices_proximos(vertices)
             return self.otimizar_vertices(vertices, img)
 
-        vertices_grad_sem_noise = self.encontrar_vertices(intersecoes_grad_sem_noise,
-                                                          clusters=4)
+        vertices_grad_sem_noise = \
+            self.encontrar_vertices(intersecoes_grad_sem_noise, clusters=4) if\
+            len(intersecoes_grad_sem_noise) >= 4 else intersecoes_grad_sem_noise
+
         vertices_grad_sem_noise = self.determinar_vertices_proximos(vertices_grad_sem_noise)
         return self.otimizar_vertices(vertices_grad_sem_noise, img)
+
+    @staticmethod
+    def avaliar_saturacao(img, thresh=60):
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        saturacao = np.sum(hsv[:, :, 1]) / (hsv.shape[0] * hsv.shape[1])
+        print(saturacao)
+
+        if saturacao < 20:
+            return Saturacao.BAIXISSIMA
+        elif saturacao < thresh:
+            return Saturacao.BAIXA
+        else:
+            return Saturacao.ALTA
+
+    @staticmethod
+    def filtrar_background(img):
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+
+        h_thresh = ndi.binary_fill_holes(
+            cv2.threshold(
+                hsv[:, :, 0], 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
+            )[1]
+        ).astype(int)
+        b_thresh = ndi.binary_fill_holes(
+            cv2.threshold(
+                lab[:, :, 2], 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU
+            )[1]
+        ).astype(int)
+
+        v_thresh = ndi.binary_fill_holes(
+            cv2.threshold(
+                hsv[:, :, 2], 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
+            )[1]
+        ).astype(int)
+        l_thresh = ndi.binary_fill_holes(
+            cv2.threshold(
+                lab[:, :, 0], 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
+            )[1]
+        ).astype(int)
+
+        intersecao = cv2.bitwise_and(h_thresh, b_thresh)
+        uniao = cv2.bitwise_or(h_thresh, b_thresh)
+        uniao = np.count_nonzero(uniao) if np.count_nonzero(uniao) != 0 else 1
+        iou = np.count_nonzero(intersecao) / uniao
+        iou_h_b = iou
+
+        intersecao = cv2.bitwise_and(v_thresh, l_thresh)
+        uniao = cv2.bitwise_or(v_thresh, l_thresh)
+        uniao = np.count_nonzero(uniao) if np.count_nonzero(uniao) != 0 else 1
+        iou = np.count_nonzero(intersecao) / uniao
+        iou_v_l = iou
+
+        if iou_h_b >= iou_v_l:
+            mascara = cv2.bitwise_and(h_thresh, b_thresh)
+        else:
+            mascara = cv2.bitwise_and(v_thresh, l_thresh)
+
+        return cv2.bitwise_and(img, img, mask=np.array(mascara, dtype='uint8'))
 
     def determinar_retas(self, retas):
         retas_verticais = []
@@ -442,7 +631,7 @@ class DetectorLRDECustomizado:
 
     @staticmethod
     def angulo_reta_entre_dois_pontos(vert_1, vert_2):
-        if vert_1 == vert_2:
+        if vert_1[0] == vert_2[0] and vert_1[1] == vert_2[1]:
             return 0
 
         if vert_1[0] == vert_2[0]:
