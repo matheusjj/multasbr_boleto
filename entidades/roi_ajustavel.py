@@ -1,4 +1,4 @@
-import cv2.cv2 as cv2
+import cv2 as cv2
 import numpy as np
 from entidades.quadrilatero import Quadrilatero
 
@@ -52,10 +52,6 @@ class RoiAjustavel:
             self.dimensoes_roi.td = [lar_janela, 0]
             self.dimensoes_roi.bd = [lar_janela, alt_janela]
             self.dimensoes_roi.be = [0, alt_janela]
-            # self.dimensoes_roi.te = [0, 0]
-            # self.dimensoes_roi.td = [0, 0]
-            # self.dimensoes_roi.bd = [0, 0]
-            # self.dimensoes_roi.be = [0, 0]
 
     def selecionar_roi(self, imagem):
         key = 0
