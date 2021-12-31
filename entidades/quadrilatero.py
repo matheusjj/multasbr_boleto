@@ -72,12 +72,26 @@ class Quadrilatero:
     def ordenar_pontos(vertices):
         vertices_ret = np.zeros((4, 2), dtype='float32')
 
-        vertices_lista = vertices.tolist()
-        vertices_lista.sort(key=lambda x: x[0])
+        if np.sum(vertices) == 0 or vertices.shape[0] != 4:
+            return vertices_ret
 
-        vertices_ret[0] = vertices_lista[0] if vertices_lista[0][1] <= vertices_lista[1][1] else vertices_lista[1]
-        vertices_ret[3] = vertices_lista[1] if vertices_lista[0][1] <= vertices_lista[1][1] else vertices_lista[0]
-        vertices_ret[1] = vertices_lista[2] if vertices_lista[2][1] <= vertices_lista[3][1] else vertices_lista[3]
-        vertices_ret[2] = vertices_lista[3] if vertices_lista[2][1] <= vertices_lista[3][1] else vertices_lista[2]
+        lim_vertical = 0
+        for n in range(int(np.min(vertices, axis=0)[1]), int(np.max(vertices, axis=0)[1])):
+            if np.count_nonzero(vertices[:, 1] <= n) >= 2:
+                lim_vertical = n
+                break
+
+        vertices_superiores = [vertices[idx] for idx in
+                               set(np.where(vertices[:, 1] <= lim_vertical)[0][:2])]
+        vertices_inferiores = [vertices[idx] for idx in
+                               set(range(0, len(vertices))) - set(np.where(vertices[:, 1] <= lim_vertical)[0][:2])]
+
+        vertices_superiores.sort(key=lambda x: x[0])
+        vertices_inferiores.sort(key=lambda x: x[0])
+
+        vertices_ret[0] = vertices_superiores[0] if vertices_superiores[0] is not None else [0, 0]
+        vertices_ret[1] = vertices_superiores[1] if vertices_superiores[1] is not None else [0, 0]
+        vertices_ret[2] = vertices_inferiores[1] if vertices_inferiores[1] is not None else [0, 0]
+        vertices_ret[3] = vertices_inferiores[0] if vertices_inferiores[0] is not None else [0, 0]
 
         return vertices_ret
