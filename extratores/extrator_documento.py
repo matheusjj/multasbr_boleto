@@ -18,10 +18,10 @@ class ExtratorDocumento:
         quadrilatero_roi = roi.selecionar_roi(imagem)
 
         return self.__transformacao_quatro_vertices(imagem_original, quadrilatero_roi, ratio)
+        # return self.__transformacao_quatro_vertices(imagem_original, quadrilatero, ratio)
 
     @staticmethod
     def __transformacao_quatro_vertices(imagem, roi, ratio):
-        # pontos_ajustados = roi.retornar_vertices()
         pontos_ajustados = roi.retornar_vertices() * ratio
         (tl, tr, br, bl) = pontos_ajustados
 
@@ -47,3 +47,4 @@ class ExtratorDocumento:
         deslocado = cv2.warpPerspective(imagem, matriz_transf, (largura_max, altura_max))
 
         return deslocado
+        # return pontos_ajustados
