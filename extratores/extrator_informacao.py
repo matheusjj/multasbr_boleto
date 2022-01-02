@@ -353,10 +353,6 @@ class IERegrado:
             resultado = valor_1
         elif valor_1.texto == valor_2.texto:
             resultado = valor_1
-        # elif len(valor_1.texto) >= len(valor_2.texto):
-        #     resultado = valor_1
-        # elif len(valor_2.texto) >= len(valor_1.texto):
-        #     resultado = valor_2
         else:
             resultado = valor_1
 
