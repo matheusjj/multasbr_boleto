@@ -15,89 +15,111 @@ class IERegrado:
         self.gravidades_re = re.compile(r"leve|m[eé]dia|grave|grav[ií]ssima", flags=re.I)
         self.estados_brasileiros_re = re.compile(
             r"RR|AP|AM|PA|AC|RO|TO|MA|PI|CE|RN|PB|PE|AL|SE|BA|MT|DF|GO|MS|MG|ES|RJ|SP|PR|SC|RS")
-        self.informacoes_relevantes = {
-            'proprietario': {'nome': None, 'cpf': None, 'cnpj': None},
-            'condutor': {'nome': None, 'cpf': None, 'cnpj': None},
-            # 'veiculo': {'placa': None, 'marca': None, 'renavam': None},
-            'placa': None,
-            'marca': None,
-            'modelo': None,
-            'renavam': None,
-            'local': {'uf': None},
-            'uf': None,
-            'gravidade': None,
-            'natureza': None,
+        self.palavras_chave = {
+            'proprietario_nome': ('proprietario', ['nome']),
+            'proprietario_cpf': ('proprietario', ['cpf']),
+            'proprietario_cnpj': ('proprietario', ['cnpj']),
+            'condutor_nome': ('condutor', ['nome']),
+            'condutor_cpf': ('condutor', ['cpf']),
+            'condutor_cnpj': ('condutor', ['cnpj']),
+            'veiculo_placa': ['placa'],
+            'veiculo_marca': ['marca', 'modelo'],
+            'veiculo_renavam': ['renavam'],
+            'local_uf': ('local', ['uf', 'rua', 'endereco']),
+            'gravidade': ['gravidade', 'categoria', 'natureza', 'pontuacao']
         }
+        self.informacoes_formulario = {chv: list() for chv in self.palavras_chave.keys()}
 
     def __call__(self, palavras, img):
         self.palavras = palavras
         self.img = img
 
-        resultado_vertical = self.atravessar_dicio(
-            copy.deepcopy(self.informacoes_relevantes),
-            self.pesquisa,
-            self.pesquisa
-        )
-        self.e_pesquisa_vertical = False
-        resultado_horizontal = self.atravessar_dicio(
-            copy.deepcopy(self.informacoes_relevantes),
-            self.pesquisa,
-            self.pesquisa
-        )
+        resultado_vertical = {chv: list() for chv in self.palavras_chave.keys()}
+        resultado_horizontal = {chv: list() for chv in self.palavras_chave.keys()}
 
-        self.informacoes_relevantes = self.comparar_valores_capturados(
-            copy.deepcopy(self.informacoes_relevantes),
-            resultado_vertical,
-            resultado_horizontal
-        )
-        self.informacoes_relevantes = self.comparar_proprietario_condutor(
-            copy.deepcopy(self.informacoes_relevantes)
-        )
-        self.informacoes_relevantes = self.determinar_pessoa(
-            copy.deepcopy(self.informacoes_relevantes)
-        )
+        for dicio in [resultado_vertical, resultado_horizontal]:
+            for chv_dicio, palavra_chave in zip(self.palavras_chave.keys(), self.palavras_chave.values()):
+                t = self.pesquisar(chv_dicio, palavra_chave)
+                dicio[chv_dicio] = list(filter(lambda item: item is not None, t))
+            self.e_pesquisa_vertical = not self.e_pesquisa_vertical
+
+        self.informacoes_formulario = self.comparar_valores_capturados(resultado_vertical, resultado_horizontal)
+        self.informacoes_formulario = self.comparar_proprietario_condutor(copy.deepcopy(self.informacoes_formulario))
+        self.informacoes_formulario = self.determinar_pessoa(copy.deepcopy(self.informacoes_formulario))
+
+    def pesquisar(self, chv_dicio, chv):
+        resultado = list()
+        chave_auxiliar = None
+        chaves = None
+
+        if type(chv) is tuple:
+            chave_auxiliar = chv[0]
+            chaves = chv[1]
+        else:
+            chaves = chv
+
+        if chave_auxiliar is not None:
+            palavras_auxiliares = self.filtrar_palavras_encontradas(chave_auxiliar)
+
+            for chv in chaves:
+                palavras_campo = self.filtrar_palavras_encontradas(chv)
+
+                if len(palavras_campo) != 0:
+                    locais_interesse = self.determinar_conjunto_proximo(palavras_auxiliares, palavras_campo)
+                    resultado.append(self.preenche_informacao(locais_interesse, chv))
+
+            return resultado
+
+        for chv in chaves:
+            palavras_campo = self.filtrar_palavras_encontradas(chv)
+
+            if len(palavras_campo) != 0:
+                locais_interesse = {i: palavras_campo[i] for i in range(0, len(palavras_campo))}
+                resultado.append(self.preenche_informacao(locais_interesse, chv))
+
+        return resultado
 
     def coletar_resultados(self, locais, campo):
         frases_selecionadas = list()
 
-        for campo_dict in locais.values():
+        for palavra_encontrada in locais.values():
             if self.e_pesquisa_vertical:
-                palavras_proxima_linha = list(filter(lambda palavra:
-                                                     palavra.linha == campo_dict.linha + 1
-                                                     and palavra.bloco == campo_dict.bloco,
-                                                     self.palavras))
+                # Caso seja pesquisa vertical então são selecionadas as palavras que aparecem na
+                # linha subsequente ao campo sendo testado.
+                dados_extraidos = list(filter(lambda palavra:
+                                              palavra.linha == palavra_encontrada.linha + 1
+                                              and palavra.bloco == palavra_encontrada.bloco,
+                                              self.palavras))
             else:
-                palavras_proxima_linha = list(filter(lambda palavra:
-                                                     palavra.linha == campo_dict.linha
-                                                     and palavra.bloco == campo_dict.bloco
-                                                     and palavra.localizacao[0] != campo_dict.localizacao[0],
-                                                     self.palavras))
+                # Análogo para a pesquisa horizontal.
+                dados_extraidos = list(filter(lambda palavra:
+                                              palavra.linha == palavra_encontrada.linha
+                                              and palavra.bloco == palavra_encontrada.bloco
+                                              and palavra.localizacao[0] != palavra_encontrada.localizacao[0],
+                                              self.palavras))
 
-            palavras_proxima_linha = self.verificar_palavras(campo, palavras_proxima_linha)
+            dados_extraidos = self.verificar_palavras(campo, dados_extraidos)
 
-            if len(palavras_proxima_linha) == 0:
+            if len(dados_extraidos) == 0:
                 continue
 
-            frases = self.separar_em_frases(palavras_proxima_linha)
+            frases = self.separar_em_frases(dados_extraidos)
 
             temp = []
             for idx, frase in enumerate(frases):
-                temp.append((idx, abs((frase[0].localizacao[0][0] / campo_dict.localizacao[0][0]) - 1)))
+                temp.append((idx, abs((frase[0].localizacao[0][0] / palavra_encontrada.localizacao[0][0]) - 1)))
 
             temp.sort(key=lambda val: val[1])
             frases_selecionadas.append(frases[temp[0][0]])
 
         return frases_selecionadas
 
-    def comparar_valores_capturados(self, resultado, r_vertical, r_horizontal):
-        for chave in resultado:
-            if type(resultado[chave]) is dict:
-                for chave_interna in resultado[chave]:
-                    v_1, v_2 = r_vertical[chave][chave_interna], r_horizontal[chave][chave_interna]
-                    resultado[chave][chave_interna] = self.testar_valores(v_1, v_2)
-            else:
-                v_1, v_2 = r_vertical[chave], r_horizontal[chave]
-                resultado[chave] = self.testar_valores(v_1, v_2)
+    def comparar_valores_capturados(self, r_vertical, r_horizontal):
+        resultado = {chv: None for chv in r_vertical.keys()}
+
+        for chv in resultado:
+            valor_1, valor_2 = r_vertical[chv], r_horizontal[chv]
+            resultado[chv] = self.testar_valores(valor_1, valor_2)
 
         return resultado
 
@@ -122,6 +144,7 @@ class IERegrado:
         else:
             return texto
 
+    # Filtra, do conjunto de palavras retornadas pelo OCR, aquela que se adequa ao argumento.
     def filtrar_palavras_encontradas(self, word):
         resultado = list(filter(lambda palavra:
                                 unicodedata
@@ -136,27 +159,8 @@ class IERegrado:
         resultado.sort(key=lambda palavra: palavra.localizacao[0][0])
         return resultado
 
-    def pesquisa(self, dicio, assunto, campo=None):
-        locais_assunto = self.filtrar_palavras_encontradas(assunto)
-
-        if campo is not None:
-            locais_campo = self.filtrar_palavras_encontradas(campo)
-
-            if len(locais_campo) != 0:
-                locais_palavras_interesse = self.determinar_conjunto_proximo(locais_assunto, locais_campo)
-                dicio[assunto][campo] = self.preenche_informacao(locais_palavras_interesse, assunto, campo)
-
-            return
-
-        if len(locais_assunto) != 0:
-            locais_palavras_interesse = {i: locais_assunto[i] for i in range(0, len(locais_assunto))}
-            dicio[assunto] = self.preenche_informacao(locais_palavras_interesse, assunto)
-
-    def preenche_informacao(self, locais_interesse, assunto, campo=None):
-        if campo is None:
-            frases_selecionadas = self.coletar_resultados(locais_interesse, assunto)
-        else:
-            frases_selecionadas = self.coletar_resultados(locais_interesse, campo)
+    def preenche_informacao(self, locais_interesse, campo):
+        frases_selecionadas = self.coletar_resultados(locais_interesse, campo)
 
         resultados = list()
         if len(frases_selecionadas) != 0:
@@ -166,11 +170,7 @@ class IERegrado:
                     resultado += palavra.texto + ' '
 
                 resultado = resultado.strip()
-
-                if campo is None:
-                    resultado = self.extrair_palavras(assunto, resultado)
-                else:
-                    resultado = self.extrair_palavras(campo, resultado)
+                resultado = self.extrair_palavras(campo, resultado)
 
                 if len(resultado) > 0:
                     resultados.append(resultado)
@@ -200,30 +200,9 @@ class IERegrado:
         else:
             return palavras
 
-    def expandir_informacoes(self):
-        return {
-            'p_nome': self.informacoes_relevantes['proprietario']['nome'],
-            'p_cpf': self.informacoes_relevantes['proprietario']['cpf'],
-            'p_cnpj': self.informacoes_relevantes['proprietario']['cnpj'],
-            'p_pessoa': self.informacoes_relevantes['proprietario']['pessoa'],
-            'c_nome': self.informacoes_relevantes['condutor']['nome'],
-            'c_cpf': self.informacoes_relevantes['condutor']['cpf'],
-            'c_cnpj': self.informacoes_relevantes['condutor']['cnpj'],
-            'c_pessoa': self.informacoes_relevantes['condutor']['pessoa'],
-            'v_placa': self.informacoes_relevantes['placa'],
-            'v_marca': self.informacoes_relevantes['marca'],
-            'v_modelo': self.informacoes_relevantes['modelo'],
-            'v_renavam': self.informacoes_relevantes['renavam'],
-            'l_uf': self.informacoes_relevantes['local']['uf'],
-            'uf': self.informacoes_relevantes['uf'],
-            'gravidade': self.informacoes_relevantes['gravidade'],
-            'natureza': self.informacoes_relevantes['natureza'],
-        }
-
     def marcar_palavras(self):
-        dicio = self.expandir_informacoes()
-        for chave, valor in zip(dicio.keys(), dicio.values()):
-            if valor is None or type(valor) == str:
+        for chave, valor in zip(self.informacoes_formulario.keys(), self.informacoes_formulario.values()):
+            if len(valor.texto) == 0:
                 continue
 
             cv2.rectangle(
@@ -257,64 +236,102 @@ class IERegrado:
 
     @staticmethod
     def comparar_proprietario_condutor(dicio):
-        dict_proprietario = dicio['proprietario']
-        dict_condutor = dicio['condutor']
+        if len(dicio['proprietario_nome'].texto) == 0:
+            if len(dicio['condutor_nome'].texto) != 0:
+                dicio['proprietario_nome'] = dicio['condutor_nome']
 
-        for chv in dict_proprietario:
-            if dict_proprietario[chv] is not None and dict_condutor[chv] is not None:
-                if dict_proprietario[chv].texto == dict_condutor[chv].texto:
-                    dicio['condutor'] = dict_proprietario
-                    break
-                elif len(dict_condutor[chv].texto) == 0:
-                    dicio['condutor'][chv] = dict_proprietario[chv]
-                elif len(dict_proprietario[chv].texto) == 0:
-                    dicio['proprietario'][chv] = dict_condutor[chv]
+        elif len(dicio['proprietario_cpf'].texto) == 0:
+            if len(dicio['condutor_cpf'].texto) != 0:
+                dicio['proprietario_cpf'] = dicio['condutor_cpf']
+
+        elif len(dicio['proprietario_cnpj'].texto) == 0:
+            if len(dicio['condutor_cnpj'].texto) != 0:
+                dicio['proprietario_cnpj'] = dicio['condutor_cnpj']
+
+        campos_preenchidos_proprietario = len(list(filter(lambda item: len(item) > 0,
+                                                          [dicio['proprietario_nome'].texto,
+                                                           dicio['proprietario_cpf'].texto,
+                                                           dicio['proprietario_cnpj'].texto])))
+
+        campos_preenchidos_condutor = len(list(filter(lambda item: len(item) > 0,
+                                                      [dicio['condutor_nome'].texto,
+                                                       dicio['condutor_cpf'].texto,
+                                                       dicio['condutor_cnpj'].texto])))
+
+        if campos_preenchidos_proprietario == campos_preenchidos_condutor:
+            pass
+        elif campos_preenchidos_proprietario > campos_preenchidos_condutor:
+            dicio['condutor_nome'] = dicio['proprietario_nome']
+            dicio['condutor_cpf'] = dicio['proprietario_cpf']
+            dicio['condutor_cnpj'] = dicio['proprietario_cnpj']
+        elif campos_preenchidos_proprietario < campos_preenchidos_condutor:
+            dicio['proprietario_nome'] = dicio['condutor_nome']
+            dicio['proprietario_cpf'] = dicio['condutor_cpf']
+            dicio['proprietario_cnpj'] = dicio['condutor_cnpj']
 
         return dicio
 
-    @staticmethod
-    def determinar_conjunto_proximo(locais_assunto, locais_campo):
-        locais = {}
+    # Organiza os pares de assunto-campo de acordo com a proximidade entre elas.
+    # Retornar <dict<int, Palavra>>, sendo o int o local na vertical da palavra auxiliar.
+    def determinar_conjunto_proximo(self, palavras_auxiliares, palavras_campo):
+        locais = dict()
 
-        for assunto in locais_assunto:
-            temp = []
+        for aux in palavras_auxiliares:
+            palavras_proximas = list()
 
-            for idx, campo in enumerate(locais_campo):
-                temp.append((
-                    idx,
-                    campo.localizacao[0][1] - assunto.localizacao[0][1]
-                ))
+            for idx, campo in enumerate(palavras_campo):
+                if self.e_pesquisa_vertical:
+                    # Se pesquisa for na vertical, então a ordenação é feita de acordo com a distância
+                    # vertical entre o assunto e o campo.
+                    palavras_proximas.append((
+                        idx,
+                        campo.localizacao[0][1] - aux.localizacao[0][1]
+                    ))
+                else:
+                    # Analogamente se a pesquisa for feita na horizontal.
+                    palavras_proximas.append((
+                        idx,
+                        campo.localizacao[0][0] - aux.localizacao[0][0]
+                    ))
 
-            temp = list(filter(lambda val: val[1] > 0, temp))
-            if len(temp) == 0:
+            palavras_proximas = list(filter(lambda val: val[1] > 0, palavras_proximas))
+            if len(palavras_proximas) == 0:
                 continue
 
-            temp.sort(key=lambda val: val[1])
-            locais[assunto.localizacao[0][1]] = locais_campo[temp[0][0]]
+            palavras_proximas.sort(key=lambda val: val[1])
+            locais[aux.localizacao[0][1]] = palavras_campo[palavras_proximas[0][0]]
 
         return locais
 
     @staticmethod
     def determinar_pessoa(dicio):
-        proprietario_cpf = dicio['proprietario']['cpf'].texto if dicio['proprietario']['cpf'] is not None else ''
-        condutor_cpf = dicio['condutor']['cpf'].texto if dicio['condutor']['cpf'] is not None else ''
+        fisica = Palavra('Física', ((0, 0), (0, 0)), 0, ((0, 0), (0, 0)), 0)
+        juridica = Palavra('Jurídica', ((0, 0), (0, 0)), 0, ((0, 0), (0, 0)), 0)
+        vazio = Palavra('', ((0, 0), (0, 0)), 0, ((0, 0), (0, 0)), 0)
 
-        proprietario_cnpj = dicio['proprietario']['cnpj'].texto if dicio['proprietario']['cnpj'] is not None else ''
-        condutor_cnpj = dicio['condutor']['cnpj'].texto if dicio['condutor']['cnpj'] is not None else ''
+        proprietario_cpf = dicio['proprietario_cpf'].texto if \
+            len(dicio['proprietario_cpf'].texto) != 0 else ''
+        condutor_cpf = dicio['condutor_cpf'].texto if \
+            len(dicio['condutor_cpf'].texto) != 0 else ''
+
+        proprietario_cnpj = dicio['proprietario_cnpj'].texto if \
+            len(dicio['proprietario_cnpj'].texto) != 0 else ''
+        condutor_cnpj = dicio['condutor_cnpj'].texto if \
+            len(dicio['condutor_cnpj'].texto) != 0 else ''
 
         if len(proprietario_cpf) > 0:
-            dicio['proprietario']['pessoa'] = 'Física'
+            dicio['proprietario_pessoa'] = fisica
         elif len(proprietario_cnpj) > 0:
-            dicio['proprietario']['pessoa'] = 'Jurídica'
+            dicio['proprietario_pessoa'] = juridica
         else:
-            dicio['proprietario']['pessoa'] = ''
+            dicio['proprietario_pessoa'] = vazio
 
         if condutor_cpf is not None and len(condutor_cpf) > 0:
-            dicio['condutor']['pessoa'] = 'Física'
+            dicio['condutor_pessoa'] = fisica
         elif len(condutor_cnpj) > 0:
-            dicio['condutor']['pessoa'] = 'Jurídica'
+            dicio['condutor_pessoa'] = juridica
         else:
-            dicio['condutor']['pessoa'] = ''
+            dicio['condutor_pessoa'] = vazio
 
         return dicio
 
@@ -344,16 +361,14 @@ class IERegrado:
         return resultado
 
     @staticmethod
-    def testar_valores(valor_1, valor_2, campo=None):
-        resultado = None
+    def testar_valores(valor_1, valor_2):
+        resultado = list()
 
-        if valor_1 is None:
+        if len(valor_1) == 0:
             resultado = valor_2
-        elif valor_2 is None:
-            resultado = valor_1
-        elif valor_1.texto == valor_2.texto:
+        elif len(valor_2) == 0:
             resultado = valor_1
         else:
-            resultado = valor_1
+            resultado = valor_1 if len(valor_1) >= len(valor_2) else valor_2
 
-        return resultado
+        return resultado[0] if len(resultado) > 0 else Palavra('', ((0, 0), (0, 0)), 0, ((0, 0), (0, 0)), 0)
