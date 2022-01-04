@@ -334,8 +334,7 @@ class DetectorLRDECustomizado:
                         )
                     lb_somado = np.sum(lb_somado) / (img.shape[0] * img.shape[1])
 
-                    l_lb_razao, b_lb_razao = abs(l_somado / lb_somado - 1), \
-                                             abs(b_somado / lb_somado - 1)
+                    l_lb_razao, b_lb_razao = abs(l_somado / lb_somado - 1), abs(b_somado / lb_somado - 1)
                     minimo = min([l_lb_razao, b_lb_razao])
 
                     if minimo == l_lb_razao:
@@ -344,15 +343,6 @@ class DetectorLRDECustomizado:
                         morph_l = morph_b
             else:
                 morph_l = cv2.bitwise_and(morph_l, morph_b)
-
-            # fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 8), sharex=True, sharey=True)
-            # ax = axes.ravel()
-            # ax[0].imshow(morph_l, cmap=plt.cm.gray)
-            # ax[0].set_title("Morph L")
-            # for a in ax:
-            #     a.axis('off')
-            # fig.tight_layout()
-            # plt.savefig('Teste.png', format='png')
         elif nivel_saturacao is Saturacao.ALTA:
             kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
             morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
@@ -381,6 +371,14 @@ class DetectorLRDECustomizado:
 
         markers = rank.gradient(gradiente, disk(5)) < 10
         markers = ndi.label(markers)[0]
+
+        # labels_background = np.unique(
+        #     np.array([item for elem in [markers[0, :],
+        #                                 markers[-1, :],
+        #                                 markers[:, 0],
+        #                                 markers[:, -1]] for item in elem]))
+        # for l in labels_background:
+        #     markers[markers == l] = 0
 
         labels = watershed(gradiente, markers)
 
@@ -444,6 +442,15 @@ class DetectorLRDECustomizado:
         gradiente_sem_noise = cv2.threshold(mascara_dilate, 0, 255,
                                             cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
+        # fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 8), sharex=True, sharey=True)
+        # ax = axes.ravel()
+        # ax[0].imshow(areas, cmap=plt.cm.gray)
+        # ax[0].set_title("Morph L")
+        # for a in ax:
+        #     a.axis('off')
+        # fig.tight_layout()
+        # plt.savefig('Teste.png', format='png')
+
         # fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(8, 8), sharex=True, sharey=True)
         # ax = axes.ravel()
         #
@@ -490,7 +497,7 @@ class DetectorLRDECustomizado:
 
         if retas is None:
             vertices = self.encontrar_vertices(intersecoes_gradiente, clusters=4) if \
-                len(intersecoes_gradiente) >=4 else \
+                len(intersecoes_gradiente) >= 4 else \
                 self.encontrar_vertices(intersecoes_gradiente, clusters=len(intersecoes_gradiente))
             vertices = self.determinar_vertices_proximos(vertices)
             return self.otimizar_vertices(vertices, img)
