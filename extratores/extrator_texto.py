@@ -6,9 +6,6 @@ from doctr.models import ocr_predictor
 
 
 class TorchOCR:
-    def __init__(self):
-        None
-
     def __call__(self, img):
         model = ocr_predictor(det_arch='db_resnet50', reco_arch='crnn_vgg16_bn', pretrained=True)
 
@@ -38,10 +35,10 @@ class PytesseractOCR:
         self.psm = psm
 
     def __call__(self, img):
-        imagem = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        options = '-l {} --psm {}'.format('por', self.psm)
-        palavras_capturadas = pytesseract.image_to_data(imagem,
-                                                        output_type=Output.DICT, config=options)
+        imagem = cv2.cvtColor(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), cv2.COLOR_RGB2GRAY)
+        # options = '-l {} --psm {}'.format('por', self.psm)
+        options = '--psm {}'.format(self.psm)
+        palavras_capturadas = pytesseract.image_to_data(imagem) #, output_type=Output.DICT, config=options)
 
         palavras = list()
 
