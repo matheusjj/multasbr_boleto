@@ -35,24 +35,27 @@ class PytesseractOCR:
         self.psm = psm
 
     def __call__(self, img):
-        imagem = cv2.cvtColor(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), cv2.COLOR_RGB2GRAY)
-        # options = '-l {} --psm {}'.format('por', self.psm)
-        options = '--psm {}'.format(self.psm)
-        palavras_capturadas = pytesseract.image_to_data(imagem) #, output_type=Output.DICT, config=options)
+        imagem = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        options = '-l {} --psm {}'.format('por', self.psm)
+        palavras_capturadas = pytesseract.image_to_data(imagem, output_type=Output.DICT, config=options)
 
         palavras = list()
 
         for idx in range(0, len(palavras_capturadas['text'])):
             if len(palavras_capturadas['text'][idx].strip()) != 0:
-                palavras.append(Palavra(
-                    palavras_capturadas['text'][idx],
-                    (
-                        (palavras_capturadas['top'][idx], palavras_capturadas['left'][idx]),
-
-                        (palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
-                         palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx])
-                    ),
-                    palavras_capturadas['line_num'][idx]
-                ))
+                palavras.append(
+                    Palavra(
+                        palavras_capturadas['text'][idx],
+                        ((palavras_capturadas['top'][idx], palavras_capturadas['left'][idx]),
+                         (palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
+                          palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx])),
+                        palavras_capturadas['line_num'][idx],
+                        ((palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
+                          palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx]),
+                         (palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
+                          palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx])),
+                        palavras_capturadas['block_num'][idx],
+                    )
+                )
 
         return palavras
