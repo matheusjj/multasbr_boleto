@@ -1,5 +1,5 @@
 import imutils
-import cv2 as cv2
+import cv2
 import numpy as np
 from itertools import combinations
 
@@ -21,7 +21,7 @@ Retorna uma instância da classe Quadrilatero ou None.
 '''
 
 
-def pre_processamento_deteccao(imagem):
+def pre_processamento_deteccao(imagem) -> list:
     cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(cinza, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
 
@@ -43,7 +43,7 @@ class DetectorDocumentoCanny:
     def __init__(self) -> None:
         pass
 
-    def __call__(self, imagem):
+    def __call__(self, imagem) -> Quadrilatero:
         canny = pre_processamento_deteccao(imagem)
 
         cnts = cv2.findContours(canny.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
@@ -66,15 +66,21 @@ class DetectorDocumentoCanny:
 
 
 class DetectorDocumentoHough:
-    def __init__(self, angulo_agudo_lim=80.0, angulo_obtuso_lim=100.0, votos_hough=30,
-                 ang_diagonal_inf=40.0, ang_diagonal_sup=50.0):
+    def __init__(
+            self,
+            angulo_agudo_lim=80.0,
+            angulo_obtuso_lim=100.0,
+            votos_hough=30,
+            ang_diagonal_inf=40.0,
+            ang_diagonal_sup=50.0
+        ) -> None:
         self.angulo_agudo = angulo_agudo_lim
         self.angulo_obtuso = angulo_obtuso_lim
         self.votos_hough = votos_hough
         self.ang_diagonal_inf = ang_diagonal_inf
         self.ang_diagonal_sup = ang_diagonal_sup
 
-    def __call__(self, imagem):
+    def __call__(self, imagem) -> Quadrilatero:
         canny = pre_processamento_deteccao(imagem)
         linhas = cv2.HoughLines(canny, 1, np.pi / 180, self.votos_hough)
 
@@ -125,7 +131,7 @@ class DetectorDocumentoHough:
         else:
             return Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
 
-    def completar_diagonal(self, vert_1, vert_2):
+    def completar_diagonal(self, vert_1, vert_2) -> list:
         angulo_entre_pontos = self.angulo_reta_entre_dois_pontos(vert_1, vert_2)
 
         if self.ang_diagonal_inf <= abs(angulo_entre_pontos) <= self.ang_diagonal_sup:
@@ -153,7 +159,7 @@ class DetectorDocumentoHough:
         return ang
 
     @staticmethod
-    def completar_vertices(vert_1, vert_2, vert_3):
+    def completar_vertices(vert_1, vert_2, vert_3) -> list:
         t = np.array([vert_1, vert_2, vert_3])
         media_coord = np.average(t, axis=0)
 
@@ -197,7 +203,7 @@ class DetectorDocumentoHough:
 
         return [te, td, bd, be]
 
-    def __determinar_vertices_proximos(self, vertices):
+    def __determinar_vertices_proximos(self, vertices) -> list:
         combinacao_vertices = combinations(range(len(vertices)), 2)
 
         distancia_vertices = []
@@ -241,7 +247,7 @@ class DetectorDocumentoHough:
         return np.rad2deg((ang2 - ang1) % (2 * np.pi))
 
     @staticmethod
-    def encontrar_vertices(intersecoes, clusters=4):
+    def encontrar_vertices(intersecoes, clusters=4) -> list:
         if len(intersecoes) < clusters:
             return None
 
@@ -257,7 +263,7 @@ class DetectorDocumentoHough:
         return [centro.tolist() for centro in kmeans.cluster_centers_]
 
     @staticmethod
-    def __intersecao(linha_1, linha_2):
+    def __intersecao(linha_1, linha_2) -> list:
         r1, teta_1 = linha_1
         r2, teta_2 = linha_2
 
@@ -519,7 +525,7 @@ class DetectorLRDECustomizado:
         return self.otimizar_vertices(vertices_grad_sem_noise, img)
 
     @staticmethod
-    def avaliar_saturacao(img, thresh=60):
+    def avaliar_saturacao(img, thresh=60) -> Saturacao:
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         saturacao = np.sum(hsv[:, :, 1]) / (hsv.shape[0] * hsv.shape[1])
         print(saturacao)
@@ -532,7 +538,7 @@ class DetectorLRDECustomizado:
             return Saturacao.ALTA
 
     @staticmethod
-    def filtrar_background(img):
+    def filtrar_background(img) -> list:
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
 
@@ -577,7 +583,7 @@ class DetectorLRDECustomizado:
 
         return cv2.bitwise_and(img, img, mask=np.array(mascara, dtype='uint8'))
 
-    def determinar_retas(self, retas):
+    def determinar_retas(self, retas) -> tuple:
         retas_verticais = []
         retas_horizontais = []
 
@@ -592,7 +598,7 @@ class DetectorLRDECustomizado:
         return retas_verticais, retas_horizontais
 
     @staticmethod
-    def intersecao(linha_1, linha_2):
+    def intersecao(linha_1, linha_2) -> list:
         r1, teta_1 = linha_1
         r2, teta_2 = linha_2
 
@@ -607,10 +613,10 @@ class DetectorLRDECustomizado:
         return [x0, y0]
 
     @staticmethod
-    def no_intervalo(x, tamanho):
+    def no_intervalo(x, tamanho) -> bool:
         return 0 <= x <= tamanho
 
-    def determinar_intersecoes(self, img, retas_verticais, retas_horizontais):
+    def determinar_intersecoes(self, img, retas_verticais, retas_horizontais) -> list:
         intersecoes = []
 
         for vertical in retas_verticais:
@@ -624,7 +630,7 @@ class DetectorLRDECustomizado:
         return intersecoes
 
     @staticmethod
-    def encontrar_vertices(intersecoes, clusters=1):
+    def encontrar_vertices(intersecoes, clusters=1) -> list:
         x = np.array([[ponto[0], ponto[1]] for ponto in intersecoes])
         kmeans = KMeans(
             n_clusters=clusters,
@@ -721,7 +727,7 @@ class DetectorLRDECustomizado:
         return [te, td, bd, be]
 
     @staticmethod
-    def corrigir_vertices(vertices, img):
+    def corrigir_vertices(vertices, img) -> list:
         verts = []
 
         for ponto in vertices:
@@ -740,7 +746,7 @@ class DetectorLRDECustomizado:
 
         return verts
 
-    def otimizar_vertices(self, vertices, img):
+    def otimizar_vertices(self, vertices, img) -> Quadrilatero:
         if len(vertices) == 1:
             return Quadrilatero()
         elif len(vertices) == 2:
@@ -776,7 +782,7 @@ class DetectorLRDECustomizado:
 
             return Quadrilatero(np.array(vertices, dtype='float32').reshape(4, 2))
 
-    def determinar_vertices_proximos(self, vertices):
+    def determinar_vertices_proximos(self, vertices) -> list:
         combinacao_vertices = combinations(range(len(vertices)), 2)
 
         distancia_vertices = []
