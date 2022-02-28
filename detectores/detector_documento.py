@@ -670,7 +670,7 @@ class DetectorLRDECustomizado:
             return None
 
     @staticmethod
-    def completar_vertices(vert_1, vert_2, vert_3):
+    def completar_vertices(vert_1, vert_2, vert_3) -> list:
         t = np.array([vert_1, vert_2, vert_3])
         media_coord = np.average(t, axis=0)
 
@@ -701,27 +701,15 @@ class DetectorLRDECustomizado:
 
         if te is None:
             delta_x = td[0] - bd[0]
-            # delta_x = 0
-            # delta_y = be[1] - bd[1]
-            # te = [be[0] + delta_x, td[1] + delta_y]
             te = [be[0] + delta_x, td[1]]
         elif td is None:
             delta_x = te[0] - be[0]
-            # delta_x = 0
-            # delta_y = bd[1] - be[1]
-            # td = [bd[0] + delta_x, te[1] + delta_y]
             td = [bd[0] + delta_x, te[1]]
         elif bd is None:
             delta_x = be[0] - te[0]
-            # delta_x = 0
-            # delta_y = td[1] - te[1]
-            # bd = [td[0] + delta_x, be[1] + delta_y]
             bd = [td[0] + delta_x, be[1]]
         else:
             delta_x = bd[0] - td[0]
-            # delta_x = 0
-            # delta_y = te[1] - td[1]
-            # be = [te[0] + delta_x, bd[1] + delta_y]
             be = [te[0] + delta_x, bd[1]]
 
         return [te, td, bd, be]
