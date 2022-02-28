@@ -9,10 +9,11 @@ class IERegrado:
     def __init__(self):
         self.e_pesquisa_vertical = True
         self.estado_re = re.compile(r"[A-Z]{2}\b")
-        self.cpf_re = re.compile(r"\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}")
+        self.cpf_re = re.compile(r"\d{3}[.]\d{3}[.]\d{3}[-]\d{2}")
+        # self.cpf_re = re.compile(r"\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}")
         self.cnpj_re = re.compile(r"\d{2}[.]?\d{3}[.]?\d{3}[/]?\d{4}[-]?\d{2}")
         self.placa_re = re.compile(r"\D{3}[-]?\d{4}|\D{3}\d\D\d{2}")
-        self.gravidades_re = re.compile(r"leve|m[eé]dia|grave|grav[ií]ssima", flags=re.I)
+        self.gravidades_re = re.compile(r"leve|m[eé]dia|grave|grav[ií]ssima|3|4|5|7", flags=re.I)
         self.estados_brasileiros_re = re.compile(
             r"RR|AP|AM|PA|AC|RO|TO|MA|PI|CE|RN|PB|PE|AL|SE|BA|MT|DF|GO|MS|MG|ES|RJ|SP|PR|SC|RS")
         self.palavras_chave = {
@@ -45,6 +46,9 @@ class IERegrado:
 
         self.informacoes_formulario = self.comparar_valores_capturados(resultado_vertical, resultado_horizontal)
         self.informacoes_formulario = self.comparar_proprietario_condutor(copy.deepcopy(self.informacoes_formulario))
+        self.informacoes_formulario = self.corrigir_gravidade(copy.deepcopy(self.informacoes_formulario))
+        self.informacoes_formulario = self.corrigir_marca(copy.deepcopy(self.informacoes_formulario))
+        self.informacoes_formulario = self.preenchimento_final(copy.deepcopy(self.informacoes_formulario))
         self.informacoes_formulario = self.determinar_pessoa(copy.deepcopy(self.informacoes_formulario))
 
     def pesquisar(self, chv_dicio, chv):
@@ -66,7 +70,7 @@ class IERegrado:
 
                 if len(palavras_campo) != 0:
                     locais_interesse = self.determinar_conjunto_proximo(palavras_auxiliares, palavras_campo)
-                    resultado.append(self.preenche_informacao(locais_interesse, chv))
+                    resultado.append(self.preenche_informacao(locais_interesse, chv_dicio))
 
             return resultado
 
@@ -75,7 +79,7 @@ class IERegrado:
 
             if len(palavras_campo) != 0:
                 locais_interesse = {i: palavras_campo[i] for i in range(0, len(palavras_campo))}
-                resultado.append(self.preenche_informacao(locais_interesse, chv))
+                resultado.append(self.preenche_informacao(locais_interesse, chv_dicio))
 
         return resultado
 
@@ -124,13 +128,13 @@ class IERegrado:
         return resultado
 
     def extrair_palavras(self, campo, texto):
-        if campo == 'cpf':
+        if campo.__contains__('cpf'):
             return self.cpf_re.search(texto).group()
-        elif campo == 'cnpj':
+        elif campo.__contains__('cnpj'):
             return self.cnpj_re.search(texto).group()
-        elif campo == 'placa':
+        elif campo.__contains__('placa'):
             return self.placa_re.search(texto).group()
-        elif campo == 'uf':
+        elif campo.__contains__('uf'):
             estados = self.estados_brasileiros_re.findall(texto)
 
             if len(estados) == 0:
@@ -139,7 +143,7 @@ class IERegrado:
                 return estados[-1]
             else:
                 return estados[0]
-        elif campo == 'gravidade' or campo == 'natureza':
+        elif campo.__contains__('gravidade'):
             return self.gravidades_re.search(texto).group()
         else:
             return texto
@@ -187,15 +191,15 @@ class IERegrado:
             return None
 
     def verificar_palavras(self, campo, palavras):
-        if campo == 'cpf':
+        if campo.__contains__('cpf'):
             return list(filter(lambda val: self.cpf_re.search(val.texto), palavras))
-        elif campo == 'cnpj':
+        elif campo.__contains__('cnpj'):
             return list(filter(lambda val: self.cnpj_re.search(val.texto), palavras))
-        elif campo == 'placa':
+        elif campo.__contains__('placa'):
             return list(filter(lambda val: self.placa_re.search(val.texto), palavras))
-        elif campo == 'uf':
+        elif campo.__contains__('uf'):
             return list(filter(lambda val: self.estado_re.search(val.texto), palavras))
-        elif campo == 'gravidade' or campo == 'natureza':
+        elif campo.__contains__('gravidade'):
             return list(filter(lambda val: self.gravidades_re.search(val.texto), palavras))
         else:
             return palavras
@@ -224,30 +228,7 @@ class IERegrado:
             )
 
     @staticmethod
-    def atravessar_dicio(dicio, func_1, func_2):
-        for chv_ext in dicio:
-            if type(dicio[chv_ext]) is dict:
-                for chv_int in dicio[chv_ext]:
-                    func_1(dicio, chv_ext, chv_int)
-            else:
-                func_2(dicio, chv_ext)
-
-        return dicio
-
-    @staticmethod
     def comparar_proprietario_condutor(dicio):
-        if len(dicio['proprietario_nome'].texto) == 0:
-            if len(dicio['condutor_nome'].texto) != 0:
-                dicio['proprietario_nome'] = dicio['condutor_nome']
-
-        elif len(dicio['proprietario_cpf'].texto) == 0:
-            if len(dicio['condutor_cpf'].texto) != 0:
-                dicio['proprietario_cpf'] = dicio['condutor_cpf']
-
-        elif len(dicio['proprietario_cnpj'].texto) == 0:
-            if len(dicio['condutor_cnpj'].texto) != 0:
-                dicio['proprietario_cnpj'] = dicio['condutor_cnpj']
-
         campos_preenchidos_proprietario = len(list(filter(lambda item: len(item) > 0,
                                                           [dicio['proprietario_nome'].texto,
                                                            dicio['proprietario_cpf'].texto,
@@ -259,7 +240,12 @@ class IERegrado:
                                                        dicio['condutor_cnpj'].texto])))
 
         if campos_preenchidos_proprietario == campos_preenchidos_condutor:
-            pass
+            if dicio['proprietario_nome'].texto == dicio['condutor_nome'].texto\
+                    or dicio['proprietario_cpf'].texto == dicio['condutor_cpf'].texto\
+                    or dicio['proprietario_cnpj'].texto == dicio['condutor_cnpj'].texto:
+                dicio['condutor_nome'] = dicio['proprietario_nome']
+                dicio['condutor_cpf'] = dicio['proprietario_cpf']
+                dicio['condutor_cnpj'] = dicio['proprietario_cnpj']
         elif campos_preenchidos_proprietario > campos_preenchidos_condutor:
             dicio['condutor_nome'] = dicio['proprietario_nome']
             dicio['condutor_cpf'] = dicio['proprietario_cpf']
@@ -294,7 +280,7 @@ class IERegrado:
                         campo.localizacao[0][0] - aux.localizacao[0][0]
                     ))
 
-            palavras_proximas = list(filter(lambda val: val[1] > 0, palavras_proximas))
+            palavras_proximas = list(filter(lambda val: val[1] >= 0, palavras_proximas))
             if len(palavras_proximas) == 0:
                 continue
 
@@ -302,6 +288,69 @@ class IERegrado:
             locais[aux.localizacao[0][1]] = palavras_campo[palavras_proximas[0][0]]
 
         return locais
+
+    def preenchimento_final(self, dicio):
+        campos_interesse = ['cpf', 'cnpj', 'placa', 'renavam']
+
+        for chv in dicio:
+            for cmp in campos_interesse:
+                if chv.__contains__(cmp) and len(dicio[chv].texto) == 0:
+                    palavras_selecionadas_re = list()
+
+                    if cmp == campos_interesse[0]:
+                        palavras_selecionadas_re = list(filter(lambda val: self.cpf_re.search(val.texto),
+                                                               self.palavras))
+                    elif cmp == campos_interesse[1]:
+                        palavras_selecionadas_re = list(filter(lambda val: self.cnpj_re.search(val.texto),
+                                                               self.palavras))
+                    elif cmp == campos_interesse[2]:
+                        palavras_selecionadas_re = list(filter(lambda val: self.placa_re.search(val.texto),
+                                                               self.palavras))
+
+                    if len(palavras_selecionadas_re) != 0:
+                        dicio[chv] = palavras_selecionadas_re[0]
+
+        return dicio
+
+    def corrigir_marca(self, dicio):
+        marca = dicio['veiculo_marca']
+        marca_texto = marca.texto
+
+        resultado = self.placa_re.split(marca_texto)
+
+        if len(resultado) == 1:
+            dicio['veiculo_marca'] = Palavra(resultado[0], marca.localizacao, marca.linha,
+                                             marca.linha_localizacao, marca.bloco)
+        else:
+            dicio['veiculo_marca'] = Palavra(resultado[1], marca.localizacao, marca.linha,
+                                             marca.linha_localizacao, marca.bloco)
+
+        return dicio
+
+    @staticmethod
+    def corrigir_gravidade(dicio):
+        gravidade = dicio['gravidade']
+        gravidade_texto = gravidade.texto
+
+        try:
+            gravidade_num = int(gravidade_texto)
+
+            if gravidade_num == 3:
+                gravidade_texto = 'Leve'
+            elif gravidade_num == 4:
+                gravidade_texto = 'Média'
+            elif gravidade_num == 5:
+                gravidade_texto = 'Grave'
+            elif gravidade_num == 7:
+                gravidade_texto = 'Gravíssima'
+            else:
+                gravidade_texto = ''
+        except ValueError:
+            pass
+
+        dicio['gravidade'] = Palavra(gravidade_texto, gravidade.localizacao, gravidade.linha,
+                                     gravidade.linha_localizacao, gravidade.bloco)
+        return dicio
 
     @staticmethod
     def determinar_pessoa(dicio):
