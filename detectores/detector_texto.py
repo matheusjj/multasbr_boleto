@@ -10,11 +10,11 @@ Retorna um tuple com tuples dentro com as coordenadas do ponto do topo esquerdo 
 
 
 class DetectorProjecao:
-    def __init__(self, proporcao_intervalo=0.1):
+    def __init__(self, proporcao_intervalo=0.1) -> None:
         self.proporcao_intervalo = proporcao_intervalo
         self.proporcao_texto = proporcao_intervalo - 0.04
 
-    def __call__(self, imagem):
+    def __call__(self, imagem) -> tuple:
         cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
         thresh = cv2.threshold(cinza, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
@@ -35,7 +35,7 @@ class DetectorProjecao:
         return topo_esquerdo, baixo_direito
 
     @staticmethod
-    def __intervalo_deslizante(projecao, proporcao_intervalo, proporcao_texto):
+    def __intervalo_deslizante(projecao, proporcao_intervalo, proporcao_texto) -> tuple:
         limites_regiao = []
         intervalo = int(projecao.shape[0] * proporcao_intervalo)
         intervalo_texto = int(projecao.shape[0] * proporcao_texto)
@@ -61,7 +61,7 @@ class DetectorProjecao:
         return limites_regiao[0], limites_regiao[1]
 
 
-def pre_processamento_deteccao(imagem, tam_kernel):
+def pre_processamento_deteccao(imagem, tam_kernel) -> list:
     retangulo_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3 * tam_kernel, tam_kernel))
 
     blurred = cv2.GaussianBlur(imagem, (3, 3), 0)
@@ -78,10 +78,10 @@ def pre_processamento_deteccao(imagem, tam_kernel):
 
 
 class DetectorPrimeiroPixelTexto:
-    def __init__(self, tam_kernel=7):
+    def __init__(self, tam_kernel=7) -> None:
         self.tam_kernel = tam_kernel
 
-    def __call__(self, imagem):
+    def __call__(self, imagem) -> tuple:
         cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
 
         quadrado_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3 * self.tam_kernel, 3 * self.tam_kernel))
@@ -101,7 +101,10 @@ class DetectorPrimeiroPixelTexto:
         return topo_esquerdo, baixo_direito
 
     @staticmethod
-    def __determinar_area_texto(linha):
+    def __determinar_area_texto(linha) -> tuple:
+        menor = 0
+        maior = 0
+
         for (idx, val) in enumerate(linha):
             if val != 0:
                 menor = idx
@@ -116,11 +119,11 @@ class DetectorPrimeiroPixelTexto:
 
 
 class DetectorContorno:
-    def __init__(self, tam_kernel=7, tolerancia=0):
+    def __init__(self, tam_kernel=7, tolerancia=0) -> None:
         self.tam_kernel = tam_kernel
         self.tolerancia = tolerancia
 
-    def __call__(self, imagem):
+    def __call__(self, imagem) -> tuple:
         cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
         (altura, largura) = cinza.shape
 
