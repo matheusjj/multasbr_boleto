@@ -6,7 +6,7 @@ from doctr.models import ocr_predictor
 
 
 class TorchOCR:
-    def __call__(self, img):
+    def __call__(self, img) -> list:
         model = ocr_predictor(det_arch='db_resnet50', reco_arch='crnn_vgg16_bn', pretrained=True)
 
         resultado = model([img])
@@ -31,10 +31,10 @@ class TorchOCR:
 
 
 class PytesseractOCR:
-    def __init__(self, psm='4'):
+    def __init__(self, psm='4') -> None:
         self.psm = psm
 
-    def __call__(self, img):
+    def __call__(self, img) -> list:
         imagem = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         options = '-l {} --psm {}'.format('por', self.psm)
         palavras_capturadas = pytesseract.image_to_data(imagem, output_type=Output.DICT, config=options)
@@ -43,17 +43,16 @@ class PytesseractOCR:
 
         for idx in range(0, len(palavras_capturadas['text'])):
             if len(palavras_capturadas['text'][idx].strip()) != 0:
+                te = (palavras_capturadas['left'][idx], palavras_capturadas['top'][idx])
+                bd = (palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx],
+                      palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx])
+
                 palavras.append(
                     Palavra(
                         palavras_capturadas['text'][idx],
-                        ((palavras_capturadas['top'][idx], palavras_capturadas['left'][idx]),
-                         (palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
-                          palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx])),
+                        (te, bd),
                         palavras_capturadas['line_num'][idx],
-                        ((palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
-                          palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx]),
-                         (palavras_capturadas['top'][idx] + palavras_capturadas['height'][idx],
-                          palavras_capturadas['left'][idx] + palavras_capturadas['width'][idx])),
+                        ((te[0], bd[1]), bd),
                         palavras_capturadas['block_num'][idx],
                     )
                 )
