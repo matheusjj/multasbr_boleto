@@ -1,0 +1,126 @@
+arquivo,proprietario_nome,proprietario_cpf,proprietario_cnpj,proprietario_pessoa,condutor_nome,condutor_cpf,condutor_cnpj,condutor_pessoa,veiculo_placa,veiculo_marca,veiculo_renavam,local_uf,gravidade
+1,AGILDO FONSECA,451.327.939-75,,Física,AGILDO FONSECA,451.327.939-75,,Física,NAL8619,JINBEITOPIC VAN SL 2.2,,,
+2,ANA PESSOA,812.658.659-14,,Física,ANA PESSOA,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2,,,
+3,ANDRE YOSHIMURA,855.151.127-09,,Física,ANDRE YOSHIMURA,855.151.127-09,,Física,JMU6059,Wake/ay 1.6 Total,,,
+4,ÂNGELO PIMENTEL,888.687.454-53,,Física,ÂNGELO PIMENTEL,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6,,,
+5,ANTONIO MELO,166.058.923-13,,Física,ANTONIO MELO,166.058.923-13,,Física,MVZ7754,Rover/Mini Cooper 1.3,,,
+6,ARLENE PINHEIRO,614.324.381-66,,Física,ARLENE PINHEIRO,614.324.381-66,,Física,JBQ0688,PAlS,,,
+7,ARMANDO SA,431.789.221-99,,Física,ARMANDO SA,431.789.221-99,,Física,MXT0314,Ba,,,
+8,ARMANDO TAVARES,289.824.273-09,,Física,ARMANDO TAVARES,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6,,,
+9,ARNOLDO CHAGAS,118.229.002-71,,Física,ARNOLDO CHAGAS,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,,
+10,ARTUR BRANDAO,077.805.804-23,,Física,ARTUR BRANDAO,077.805.804-23,,Física,MXH5004,Acura/ntegra GS 1.8,,,
+11,ARTUR HAMAMURA,063.732.766-78,,Física,ARTUR HAMAMURA,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE,,,
+12,ARTUR HASHIMOTO,360.422.101-30,,Física,ARTUR HASHIMOTO,360.422.101-30,,Física,HMH5586, T20,,,
+13,AUGUSTO ALVES,715.815.128-05,,Física,AUGUSTO ALVES,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top,,,
+14,AUREA BONFIM,317.434.142-69,,Física,AUREA BONFIM,317.434.142-69,,Física,BMV5105,V,,,
+15,AUREA HENRIQUES,593.913.532-31,,Física,AUREA HENRIQUES,593.913.532-31,,Física,BMV5105,V,,,
+16,AURELIO QUEIROZ,631.616.164-64,,Física,AURELIO QUEIROZ,631.616.164-64,,Física,MXG6654,Land Rover/Detender 90,,,
+17,BRUNO FLORES,027.041.616-15,,Física,BRUNO FLORES,027.041.616-15,,Física,MXG6654,Land Rover/Detender 90,,,
+18,CAIO TEIXEIRA,338.735.631-50,,Física,CAIO TEIXEIRA,338.735.631-50,,Física,MXG6654,Land Rover/Detender 90,,,
+19,CARINA NAKATA,421.923.516-74,,Física,CARINA NAKATA,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,,
+20,CICERO MENEZES,882.531.366-76,,Física,CICERO MENEZES,882.531.366-76,,Física,NAL8619,JINBEITOPIC VAN SL,,,
+21,CINTIA CORREA,213.589.752-30,,Física,CINTIA CORREA,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2,,,
+22,CLARISSA SALLES,835.098.768-57,,Física,CLARISSA SALLES,835.098.768-57,,Física,JMU6059,Wake/ay 1.6 Total Flex,,,
+23,CLAUDIA GOMES,786.765.608-11,,Física,CLAUDIA GOMES,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6,,,
+24,CONRADO MORAES,541.387.528-20,,Física,CONRADO MORAES,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,,
+25,CONRADO SALGADO,336.889.657-10,,Física,CONRADO SALGADO,336.889.657-10,,Física,JBQ0688,PAlS,,,
+26,DANIEL FONTANA,288.125.321-01,,Física,DANIEL FONTANA,288.125.321-01,,Física,MXT0314,I/HAFEI Towner Jr. Pick-up Ba,3256325344,AL,Média
+27,DANILA MACEDO,611.117.625-03,,Física,DANILA MACEDO,611.117.625-03,,Física,MQU9147,I/Subaru Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,Média
+28,DARCY FURTADO,664.954.519-89,,Física,DARCY FURTADO,664.954.519-89,,Física,LCT2216,I/Lada Outback Samara 1.3/ 1.5,3256325344,AL,Média
+29,DAVI GUERRA,214.623.386-90,,Física,DAVI GUERRA,214.623.386-90,,Física,MXH5004,Acural Integra GS 1.8,3256325344,AL,Média
+30,DAVI TEIXEIRA,828.854.933-05,,Física,DAVI TEIXEIRA,828.854.933-05,,Física,DPQ8378,Jaguar / X-Type ESTATE 3.0 24V 230cv,3256325344,AL,Média
+31,DIEGO FAGUNDES,642.498.115-22,,Física,DIEGO FAGUNDES,642.498.115-22,,Física,HMH5586, T20 TRUCKS,3256325344,AL,Média
+32,DOUGLAS MACIEL,818.556.242-30,,Física,DOUGLAS MACIEL,818.556.242-30,,Física,NEY7045,Municipio,3256325344,AL,Média
+33,EDGAR MALDONADO,362.825.377-20,,Física,EDGAR MALDONADO,362.825.377-20,,Física,BMV5105, 8V 53cv (Pick-Up),3256325344,AL,Média
+34,EDGAR NAKAMURA,757.712.288-26,,Física,EDGAR NAKAMURA,757.712.288-26,,Física,MNX1171,Volvo / C30 2.4 170cv Aut,3256325344,AL,Média
+35,EDNA AVILA,641.294.201-78,,Física,EDNA AVILA,641.294.201-78,,Física,MXG6654,Municipio,2114684790,AL,Média
+36,EDUARDA GIMENES,232.422.125-09,,Física,EDUARDA GIMENES,232.422.125-09,,Física,MWZ6550,W 1.6 8V,2114684790,AL,Média
+37,EDUARDO LUZ,622.064.550-21,,Física,EDUARDO LUZ,622.064.550-21,,Física,MLO3215,Municipio,2114684790,AL,Média
+38,ELOISA SIQUEIRA,173.587.725-55,,Física,ELOISA SIQUEIRA,173.587.725-55,,Física,KKB3204,Mazda / MX-5 Mec,2114684790,AL,Média
+39,EMANUEL PERES,829.927.180-09,,Física,EMANUEL PERES,829.927.180-09,,Física,NAL8619,Municipio,2114684790,AL,Média
+40,ÉMERSON LOPES,462.146.406-00,,Física,ÉMERSON LOPES,462.146.406-00,,Física,NFB4339,Municipio,2114684790,AL,Média
+41,ERASMO FAGUNDES,232.376.034-30,,Física,ERASMO FAGUNDES,232.376.034-30,,Física,JMU6059,Wake / Way 1. 6 Total Flex 8V Mec.,2114684790,AL,Média
+42,ERASMO LEITAO,561.764.750-40,,Física,ERASMO LEITAO,561.764.750-40,,Física,MUR2946,Rolls-Royce / Wraith 6.6 V12 Aut.,2114684790,AL,Média
+43,ERICO FLORES,976.374.884-46,,Física,ERICO FLORES,976.374.884-46,,Física,MVZ7754,Rover / Mini Cooper 1.3,2114684790,AL,Média
+44,ERICO WATANABE,219.460.641-65,,Física,ERICO WATANABE,219.460.641-65,,Física,JBQ0688,Municipio,2114684790,AL,Média
+45,ESTER SILVA,938.727.378-48,,Física,ESTER SILVA,938.727.378-48,,Física,MXT0314,HAFEI Towner Jr. Pick-up Ba,2114684790,AL,Média
+46,EVELYN TAKEDA,644.274.225-35,,Física,EVELYN TAKEDA,644.274.225-35,,Física,MQU9147,Subaru / Outback 3.0 H6 SW 245cV Aut.,2114684790,AL,Média
+47,FABIANE PERES,612.033.622-26,,Física,FABIANE PERES,612.033.622-26,,Física,LCT2216,Lada / Samara 1.3/ 1.5,2114684790,AL,Média
+48,Nome,605.747.186-56,,Física,Nome,605.747.186-56,,Física,MXH5004,Acural Integra GS 1.8,2114684790,AL,Média
+49,FREDERICO NAKATA,731.211.343-53,,Física,FREDERICO NAKATA,731.211.343-53,,Física,DPQ8378,Jaguar / X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+50,GIOVANA ROSA,886.345.558-95,,Física,GIOVANA ROSA,886.345.558-95,,Física,HMH5586, T20 TRUCKS,2114684790,AL,Média
+51,,,,,,,,,NEY-7045,Codigo:,,,
+52,,,,,,,,,BMV-5105,Codigo:,,,
+53,,,,,,,,,MNX-1171,Codigo:,,,
+54,,,,,,,,,MXG-5654.,Codigo:,,,
+55,,,,,,,,,MWZ-6550,Codigo:,,,
+56,,,,,,,,,MLO-3215,Codigo:,,,
+57,,,,,,,,,KKA-3204.,Codigo:,,,
+58,,,,,,,,,NAL-8519,Codigo:,,,
+59,,,,,,,,,NFB-4339,Codigo:,,,
+60,,,,,,,,,JMU-6059,Codigo:,,,
+61,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MUR2946,Rolls-Royce,,,
+62,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MVZ7754,Rover,,,
+63,causula de responsabilidade por,,,,causula de responsabilidade por,,,,JBQ0688,Mitsubishi,,,
+64,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MXT0314,HAFEI,,,
+65,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MQU9147, Subaru,,,
+66,causula de responsabilidade por,,,,causula de responsabilidade por,,,,LCT2216,Lada,,,
+67,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MXH5004, Acura,,,
+68,causula de responsabilidade por,,,,causula de responsabilidade por,,,,DPQ8378, Jaguar,,,
+69,causula de responsabilidade por,,,,causula de responsabilidade por,,,,HMH5586, SHINERAY,,,
+70,causula de responsabilidade por,,,,causula de responsabilidade por,,,,NEY7045,AM Gen,,,
+71,causula de responsabilidade por,,,,causula de responsabilidade por,,,,BMV5105,CHANA,,,
+72,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MNX1171, Volvo,,,
+73,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MXG6654, Land Rover,,,
+74,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MWZ6550, Fyber,,,
+75,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MLO3215, LAMBORGHINT,,,
+76,causula de responsabilidade por,,,,causula de responsabilidade por,,,,KKA3204,Mazda,,,
+77,causula de responsabilidade por,,,,causula de responsabilidade por,,,,NAL8619,JINBEI,,,
+78,causula de responsabilidade por,,,,causula de responsabilidade por,,,,NFB4339,Matra,,,
+79,causula de responsabilidade por,,,,causula de responsabilidade por,,,,JMU6059, Wake,,,
+80,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MUR2946, Rolls-Royce,,,
+81,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MVZ7754,Rover,,,
+82,causula de responsabilidade por,,,,causula de responsabilidade por,,,,JBQ0688,Mitsubishi,,,
+83,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MXT0314,HAFEI,,,
+84,causula de responsabilidade por,,,,causula de responsabilidade por,,,,MQU9147, Subaru,,,
+85,MANUEL LEITE,,,,MANUEL LEITE,,,,LCT2216,SP Lada,,,
+86,MARCIA NAKAMURA,,,,MARCIA NAKAMURA,,,,EWT2548,SP Acura,,,
+87,MARCIO GUERRA,181.282.176-07,,Física,MARCIO GUERRA,181.282.176-07,,Física,EWT2548,SP Acura,,,
+88,MARCIO ROSARIO,503.366.651-72,,Física,MARCIO ROSARIO,503.366.651-72,,Física,EWT2548,SP Acura,,,
+89,MARILIA ALVES,256.486.738-33,,Física,MARILIA ALVES,256.486.738-33,,Física,EWT2548,SP Acura,,,
+90,MARILIA MEDEIR AS,684.366.754-16,,Física,MARILIA MEDEIR AS,684.366.754-16,,Física,EWT2548,SP Acura,,,
+91,MARLICAVALCANTI,276.274.536-58,,Física,MARLICAVALCANTI,276.274.536-58,,Física,EWT2548,SP Acura,,,
+92,MARTA NUNES,276.274.536-58,,Física,MARTA NUNES,276.274.536-58,,Física,EWT2548,SP Acura,,,
+93,MATEUS GUEDES,276.274.536-58,,Física,MATEUS GUEDES,276.274.536-58,,Física,EWT2548,SP Acura,,,
+94,MATEUS GUEDES,,,,MATEUS GUEDES,,,,EWT2548,SP Fyber,,,
+95,MAURICIO VILA,,,,MAURICIO VILA,,,,EWT2548,SP,,,
+96,MICHELE CAMPOS,463.020.307-90,,Física,MICHELE CAMPOS,463.020.307-90,,Física,EWT2548,SP Mazda,,,
+97,MOACIR ARRUDA,,,,MOACIR ARRUDA,,,,EWT2548,SP JINBEI,,,
+98,NETO FERREIRA,,,,NETO FERREIRA,,,,EWT2548,SP Matra,,,
+99,NINA PRESTES,547.266.678-31,,Física,NINA PRESTES,547.266.678-31,,Física,JMU6059,IDENTIFICAÇAOI DO,,,
+100,ODETE CASTRO,,,,ODETE CASTRO,,,,EWT2548,SP Rolls- Royce,,,
+101,,,,,,,,,,Codigo:,,,
+102,,,,,,,,,NEY-7257,Codigo:,,,
+103,,,,,,,,,KJT-9301,Codigo:,,,
+104,,,,,,,,,JYR-2706,Codigo:,,,
+105,,,,,,,,,NAL-5568,Codigo:,,,
+106,,,,,,,,,IZO-0533,Codigo:,,,
+107,,,,,,,,,AWC-8368,Codigo:,,,
+108,,,,,,,,,JMZ-6382,Codigo:,,,
+109,,,,,,,,,KLO-8906,Codigo:,,,
+110,,,,,,,,,NAP-0223,Codigo:,,,
+111,,,,,,,,,HEU-1387,Codigo:,,,
+112,,,,,,,,,MZR-1199,Codigo:,,,
+113,,,,,,,,,AXT-5289,Codigo:,,,
+114,,,,,,,,,KMW-1529,Codigo:,,,
+115,,,,,,,,,KFA-3460,Codigo:,,,
+116,MANOEL PIMENTEL,,,,MANOEL PIMENTEL,,,,EWT2548,SP CHANGAN,,,
+117,DIOGO RIOS,473.512.311-33,,Física,DIOGO RIOS,473.512.311-33,,Física,EWT2548,SP Rolls- Royce,,,
+118,ARTHUR PRADO,278.632.393-20,,Física,ARTHUR PRADO,278.632.393-20,,Física,JHI9802,SP Envem,,,
+119,CRISTIANO LEITE,,,,CRISTIANO LEITE,,,,EWT2548,SP,,,
+120,MARCOS MARTINS,167.547.131-27,,Física,MARCOS MARTINS,167.547.131-27,,Física,ISB1587,SP Honda,,,
+121,MURILO FERRAZ,,,,MURILO FERRAZ,,,,MUQ9220,IDENTIFICAÇAOI DO,,,
+122,RENATO VENTURA,667.160.447-95,,Física,RENATO VENTURA,667.160.447-95,,Física,EWT2548,SP Rover,,,
+123,Ivo AVILA,,,,Ivo AVILA,,,,LVK1018,SP Fyber,,,
+124,AURÉLIOLUZ,513.160.432-07,,Física,AURÉLIOLUZ,513.160.432-07,,Física,EWT2548,SP LOBINI,,,
+125,RICARDO NAZARIO,,,,RICARDO NAZARIO,,,,EWT2548,SP FOTON,,,

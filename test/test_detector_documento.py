@@ -1,7 +1,10 @@
+import os
 import cv2
+import csv
 import numpy as np
-from detectores.detector_documento import DetectorDocumentoHough
-from pre_processadores import PreProcessador
+from extratores.extrator_documento import ExtratorDocumento
+from detectores.detector_documento import DetectorDocumentoHough, DetectorLRDECustomizado
+from pre_processadores.pre_processador import PreProcessador
 
 # Testes angulo_entre_pontos
 
@@ -13,14 +16,14 @@ def test_angulo_entre_pontos_mesmo_ponto():
     assert angulo == 0
 
 
-def test_angulo_entre_pontos_menor_maior():
+def test_angulo_entre_pontos_diagonal():
     vertices = [[-1, -1], [1, 1]]
     detector = DetectorDocumentoHough()
     angulo = detector.angulo_entre_pontos(vertices[0], vertices[1])
     assert angulo == 180
 
 
-def test_angulo_entre_pontos_diagonal():
+def test_angulo_entre_pontos_diagonal_2():
     vertices = [[1, 1], [-1, -1]]
     detector = DetectorDocumentoHough()
     angulo = detector.angulo_entre_pontos(vertices[0], vertices[1])
@@ -162,66 +165,6 @@ def test_angulo_reta_quadrantes_1_e_4_inv():
     angulo = detector.angulo_reta_entre_dois_pontos(vertices[0], vertices[1])
     assert angulo == -38.61717747362881
 
-# test completar_vertices
-
-
-# def test_completar_vertices_tres_vertices_te_faltante():
-#     vertices = [[100, 0], [0, 100], [100, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[100, 0], [0, 100], [100, 100], [0, 0]]
-#
-#
-# def test_completar_vertices_tres_vertices_td_faltante():
-#     vertices = [[0, 0], [100, 0], [100, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[0, 0], [100, 0], [100, 100], [0, 100]]
-#
-#
-# def test_completar_vertices_tres_vertices_bd_faltante():
-#     vertices = [[2, 2], [100, 0], [0, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[2, 2], [100, 0], [0, 100], [98, 98]]
-#
-#
-# def test_completar_vertices_tres_vertices_be_faltante():
-#     vertices = [[2, 2], [0, 100], [100, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[2, 2], [0, 100], [100, 100], [102, 2]]
-#
-#
-# def test_completar_vertices_v1_v2_diagonal():
-#     vertices = [[100, 0], [0, 100], [100, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[100, 0], [0, 100], [100, 100], [0, 0]]
-#
-#
-# def test_completar_vertices_v1_v3_diagonal():
-#     vertices = [[100, 0], [100, 100], [0, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[100, 0], [100, 100], [0, 100], [0, 0]]
-#
-#
-# def test_completar_vertices_v2_v3_diagonal():
-#     vertices = [[100, 100], [100, 0], [0, 100]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[100, 100], [100, 0], [0, 100], [0, 0]]
-#
-#
-# def test_completar_vertices_pratico():
-#     vertices = [[544.5, 670.0], [442.0, 224.0], [50.83333333333333, 673.5]]
-#     detector = DetectorDocumentoHough()
-#     vertices = detector.completar_vertices(vertices[0], vertices[1], vertices[2])
-#     assert vertices == [[100, 100], [100, 0], [0, 100], [153.33, 220.5]]
-
-# test completar_diagonal
-
 
 def test_completar_diagonal_positiva():
     vertices = [[100, 0], [0, 100]]
@@ -269,3 +212,57 @@ def test_detector_documento_hough_call():
 
     detector = DetectorDocumentoHough()
     detector(img)
+
+
+# test DetectorLRDE
+
+
+def test_detector_lrde():
+    caminho_img = '/home/matheus/Documentos/Exemplo/'
+    caminho_mascara_lrde = '/home/matheus/Documentos/Exemplo/Mascara_LRDE/'
+
+    pre_processador = PreProcessador()
+    detector = DetectorLRDECustomizado()
+    extrator = ExtratorDocumento()
+
+    for arquivo in os.listdir(caminho_img):
+        if os.path.isfile(os.path.join(caminho_img, arquivo)):
+            original = cv2.imread(caminho_img + arquivo)
+
+            img, ratio = pre_processador(original)
+            vertices = detector(img.copy())
+            documento = extrator(img, vertices, original, ratio)
+            quad = np.array([documento], dtype='int32')
+
+            img_final = np.zeros(original.shape[:2])
+
+            cv2.fillPoly(img_final, [quad], 255)
+            cv2.imwrite(caminho_mascara_lrde + arquivo, img_final)
+
+        # break
+
+
+def test_processar_iou():
+    caminho_auto = 'imagens/camera/mascara_doc_hough/'
+    caminho_manual = 'imagens/camera/mascara_documento/'
+    arquivo_output = 'Resultado_IoU_Hough'
+    resultados = []
+
+    for arquivo in os.listdir(caminho_auto):
+        if os.path.isfile(os.path.join(caminho_auto, arquivo)):
+            auto = cv2.imread(caminho_auto + arquivo)
+            manual = cv2.imread(caminho_manual + arquivo)
+
+            intersecao = cv2.bitwise_and(auto, manual)
+            uniao = cv2.bitwise_or(auto, manual)
+
+            iou = np.count_nonzero(intersecao == 255) / np.count_nonzero(uniao == 255)
+            resultados.append([arquivo, iou])
+
+    # print(resultados)
+    campos = ['Imagem', 'IoU']
+
+    with open(arquivo_output, 'w') as f:
+        write = csv.writer(f)
+        write.writerow(campos)
+        write.writerows(resultados)

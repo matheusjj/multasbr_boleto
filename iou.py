@@ -3,7 +3,7 @@ import cv2
 import csv
 import numpy as np
 
-from pre_processadores import PreProcessador
+from pre_processadores.pre_processador import PreProcessador
 from detectores.detector_documento import DetectorLRDECustomizado
 from extratores.extrator_documento import ExtratorDocumento
 
@@ -17,7 +17,7 @@ def detector_lrde():
     extrator = ExtratorDocumento()
 
     for arquivo in os.listdir(caminho_img):
-        # if os.path.isfile(os.path.join(caminho_img, arquivo)) and arquivo == 'D40_F3.jpg':
+        # if os.path.isfile(os.path.join(caminho_img, arquivo)) and arquivo == 'D43_F3.jpg':
         if os.path.isfile(os.path.join(caminho_img, arquivo)):
             print(arquivo)
             original = cv2.imread(caminho_img + arquivo)
@@ -59,5 +59,5 @@ def processar_iou():
         write.writerows(resultados)
 
 
-# detector_lrde()
-processar_iou()
+detector_lrde()
+# processar_iou()
