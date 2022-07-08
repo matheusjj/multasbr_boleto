@@ -1,126 +1,626 @@
-Arquivo,Nome Proprietário,CPF,CNPJ,Pessoa,Nome Condutor,CPF,CNPJ,Pessoa,Placa,Marca,Renavam,Local UF,UF,Gravidade
-1,Agildo Fonseca,451.327.939-75,,Física,Agildo Fonseca,451.327.939-75,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,ES,
-2,Ana Pessoa,812.658.659-14,,Física,Ana Pessoa,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,ES,
-3,André Yoshimura,855.151.127-09,,Física,André Yoshimura,855.151.127-09,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,ES,
-4,Ângelo Pimentel,888.687.454-53,,Física,Ângelo Pimentel,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,ES,
-5,Antonio Melo,166.058.923-13,,Física,Antonio Melo,166.058.923-13,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,ES,
-6,Arlene Pinheiro,614.324.381-66,,Física,Arlene Pinheiro,614.324.381-66,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,ES,
-7,Armando Sá,431.789.221-99,,Física,Armando Sá,431.789.221-99,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,ES,ES,
-8,Armando Tavares,289.824.273-09,,Física,Armando Tavares,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,ES,ES,
-9,Arnoldo Chagas,118.229.002-71,,Física,Arnoldo Chagas,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,ES,ES,
-10,Artur Brandão,077.805.804-23,,Física,Artur Brandão,077.805.804-23,,Física,MXH5004,Acura/Integra GS 1.8,,ES,ES,
-11,Artur Hamamura,063.732.766-78,,Física,Artur Hamamura,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,ES,ES,
-12,Artur Hashimoto,360.422.101-30,,Física,Artur Hashimoto,360.422.101-30,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,ES,ES,
-13,Augusto Alves,715.815.128-05,,Física,Augusto Alves,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,ES,ES,
-14,Áurea Bonfim,317.434.142-69,,Física,Áurea Bonfim,317.434.142-69,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,ES,
-15,Áurea Henriques,593.913.532-31,,Física,Áurea Henriques,593.913.532-31,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,ES,
-16,Aurélio Queiroz,631.616.164-64,,Física,Aurélio Queiroz,631.616.164-64,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,ES,
-17,Bruno Flores,027.041.616-15,,Física,Bruno Flores,027.041.616-15,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,ES,
-18,Caio Teixeira,338.735.631-50,,Física,Caio Teixeira,338.735.631-50,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,ES,
-19,Carina Nakata,421.923.516-74,,Física,Carina Nakata,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,ES,ES,
-20,Cícero Menezes,882.531.366-76,,Física,Cícero Menezes,882.531.366-76,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,ES,
-21,Cíntia Corrêa,213.589.752-30,,Física,Cíntia Corrêa,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,ES,
-22,Clarissa Salles,835.098.768-57,,Física,Clarissa Salles,835.098.768-57,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,ES,
-23,Cláudia Gomes,786.765.608-11,,Física,Cláudia Gomes,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,ES,
-24,Conrado Moraes,541.387.528-20,,Física,Conrado Moraes,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,ES,
-25,Conrado Salgado,336.889.657-10,,Física,Conrado Salgado,336.889.657-10,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,ES,
-26,Daniel Fontana,288.125.321-01,,Física,Daniel Fontana,288.125.321-01,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,3256325344,AL,AL,Média
-27,Danila Macedo,611.117.625-03,,Física,Danila Macedo,611.117.625-03,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,AL,Média
-28,Darcy Furtado,664.954.519-89,,Física,Darcy Furtado,664.954.519-89,,Física,LCT2216,Lada/Outback Samara 1.3/ 1.5,3256325344,AL,AL,Média
-29,Davi Guerra,214.623.386-90,,Física,Davi Guerra,214.623.386-90,,Física,MXH5004,Acura/Integra GS 1.8,3256325344,AL,AL,Média
-30,Davi Teixeira,828.854.933-05,,Física,Davi Teixeira,828.854.933-05,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,3256325344,AL,AL,Média
-31,Diego Fagundes,642.498.115-22,,Física,Diego Fagundes,642.498.115-22,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,3256325344,AL,AL,Média
-32,Douglas Maciel,818.556.242-30,,Física,Douglas Maciel,818.556.242-30,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,3256325344,AL,AL,Média
-33,Edgar Maldonado,362.825.377-20,,Física,Edgar Maldonado,362.825.377-20,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),3256325344,AL,AL,Média
-34,Edgar Nakamura,757.712.288-26,,Física,Edgar Nakamura,757.712.288-26,,Física,MNX1171,Volvo/C30 2.4 170cv Aut,3256325344,AL,AL,Média
-35,Edna Ávila,641.294.201-78,,Física,Edna Ávila,641.294.201-78,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,2114684790,AL,AL,Média
-36,Eduarda Gimenes,232.422.125-09,,Física,Eduarda Gimenes,232.422.125-09,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,2114684790,AL,AL,Média
-37,Eduardo Luz,622.064.550-21,,Física,Eduardo Luz,622.064.550-21,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,2114684790,AL,AL,Média
-38,Eloísa Siqueira,173.587.725-55,,Física,Eloísa Siqueira,173.587.725-55,,Física,KKB3204,Mazda/MX-5 Mec,2114684790,AL,AL,Média
-39,Emanuel Peres,829.927.180-09,,Física,Emanuel Peres,829.927.180-09,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,2114684790,AL,AL,Média
-40,Émerson Lopes,462.146.406-00,,Física,Émerson Lopes,462.146.406-00,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,2114684790,AL,AL,Média
-41,Erasmo Fagundes,232.376.034-30,,Física,Erasmo Fagundes,232.376.034-30,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,2114684790,AL,AL,Média
-42,Erasmo Leitão,561.764.750-40,,Física,Erasmo Leitão,561.764.750-40,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,2114684790,AL,AL,Média
-43,Érico Flores,976.374.884-46,,Física,Érico Flores,976.374.884-46,,Física,MVZ7754,Rover/Mini Cooper 1.3,2114684790,AL,AL,Média
-44,Érico Watanabe,219.460.641-65,,Física,Érico Watanabe,219.460.641-65,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,2114684790,AL,AL,Média
-45,Ester Silva,938.727.378-48,,Física,Ester Silva,938.727.378-48,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,2114684790,AL,AL,Média
-46,Evelyn Takeda,644.274.225-35,,Física,Evelyn Takeda,644.274.225-35,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,2114684790,AL,AL,Média
-47,Fabiane Peres,612.033.622-26,,Física,Fabiane Peres,612.033.622-26,,Física,LCT2216,Lada/Samara 1.3/ 1.5,2114684790,AL,AL,Média
-48,Fernando Belchior,605.747.186-56,,Física,Fernando Belchior,605.747.186-56,,Física,MXH5004,Acura/Integra GS 1.8,2114684790,AL,AL,Média
-49,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,AL,Média
-50,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,AL,Média
-51,,,,,,,,,NEY7045,GEN DA/,,,,
-52,,,,,,,,,BMV5105,GEN DA/,,,,
-53,,,,,,,,,MNX1171,Volvo/,,,,
-54,,,,,,,,,MXG6654,Land Rover/,,,,
-55,,,,,,,,,MWZ6550,Fyber/,,,,
-56,,,,,,,,,MLO3215,LAMBORGHINI/,,,,
-57,,,,,,,,,KKA3204,Mazda/,,,,
-58,,,,,,,,,NAL8619,JINBEI/,,,,
-59,,,,,,,,,NFB4339,Matra/,,,,
-60,,,,,,,,,JMU6059,Wake/,,,,
-61,Jaqueline Maia,,,,Jaqueline Maia,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,,Média
-62,Joana Brandão,,,,Joana Brandão,,,,MVZ7754,Rover/Mini Cooper 1.3,,,,Média
-63,Joana Maldonado,,,,Joana Maldonado,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,,Média
-64,Joana Martins,,,,Joana Martins,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,,Média
-65,Joaquim Hashimoto,,,,Joaquim Hashimoto,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,,Média
-66,Jorge Fernandes,,,,Jorge Fernandes,,,,LCT2216,Lada/Samara 1.3/ 1.5,,,,Média
-67,José Melo,,,,José Melo,,,,MXH5004,Acura/Integra GS 1.8,,,,Média
-68,Judite Ventura,,,,Judite Ventura,,,,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,,,Média
-69,Kelly Miranda,,,,Kelly Miranda,,,,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,,,Média
-70,Kléber Bonfim,,,,Kléber Bonfim,,,,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,,,Média
-71,Kléber Siqueira,,,,Kléber Siqueira,,,,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,,,Média
-72,Lavínia Couto,,,,Lavínia Couto,,,,MNX1171,Volvo/C30 2.4 170cv Aut,,,,Média
-73,Leandro Lemos,,,,Leandro Lemos,,,,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,,,Média
-74,Leonardo Justino,,,,Leonardo Justino,,,,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,,,Média
-75,Lorena Fraga,,,,Lorena Fraga,,,,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,,,,Média
-76,Lúcia Justino,,,,Lúcia Justino,,,,KKA3204,Mazda/MX-5 Mec,,,,Média
-77,Lúcia Queiroz,,,,Lúcia Queiroz,,,,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,,,Média
-78,Luciana Castro,,,,Luciana Castro,,,,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,,,Média
-79,Luciano Vidal,,,,Luciano Vidal,,,,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,,,Média
-80,Luiza Falcão,,,,Luiza Falcão,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,,Média
-81,Luíza Padilha,,,,Luíza Padilha,,,,MVZ7754,Rover/Mini Cooper 1.3,,,,Média
-82,Magali Morais,,,,Magali Morais,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,,Média
-83,Maiara Borba,,,,Maiara Borba,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,,Média
-84,Maiara Flores,,,,Maiara Flores,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,,Média
-85,Manuel Leite,492.318.981-91,,Física,Manuel Leite,492.318.981-91,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,SP,SP,
-86,Marcia Nakamura,210.238.529-93,,Física,Renan Maia,863.825.415-67,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-87,Márcio Guerra,181.282.176-07,,Física,Renato Velho,124.495.707-05,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-88,Márcio Rosário,503.366.651-72,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-89,Marília Álves,256.486.738-33,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-90,Marília Medeiras,684.356.754-16,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-91,Marli Cavalcanti,194.724.355-13,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-92,Marta Nunes,636.871.602-97,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-93,Mateus Guedes,668.826.212-68,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,SP,
-94,Mateus Guedes,668.826.212-68,,Física,Mateus Guedes,668.826.212-68,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,SP,SP,
-95,Maurício Vila,734.507.619-94,,Física,Maurício Vila,734.507.619-94,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP5,,SP,SP,
-96,Michele Campos,463.020.307-90,,Física,Michele Campos,463.020.307-90,,Física,KKA3204,Mazda/MX-5 Mec,,SP,SP,
-97,Moacir Arruda,031.954.289-03,,Física,Moacir Arruda,031.954.289-03,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2,,SP,SP,
-98,Neto Ferreira,454.326.826-13,,Física,Neto Ferreira,454.326.826-13,,Física,NFB4339,Matra/Pick-Up CD 4x2,,SP,SP,
-99,Nina Prestes,547.266.678-31,,Física,Nina Prestes,547.266.678-31,,Física,JMU6059,WAKE/Way 1.6 Total Flex,,SP,SP,
-100,Odete Castro,326.784.995-02,,Física,Odete Castro,326.784.995-02,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,SP,SP,
-101,,,,,,,,,MQX9144,HAFEI/,,,,
-102,,,,,,,,,NEY7257,ACURA/,,,,
-103,,,,,,,,,KJT9301,WALK/,,,,
-104,,,,,,,,,JYR2706,HAFEI/,,,,
-105,,,,,,,,,NAU6668,GEELY/,,,,
-106,,,,,,,,,IZO0533,MATRA/,,,,
-107,,,,,,,,,AWC8368,DODGE/,,,,
-108,,,,,,,,,JMZ6382,FIBRAVAN/,,,,
-109,,,,,,,,,KLO8906,SAAB/,,,,
-110,,,,,,,,,NAP0223,SUZUKI/,,,,
-111,,,,,,,,,HEU1387,SSANGYONG/,,,,
-112,,,,,,,,,MZR1199,GREAT WALL/,,,,
-113,,,,,,,,,AXT6289,PORSCHE/,,,,
-114,,,,,,,,,KMW1529,ENVERNO/,,,,
-115,,,,,,,,,KFA3460,LADA/,,,,
-116,Manoel Pimentel,888.867.875-10,,Física,Manoel Pimentel,888.867.875-10,,Física,HYN2930,CHANGAN/MINI STAR CE 1.0 8,,SP,SP,
-117,Diogo Rios,473.512.311-33,,Física,Diogo Rios,473.512.311-33,,Física,MMO9643,Rolls-Royce/Phantom 6.7 V12,,SP,SP,
-118,Arthur Prado,278.632.393-20,,Física,Arthur Prado,278.632.393-20,,Física,JHI9802,Envemo/Camper 4x4 2.5,,SP,SP,
-119,Cristiano Leite,225.586.421-54,,Física,Cristiano Leite,225.586.421-54,,Física,KEY1693,SHINERAY/SY1020 T20 TRUCK,,SP,SP,
-120,Marcos Martins,167.547.131-27,,Física,Marcos Martins,167.547.131-27,,Física,ISB1587,Honda/HR-V LX 1.8 Flexone,,SP,SP,
-121,Murilo Ferraz,683.669.436-31,,Física,Murilo Ferraz,683.669.436-31,,Física,MUQ9220,BMW/330iA Exclusive 3.0,,SP,SP,
-122,Renato Ventura,667.160.447-95,,Física,Renato Ventura,667.160.447-95,,Física,MXR7315,Rover/Mini Cooper 1.3,,SP,SP,
-123,Ivo Ávila,388.464.518-80,,Física,Ivo Ávila,388.464.518-80,,Física,LVK1018,Fyber/Buggy 2000W 1.6 8V,,SP,SP,
-124,Aurélio Luz,513.160.432-07,,Física,Aurélio Luz,513.160.432-07,,Física,MSJ8618,LOBINI/H1 1.8 20V Turbo 18,,SP,SP,
-125,Ricardo Nazário,590.783.233-96,,Física,Ricardo Nazário,590.783.233-96,,Física,MUB6296,FOTON/AUMARK 3.50AK 2.8,,SP,SP,
+Arquivo,Nome Proprietário,CPF,CNPJ,Pessoa,Nome Condutor,CPF,CNPJ,Pessoa,Placa,Marca,Renavam,Local UF,Gravidade
+1,Jaqueline Maia,,,,Jaqueline Maia,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+1,Jaqueline Maia,,,,Jaqueline Maia,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+1,Jaqueline Maia,,,,Jaqueline Maia,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+1,Jaqueline Maia,,,,Jaqueline Maia,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+1,Jaqueline Maia,,,,Jaqueline Maia,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+2,Joana Brandão,,,,Joana Brandão,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+2,Joana Brandão,,,,Joana Brandão,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+2,Joana Brandão,,,,Joana Brandão,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+2,Joana Brandão,,,,Joana Brandão,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+2,Joana Brandão,,,,Joana Brandão,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+3,Joana Maldonado,,,,Joana Maldonado,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+3,Joana Maldonado,,,,Joana Maldonado,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+3,Joana Maldonado,,,,Joana Maldonado,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+3,Joana Maldonado,,,,Joana Maldonado,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+3,Joana Maldonado,,,,Joana Maldonado,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+4,Joana Martins,,,,Joana Martins,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+4,Joana Martins,,,,Joana Martins,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+4,Joana Martins,,,,Joana Martins,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+4,Joana Martins,,,,Joana Martins,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+4,Joana Martins,,,,Joana Martins,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+5,Joaquim Hashimoto,,,,Joaquim Hashimoto,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+5,Joaquim Hashimoto,,,,Joaquim Hashimoto,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+5,Joaquim Hashimoto,,,,Joaquim Hashimoto,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+5,Joaquim Hashimoto,,,,Joaquim Hashimoto,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+5,Joaquim Hashimoto,,,,Joaquim Hashimoto,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+6,Edna Ávila,641.294.201-78,,Física,Edna Ávila,641.294.201-78,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,2114684790,AL,Média
+6,Edna Ávila,641.294.201-78,,Física,Edna Ávila,641.294.201-78,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,2114684790,AL,Média
+6,Edna Ávila,641.294.201-78,,Física,Edna Ávila,641.294.201-78,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,2114684790,AL,Média
+6,Edna Ávila,641.294.201-78,,Física,Edna Ávila,641.294.201-78,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,2114684790,AL,Média
+6,Edna Ávila,641.294.201-78,,Física,Edna Ávila,641.294.201-78,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,2114684790,AL,Média
+7,Eduarda Gimenes,232.422.125-09,,Física,Eduarda Gimenes,232.422.125-09,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,2114684790,AL,Média
+7,Eduarda Gimenes,232.422.125-09,,Física,Eduarda Gimenes,232.422.125-09,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,2114684790,AL,Média
+7,Eduarda Gimenes,232.422.125-09,,Física,Eduarda Gimenes,232.422.125-09,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,2114684790,AL,Média
+7,Eduarda Gimenes,232.422.125-09,,Física,Eduarda Gimenes,232.422.125-09,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,2114684790,AL,Média
+7,Eduarda Gimenes,232.422.125-09,,Física,Eduarda Gimenes,232.422.125-09,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,2114684790,AL,Média
+8,Eduardo Luz,622.064.550-21,,Física,Eduardo Luz,622.064.550-21,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,2114684790,AL,Média
+8,Eduardo Luz,622.064.550-21,,Física,Eduardo Luz,622.064.550-21,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,2114684790,AL,Média
+8,Eduardo Luz,622.064.550-21,,Física,Eduardo Luz,622.064.550-21,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,2114684790,AL,Média
+8,Eduardo Luz,622.064.550-21,,Física,Eduardo Luz,622.064.550-21,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,2114684790,AL,Média
+8,Eduardo Luz,622.064.550-21,,Física,Eduardo Luz,622.064.550-21,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,2114684790,AL,Média
+9,Eloísa Siqueira,173.587.725-55,,Física,Eloísa Siqueira,173.587.725-55,,Física,KKB3204,Mazda/MX-5 Mec,2114684790,AL,Média
+9,Eloísa Siqueira,173.587.725-55,,Física,Eloísa Siqueira,173.587.725-55,,Física,KKB3204,Mazda/MX-5 Mec,2114684790,AL,Média
+9,Eloísa Siqueira,173.587.725-55,,Física,Eloísa Siqueira,173.587.725-55,,Física,KKB3204,Mazda/MX-5 Mec,2114684790,AL,Média
+9,Eloísa Siqueira,173.587.725-55,,Física,Eloísa Siqueira,173.587.725-55,,Física,KKB3204,Mazda/MX-5 Mec,2114684790,AL,Média
+9,Eloísa Siqueira,173.587.725-55,,Física,Eloísa Siqueira,173.587.725-55,,Física,KKB3204,Mazda/MX-5 Mec,2114684790,AL,Média
+10,Emanuel Peres,829.927.180-09,,Física,Emanuel Peres,829.927.180-09,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,2114684790,AL,Média
+10,Emanuel Peres,829.927.180-09,,Física,Emanuel Peres,829.927.180-09,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,2114684790,AL,Média
+10,Emanuel Peres,829.927.180-09,,Física,Emanuel Peres,829.927.180-09,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,2114684790,AL,Média
+10,Emanuel Peres,829.927.180-09,,Física,Emanuel Peres,829.927.180-09,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,2114684790,AL,Média
+10,Emanuel Peres,829.927.180-09,,Física,Emanuel Peres,829.927.180-09,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,2114684790,AL,Média
+11,Artur Brandão,077.805.804-23,,Física,Artur Brandão,077.805.804-23,,Física,MXH5004,Acura/Integra GS 1.8,,ES,
+11,Artur Brandão,077.805.804-23,,Física,Artur Brandão,077.805.804-23,,Física,MXH5004,Acura/Integra GS 1.8,,ES,
+11,Artur Brandão,077.805.804-23,,Física,Artur Brandão,077.805.804-23,,Física,MXH5004,Acura/Integra GS 1.8,,ES,
+11,Artur Brandão,077.805.804-23,,Física,Artur Brandão,077.805.804-23,,Física,MXH5004,Acura/Integra GS 1.8,,ES,
+11,Artur Brandão,077.805.804-23,,Física,Artur Brandão,077.805.804-23,,Física,MXH5004,Acura/Integra GS 1.8,,ES,
+12,Artur Hamamura,063.732.766-78,,Física,Artur Hamamura,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,ES,
+12,Artur Hamamura,063.732.766-78,,Física,Artur Hamamura,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,ES,
+12,Artur Hamamura,063.732.766-78,,Física,Artur Hamamura,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,ES,
+12,Artur Hamamura,063.732.766-78,,Física,Artur Hamamura,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,ES,
+12,Artur Hamamura,063.732.766-78,,Física,Artur Hamamura,063.732.766-78,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,ES,
+13,Áurea Henriques,593.913.532-31,,Física,Áurea Henriques,593.913.532-31,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+13,Áurea Henriques,593.913.532-31,,Física,Áurea Henriques,593.913.532-31,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+13,Áurea Henriques,593.913.532-31,,Física,Áurea Henriques,593.913.532-31,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+13,Áurea Henriques,593.913.532-31,,Física,Áurea Henriques,593.913.532-31,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+13,Áurea Henriques,593.913.532-31,,Física,Áurea Henriques,593.913.532-31,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+14,Aurélio Queiroz,631.616.164-64,,Física,Aurélio Queiroz,631.616.164-64,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+14,Aurélio Queiroz,631.616.164-64,,Física,Aurélio Queiroz,631.616.164-64,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+14,Aurélio Queiroz,631.616.164-64,,Física,Aurélio Queiroz,631.616.164-64,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+14,Aurélio Queiroz,631.616.164-64,,Física,Aurélio Queiroz,631.616.164-64,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+14,Aurélio Queiroz,631.616.164-64,,Física,Aurélio Queiroz,631.616.164-64,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+15,Bruno Flores,027.041.616-15,,Física,Bruno Flores,027.041.616-15,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+15,Bruno Flores,027.041.616-15,,Física,Bruno Flores,027.041.616-15,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+15,Bruno Flores,027.041.616-15,,Física,Bruno Flores,027.041.616-15,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+15,Bruno Flores,027.041.616-15,,Física,Bruno Flores,027.041.616-15,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+15,Bruno Flores,027.041.616-15,,Física,Bruno Flores,027.041.616-15,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+16,,,,,,,,,MQX9144,HAFEI/,,,
+16,,,,,,,,,MQX9144,HAFEI/,,,
+16,,,,,,,,,MQX9144,HAFEI/,,,
+16,,,,,,,,,MQX9144,HAFEI/,,,
+16,,,,,,,,,MQX9144,HAFEI/,,,
+17,,,,,,,,,NEY7257,ACURA/,,,
+17,,,,,,,,,NEY7257,ACURA/,,,
+17,,,,,,,,,NEY7257,ACURA/,,,
+17,,,,,,,,,NEY7257,ACURA/,,,
+17,,,,,,,,,NEY7257,ACURA/,,,
+18,,,,,,,,,KJT9301,WALK/,,,
+18,,,,,,,,,KJT9301,WALK/,,,
+18,,,,,,,,,KJT9301,WALK/,,,
+18,,,,,,,,,KJT9301,WALK/,,,
+18,,,,,,,,,KJT9301,WALK/,,,
+19,,,,,,,,,JYR2706,HAFEI/,,,
+19,,,,,,,,,JYR2706,HAFEI/,,,
+19,,,,,,,,,JYR2706,HAFEI/,,,
+19,,,,,,,,,JYR2706,HAFEI/,,,
+19,,,,,,,,,JYR2706,HAFEI/,,,
+20,,,,,,,,,NAU6668,GEELY/,,,
+20,,,,,,,,,NAU6668,GEELY/,,,
+20,,,,,,,,,NAU6668,GEELY/,,,
+20,,,,,,,,,NAU6668,GEELY/,,,
+20,,,,,,,,,NAU6668,GEELY/,,,
+21,Odete Castro,326.784.995-02,,Física,Odete Castro,326.784.995-02,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,SP,
+21,Odete Castro,326.784.995-02,,Física,Odete Castro,326.784.995-02,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,SP,
+21,Odete Castro,326.784.995-02,,Física,Odete Castro,326.784.995-02,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,SP,
+21,Odete Castro,326.784.995-02,,Física,Odete Castro,326.784.995-02,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,SP,
+21,Odete Castro,326.784.995-02,,Física,Odete Castro,326.784.995-02,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,SP,
+22,Manoel Pimentel,888.867.875-10,,Física,Manoel Pimentel,888.867.875-10,,Física,HYN2930,CHANGAN/MINI STAR CE 1.0 8,,SP,
+22,Manoel Pimentel,888.867.875-10,,Física,Manoel Pimentel,888.867.875-10,,Física,HYN2930,CHANGAN/MINI STAR CE 1.0 8,,SP,
+22,Manoel Pimentel,888.867.875-10,,Física,Manoel Pimentel,888.867.875-10,,Física,HYN2930,CHANGAN/MINI STAR CE 1.0 8,,SP,
+22,Manoel Pimentel,888.867.875-10,,Física,Manoel Pimentel,888.867.875-10,,Física,HYN2930,CHANGAN/MINI STAR CE 1.0 8,,SP,
+22,Manoel Pimentel,888.867.875-10,,Física,Manoel Pimentel,888.867.875-10,,Física,HYN2930,CHANGAN/MINI STAR CE 1.0 8,,SP,
+23,Diogo Rios,473.512.311-33,,Física,Diogo Rios,473.512.311-33,,Física,MMO9643,Rolls-Royce/Phantom 6.7 V12,,SP,
+23,Diogo Rios,473.512.311-33,,Física,Diogo Rios,473.512.311-33,,Física,MMO9643,Rolls-Royce/Phantom 6.7 V12,,SP,
+23,Diogo Rios,473.512.311-33,,Física,Diogo Rios,473.512.311-33,,Física,MMO9643,Rolls-Royce/Phantom 6.7 V12,,SP,
+23,Diogo Rios,473.512.311-33,,Física,Diogo Rios,473.512.311-33,,Física,MMO9643,Rolls-Royce/Phantom 6.7 V12,,SP,
+23,Diogo Rios,473.512.311-33,,Física,Diogo Rios,473.512.311-33,,Física,MMO9643,Rolls-Royce/Phantom 6.7 V12,,SP,
+24,Arthur Prado,278.632.393-20,,Física,Arthur Prado,278.632.393-20,,Física,JHI9802,Envemo/Camper 4x4 2.5,,SP,
+24,Arthur Prado,278.632.393-20,,Física,Arthur Prado,278.632.393-20,,Física,JHI9802,Envemo/Camper 4x4 2.5,,SP,
+24,Arthur Prado,278.632.393-20,,Física,Arthur Prado,278.632.393-20,,Física,JHI9802,Envemo/Camper 4x4 2.5,,SP,
+24,Arthur Prado,278.632.393-20,,Física,Arthur Prado,278.632.393-20,,Física,JHI9802,Envemo/Camper 4x4 2.5,,SP,
+24,Arthur Prado,278.632.393-20,,Física,Arthur Prado,278.632.393-20,,Física,JHI9802,Envemo/Camper 4x4 2.5,,SP,
+25,Cristiano Leite,225.586.421-54,,Física,Cristiano Leite,225.586.421-54,,Física,KEY1693,SHINERAY/SY1020 T20 TRUCK,,SP,
+25,Cristiano Leite,225.586.421-54,,Física,Cristiano Leite,225.586.421-54,,Física,KEY1693,SHINERAY/SY1020 T20 TRUCK,,SP,
+25,Cristiano Leite,225.586.421-54,,Física,Cristiano Leite,225.586.421-54,,Física,KEY1693,SHINERAY/SY1020 T20 TRUCK,,SP,
+25,Cristiano Leite,225.586.421-54,,Física,Cristiano Leite,225.586.421-54,,Física,KEY1693,SHINERAY/SY1020 T20 TRUCK,,SP,
+25,Cristiano Leite,225.586.421-54,,Física,Cristiano Leite,225.586.421-54,,Física,KEY1693,SHINERAY/SY1020 T20 TRUCK,,SP,
+26,Kléber Bonfim,,,,Kléber Bonfim,,,,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,,Média
+26,Kléber Bonfim,,,,Kléber Bonfim,,,,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,,Média
+26,Kléber Bonfim,,,,Kléber Bonfim,,,,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,,Média
+26,Kléber Bonfim,,,,Kléber Bonfim,,,,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,,Média
+26,Kléber Bonfim,,,,Kléber Bonfim,,,,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,,Média
+27,Kelly Miranda,,,,Kelly Miranda,,,,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,,Média
+27,Kelly Miranda,,,,Kelly Miranda,,,,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,,Média
+27,Kelly Miranda,,,,Kelly Miranda,,,,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,,Média
+27,Kelly Miranda,,,,Kelly Miranda,,,,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,,Média
+27,Kelly Miranda,,,,Kelly Miranda,,,,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,,Média
+28,Judite Ventura,,,,Judite Ventura,,,,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,,Média
+28,Judite Ventura,,,,Judite Ventura,,,,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,,Média
+28,Judite Ventura,,,,Judite Ventura,,,,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,,Média
+28,Judite Ventura,,,,Judite Ventura,,,,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,,Média
+28,Judite Ventura,,,,Judite Ventura,,,,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,,,Média
+29,José Melo,,,,José Melo,,,,MXH5004,Acura/Integra GS 1.8,,,Média
+29,José Melo,,,,José Melo,,,,MXH5004,Acura/Integra GS 1.8,,,Média
+29,José Melo,,,,José Melo,,,,MXH5004,Acura/Integra GS 1.8,,,Média
+29,José Melo,,,,José Melo,,,,MXH5004,Acura/Integra GS 1.8,,,Média
+29,José Melo,,,,José Melo,,,,MXH5004,Acura/Integra GS 1.8,,,Média
+30,Aurélio Luz,513.160.432-07,,Física,Aurélio Luz,513.160.432-07,,Física,MSJ8618,LOBINI/H1 1.8 20V Turbo 18,,SP,
+30,Aurélio Luz,513.160.432-07,,Física,Aurélio Luz,513.160.432-07,,Física,MSJ8618,LOBINI/H1 1.8 20V Turbo 18,,SP,
+30,Aurélio Luz,513.160.432-07,,Física,Aurélio Luz,513.160.432-07,,Física,MSJ8618,LOBINI/H1 1.8 20V Turbo 18,,SP,
+30,Aurélio Luz,513.160.432-07,,Física,Aurélio Luz,513.160.432-07,,Física,MSJ8618,LOBINI/H1 1.8 20V Turbo 18,,SP,
+30,Aurélio Luz,513.160.432-07,,Física,Aurélio Luz,513.160.432-07,,Física,MSJ8618,LOBINI/H1 1.8 20V Turbo 18,,SP,
+31,Manuel Leite,492.318.981-91,,Física,Manuel Leite,492.318.981-91,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,SP,
+31,Manuel Leite,492.318.981-91,,Física,Manuel Leite,492.318.981-91,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,SP,
+31,Manuel Leite,492.318.981-91,,Física,Manuel Leite,492.318.981-91,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,SP,
+31,Manuel Leite,492.318.981-91,,Física,Manuel Leite,492.318.981-91,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,SP,
+31,Manuel Leite,492.318.981-91,,Física,Manuel Leite,492.318.981-91,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,SP,
+32,Marcia Nakamura,210.238.529-93,,Física,Renan Maia,863.825.415-67,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+32,Marcia Nakamura,210.238.529-93,,Física,Renan Maia,863.825.415-67,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+32,Marcia Nakamura,210.238.529-93,,Física,Renan Maia,863.825.415-67,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+32,Marcia Nakamura,210.238.529-93,,Física,Renan Maia,863.825.415-67,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+32,Marcia Nakamura,210.238.529-93,,Física,Renan Maia,863.825.415-67,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+33,Murilo Ferraz,683.669.436-31,,Física,Murilo Ferraz,683.669.436-31,,Física,MUQ9220,BMW/330iA Exclusive 3.0,,SP,
+33,Murilo Ferraz,683.669.436-31,,Física,Murilo Ferraz,683.669.436-31,,Física,MUQ9220,BMW/330iA Exclusive 3.0,,SP,
+33,Murilo Ferraz,683.669.436-31,,Física,Murilo Ferraz,683.669.436-31,,Física,MUQ9220,BMW/330iA Exclusive 3.0,,SP,
+33,Murilo Ferraz,683.669.436-31,,Física,Murilo Ferraz,683.669.436-31,,Física,MUQ9220,BMW/330iA Exclusive 3.0,,SP,
+33,Murilo Ferraz,683.669.436-31,,Física,Murilo Ferraz,683.669.436-31,,Física,MUQ9220,BMW/330iA Exclusive 3.0,,SP,
+34,Renato Ventura,667.160.447-95,,Física,Renato Ventura,667.160.447-95,,Física,MXR7315,Rover/Mini Cooper 1.3,,SP,
+34,Renato Ventura,667.160.447-95,,Física,Renato Ventura,667.160.447-95,,Física,MXR7315,Rover/Mini Cooper 1.3,,SP,
+34,Renato Ventura,667.160.447-95,,Física,Renato Ventura,667.160.447-95,,Física,MXR7315,Rover/Mini Cooper 1.3,,SP,
+34,Renato Ventura,667.160.447-95,,Física,Renato Ventura,667.160.447-95,,Física,MXR7315,Rover/Mini Cooper 1.3,,SP,
+34,Renato Ventura,667.160.447-95,,Física,Renato Ventura,667.160.447-95,,Física,MXR7315,Rover/Mini Cooper 1.3,,SP,
+35,Ivo Ávila,388.464.518-80,,Física,Ivo Ávila,388.464.518-80,,Física,LVK1018,Fyber/Buggy 2000W 1.6 8V,,SP,
+35,Ivo Ávila,388.464.518-80,,Física,Ivo Ávila,388.464.518-80,,Física,LVK1018,Fyber/Buggy 2000W 1.6 8V,,SP,
+35,Ivo Ávila,388.464.518-80,,Física,Ivo Ávila,388.464.518-80,,Física,LVK1018,Fyber/Buggy 2000W 1.6 8V,,SP,
+35,Ivo Ávila,388.464.518-80,,Física,Ivo Ávila,388.464.518-80,,Física,LVK1018,Fyber/Buggy 2000W 1.6 8V,,SP,
+35,Ivo Ávila,388.464.518-80,,Física,Ivo Ávila,388.464.518-80,,Física,LVK1018,Fyber/Buggy 2000W 1.6 8V,,SP,
+36,Clarissa Salles,835.098.768-57,,Física,Clarissa Salles,835.098.768-57,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+36,Clarissa Salles,835.098.768-57,,Física,Clarissa Salles,835.098.768-57,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+36,Clarissa Salles,835.098.768-57,,Física,Clarissa Salles,835.098.768-57,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+36,Clarissa Salles,835.098.768-57,,Física,Clarissa Salles,835.098.768-57,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+36,Clarissa Salles,835.098.768-57,,Física,Clarissa Salles,835.098.768-57,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+37,Ângelo Pimentel,888.687.454-53,,Física,Ângelo Pimentel,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+37,Ângelo Pimentel,888.687.454-53,,Física,Ângelo Pimentel,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+37,Ângelo Pimentel,888.687.454-53,,Física,Ângelo Pimentel,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+37,Ângelo Pimentel,888.687.454-53,,Física,Ângelo Pimentel,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+37,Ângelo Pimentel,888.687.454-53,,Física,Ângelo Pimentel,888.687.454-53,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+38,Ana Pessoa,812.658.659-14,,Física,Ana Pessoa,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+38,Ana Pessoa,812.658.659-14,,Física,Ana Pessoa,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+38,Ana Pessoa,812.658.659-14,,Física,Ana Pessoa,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+38,Ana Pessoa,812.658.659-14,,Física,Ana Pessoa,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+38,Ana Pessoa,812.658.659-14,,Física,Ana Pessoa,812.658.659-14,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+39,André Yoshimura,855.151.127-09,,Física,André Yoshimura,855.151.127-09,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+39,André Yoshimura,855.151.127-09,,Física,André Yoshimura,855.151.127-09,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+39,André Yoshimura,855.151.127-09,,Física,André Yoshimura,855.151.127-09,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+39,André Yoshimura,855.151.127-09,,Física,André Yoshimura,855.151.127-09,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+39,André Yoshimura,855.151.127-09,,Física,André Yoshimura,855.151.127-09,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,ES,
+40,Arnoldo Chagas,118.229.002-71,,Física,Arnoldo Chagas,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,ES,
+40,Arnoldo Chagas,118.229.002-71,,Física,Arnoldo Chagas,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,ES,
+40,Arnoldo Chagas,118.229.002-71,,Física,Arnoldo Chagas,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,ES,
+40,Arnoldo Chagas,118.229.002-71,,Física,Arnoldo Chagas,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,ES,
+40,Arnoldo Chagas,118.229.002-71,,Física,Arnoldo Chagas,118.229.002-71,,Física,LCT2216,Lada/Samara 1.3/ 1.5,,ES,
+41,Evelyn Takeda,644.274.225-35,,Física,Evelyn Takeda,644.274.225-35,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,2114684790,AL,Média
+41,Evelyn Takeda,644.274.225-35,,Física,Evelyn Takeda,644.274.225-35,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,2114684790,AL,Média
+41,Evelyn Takeda,644.274.225-35,,Física,Evelyn Takeda,644.274.225-35,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,2114684790,AL,Média
+41,Evelyn Takeda,644.274.225-35,,Física,Evelyn Takeda,644.274.225-35,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,2114684790,AL,Média
+41,Evelyn Takeda,644.274.225-35,,Física,Evelyn Takeda,644.274.225-35,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,2114684790,AL,Média
+42,Fabiane Peres,612.033.622-26,,Física,Fabiane Peres,612.033.622-26,,Física,LCT2216,Lada/Samara 1.3/ 1.5,2114684790,AL,Média
+42,Fabiane Peres,612.033.622-26,,Física,Fabiane Peres,612.033.622-26,,Física,LCT2216,Lada/Samara 1.3/ 1.5,2114684790,AL,Média
+42,Fabiane Peres,612.033.622-26,,Física,Fabiane Peres,612.033.622-26,,Física,LCT2216,Lada/Samara 1.3/ 1.5,2114684790,AL,Média
+42,Fabiane Peres,612.033.622-26,,Física,Fabiane Peres,612.033.622-26,,Física,LCT2216,Lada/Samara 1.3/ 1.5,2114684790,AL,Média
+42,Fabiane Peres,612.033.622-26,,Física,Fabiane Peres,612.033.622-26,,Física,LCT2216,Lada/Samara 1.3/ 1.5,2114684790,AL,Média
+43,Fernando Belchior,605.747.186-56,,Física,Fernando Belchior,605.747.186-56,,Física,MXH5004,Acura/Integra GS 1.8,2114684790,AL,Média
+43,Fernando Belchior,605.747.186-56,,Física,Fernando Belchior,605.747.186-56,,Física,MXH5004,Acura/Integra GS 1.8,2114684790,AL,Média
+43,Fernando Belchior,605.747.186-56,,Física,Fernando Belchior,605.747.186-56,,Física,MXH5004,Acura/Integra GS 1.8,2114684790,AL,Média
+43,Fernando Belchior,605.747.186-56,,Física,Fernando Belchior,605.747.186-56,,Física,MXH5004,Acura/Integra GS 1.8,2114684790,AL,Média
+43,Fernando Belchior,605.747.186-56,,Física,Fernando Belchior,605.747.186-56,,Física,MXH5004,Acura/Integra GS 1.8,2114684790,AL,Média
+44,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+44,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+44,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+44,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+44,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+45,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+45,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+45,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+45,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+45,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+46,,,,,,,,,NEY7045,GEN DA/,,,
+46,,,,,,,,,NEY7045,GEN DA/,,,
+46,,,,,,,,,NEY7045,GEN DA/,,,
+46,,,,,,,,,NEY7045,GEN DA/,,,
+46,,,,,,,,,NEY7045,GEN DA/,,,
+47,,,,,,,,,BMV5105,GEN DA/,,,
+47,,,,,,,,,BMV5105,GEN DA/,,,
+47,,,,,,,,,BMV5105,GEN DA/,,,
+47,,,,,,,,,BMV5105,GEN DA/,,,
+47,,,,,,,,,BMV5105,GEN DA/,,,
+48,,,,,,,,,JMZ6382,FIBRAVAN/,,,
+48,,,,,,,,,JMZ6382,FIBRAVAN/,,,
+48,,,,,,,,,JMZ6382,FIBRAVAN/,,,
+48,,,,,,,,,JMZ6382,FIBRAVAN/,,,
+48,,,,,,,,,JMZ6382,FIBRAVAN/,,,
+49,,,,,,,,,KLO8906,SAAB/,,,
+49,,,,,,,,,KLO8906,SAAB/,,,
+49,,,,,,,,,KLO8906,SAAB/,,,
+49,,,,,,,,,KLO8906,SAAB/,,,
+49,,,,,,,,,KLO8906,SAAB/,,,
+50,,,,,,,,,NAP0223,SUZUKI/,,,
+50,,,,,,,,,NAP0223,SUZUKI/,,,
+50,,,,,,,,,NAP0223,SUZUKI/,,,
+50,,,,,,,,,NAP0223,SUZUKI/,,,
+50,,,,,,,,,NAP0223,SUZUKI/,,,
+51,Luciana Castro,,,,Luciana Castro,,,,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,,Média
+51,Luciana Castro,,,,Luciana Castro,,,,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,,Média
+51,Luciana Castro,,,,Luciana Castro,,,,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,,Média
+51,Luciana Castro,,,,Luciana Castro,,,,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,,Média
+51,Luciana Castro,,,,Luciana Castro,,,,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,,Média
+52,Luciano Vidal,,,,Luciano Vidal,,,,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,,Média
+52,Luciano Vidal,,,,Luciano Vidal,,,,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,,Média
+52,Luciano Vidal,,,,Luciano Vidal,,,,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,,Média
+52,Luciano Vidal,,,,Luciano Vidal,,,,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,,Média
+52,Luciano Vidal,,,,Luciano Vidal,,,,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,,,Média
+53,Luiza Falcão,,,,Luiza Falcão,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+53,Luiza Falcão,,,,Luiza Falcão,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+53,Luiza Falcão,,,,Luiza Falcão,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+53,Luiza Falcão,,,,Luiza Falcão,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+53,Luiza Falcão,,,,Luiza Falcão,,,,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,,Média
+54,Luíza Padilha,,,,Luíza Padilha,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+54,Luíza Padilha,,,,Luíza Padilha,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+54,Luíza Padilha,,,,Luíza Padilha,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+54,Luíza Padilha,,,,Luíza Padilha,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+54,Luíza Padilha,,,,Luíza Padilha,,,,MVZ7754,Rover/Mini Cooper 1.3,,,Média
+55,Cíntia Corrêa,213.589.752-30,,Física,Cíntia Corrêa,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+55,Cíntia Corrêa,213.589.752-30,,Física,Cíntia Corrêa,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+55,Cíntia Corrêa,213.589.752-30,,Física,Cíntia Corrêa,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+55,Cíntia Corrêa,213.589.752-30,,Física,Cíntia Corrêa,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+55,Cíntia Corrêa,213.589.752-30,,Física,Cíntia Corrêa,213.589.752-30,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,,ES,
+56,Áurea Bonfim,317.434.142-69,,Física,Áurea Bonfim,317.434.142-69,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+56,Áurea Bonfim,317.434.142-69,,Física,Áurea Bonfim,317.434.142-69,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+56,Áurea Bonfim,317.434.142-69,,Física,Áurea Bonfim,317.434.142-69,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+56,Áurea Bonfim,317.434.142-69,,Física,Áurea Bonfim,317.434.142-69,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+56,Áurea Bonfim,317.434.142-69,,Física,Áurea Bonfim,317.434.142-69,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,ES,
+57,Augusto Alves,715.815.128-05,,Física,Augusto Alves,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,ES,
+57,Augusto Alves,715.815.128-05,,Física,Augusto Alves,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,ES,
+57,Augusto Alves,715.815.128-05,,Física,Augusto Alves,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,ES,
+57,Augusto Alves,715.815.128-05,,Física,Augusto Alves,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,ES,
+57,Augusto Alves,715.815.128-05,,Física,Augusto Alves,715.815.128-05,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,,ES,
+58,Arthur Hashimoto,360.422.101-30,,Física,Arthur Hashimoto,360.422.101-30,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,ES,
+58,Arthur Hashimoto,360.422.101-30,,Física,Arthur Hashimoto,360.422.101-30,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,ES,
+58,Arthur Hashimoto,360.422.101-30,,Física,Arthur Hashimoto,360.422.101-30,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,ES,
+58,Arthur Hashimoto,360.422.101-30,,Física,Arthur Hashimoto,360.422.101-30,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,ES,
+58,Arthur Hashimoto,360.422.101-30,,Física,Arthur Hashimoto,360.422.101-30,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,,ES,
+59,Antonio Melo,166.058.923-13,,Física,Antonio Melo,166.058.923-13,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,
+59,Antonio Melo,166.058.923-13,,Física,Antonio Melo,166.058.923-13,,Física,MVZ7755,Rover/Mini Cooper 1.3,,ES,
+59,Antonio Melo,166.058.923-13,,Física,Antonio Melo,166.058.923-13,,Física,MVZ7756,Rover/Mini Cooper 1.3,,ES,
+59,Antonio Melo,166.058.923-13,,Física,Antonio Melo,166.058.923-13,,Física,MVZ7757,Rover/Mini Cooper 1.3,,ES,
+59,Antonio Melo,166.058.923-13,,Física,Antonio Melo,166.058.923-13,,Física,MVZ7758,Rover/Mini Cooper 1.3,,ES,
+60,,,,,,,,,NAL8619,JINBEI/,,,
+60,,,,,,,,,NAL8619,JINBEI/,,,
+60,,,,,,,,,NAL8619,JINBEI/,,,
+60,,,,,,,,,NAL8619,JINBEI/,,,
+60,,,,,,,,,NAL8619,JINBEI/,,,
+61,,,,,,,,,NFB4339,Matra/,,,
+61,,,,,,,,,NFB4339,Matra/,,,
+61,,,,,,,,,NFB4339,Matra/,,,
+61,,,,,,,,,NFB4339,Matra/,,,
+61,,,,,,,,,NFB4339,Matra/,,,
+62,,,,,,,,,JMU6059,Wake/,,,
+62,,,,,,,,,JMU6059,Wake/,,,
+62,,,,,,,,,JMU6059,Wake/,,,
+62,,,,,,,,,JMU6059,Wake/,,,
+62,,,,,,,,,JMU6059,Wake/,,,
+63,,,,,,,,,IZO0533,MATRA/,,,
+63,,,,,,,,,IZO0533,MATRA/,,,
+63,,,,,,,,,IZO0533,MATRA/,,,
+63,,,,,,,,,IZO0533,MATRA/,,,
+63,,,,,,,,,IZO0533,MATRA/,,,
+64,,,,,,,,,AWC8368,DODGE/,,,
+64,,,,,,,,,AWC8368,DODGE/,,,
+64,,,,,,,,,AWC8368,DODGE/,,,
+64,,,,,,,,,AWC8368,DODGE/,,,
+64,,,,,,,,,AWC8368,DODGE/,,,
+65,Émerson Lopes,462.146.406-00,,Física,Émerson Lopes,462.146.406-00,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,2114684790,AL,Média
+65,Émerson Lopes,462.146.406-00,,Física,Émerson Lopes,462.146.406-00,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,2114684790,AL,Média
+65,Émerson Lopes,462.146.406-00,,Física,Émerson Lopes,462.146.406-00,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,2114684790,AL,Média
+65,Émerson Lopes,462.146.406-00,,Física,Émerson Lopes,462.146.406-00,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,2114684790,AL,Média
+65,Émerson Lopes,462.146.406-00,,Física,Émerson Lopes,462.146.406-00,,Física,NFB4339,Matra/Pick-Up CD 4x2 Curto/Longo 2.5 TDI Dies.,2114684790,AL,Média
+66,Erasmo Fagundes,232.376.034-30,,Física,Erasmo Fagundes,232.376.034-30,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,2114684790,AL,Média
+66,Erasmo Fagundes,232.376.034-30,,Física,Erasmo Fagundes,232.376.034-30,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,2114684790,AL,Média
+66,Erasmo Fagundes,232.376.034-30,,Física,Erasmo Fagundes,232.376.034-30,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,2114684790,AL,Média
+66,Erasmo Fagundes,232.376.034-30,,Física,Erasmo Fagundes,232.376.034-30,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,2114684790,AL,Média
+66,Erasmo Fagundes,232.376.034-30,,Física,Erasmo Fagundes,232.376.034-30,,Física,JMU6059,Wake/Way 1.6 Total Flex 8V Mec.,2114684790,AL,Média
+67,Erasmo Leitão,561.764.750-40,,Física,Erasmo Leitão,561.764.750-40,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,2114684790,AL,Média
+67,Erasmo Leitão,561.764.750-40,,Física,Erasmo Leitão,561.764.750-40,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,2114684790,AL,Média
+67,Erasmo Leitão,561.764.750-40,,Física,Erasmo Leitão,561.764.750-40,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,2114684790,AL,Média
+67,Erasmo Leitão,561.764.750-40,,Física,Erasmo Leitão,561.764.750-40,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,2114684790,AL,Média
+67,Erasmo Leitão,561.764.750-40,,Física,Erasmo Leitão,561.764.750-40,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,2114684790,AL,Média
+68,Érico Flores,976.374.884-46,,Física,Érico Flores,976.374.884-46,,Física,MVZ7754,Rover/Mini Cooper 1.3,2114684790,AL,Média
+68,Érico Flores,976.374.884-46,,Física,Érico Flores,976.374.884-46,,Física,MVZ7754,Rover/Mini Cooper 1.3,2114684790,AL,Média
+68,Érico Flores,976.374.884-46,,Física,Érico Flores,976.374.884-46,,Física,MVZ7754,Rover/Mini Cooper 1.3,2114684790,AL,Média
+68,Érico Flores,976.374.884-46,,Física,Érico Flores,976.374.884-46,,Física,MVZ7754,Rover/Mini Cooper 1.3,2114684790,AL,Média
+68,Érico Flores,976.374.884-46,,Física,Érico Flores,976.374.884-46,,Física,MVZ7754,Rover/Mini Cooper 1.3,2114684790,AL,Média
+69,Érico Watanabe,219.460.641-65,,Física,Érico Watanabe,219.460.641-65,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,2114684790,AL,Média
+69,Érico Watanabe,219.460.641-65,,Física,Érico Watanabe,219.460.641-65,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,2114684790,AL,Média
+69,Érico Watanabe,219.460.641-65,,Física,Érico Watanabe,219.460.641-65,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,2114684790,AL,Média
+69,Érico Watanabe,219.460.641-65,,Física,Érico Watanabe,219.460.641-65,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,2114684790,AL,Média
+69,Érico Watanabe,219.460.641-65,,Física,Érico Watanabe,219.460.641-65,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,2114684790,AL,Média
+70,Maurício Vila,734.507.619-94,,Física,Maurício Vila,734.507.619-94,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP5,,SP,
+70,Maurício Vila,734.507.619-94,,Física,Maurício Vila,734.507.619-94,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP5,,SP,
+70,Maurício Vila,734.507.619-94,,Física,Maurício Vila,734.507.619-94,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP5,,SP,
+70,Maurício Vila,734.507.619-94,,Física,Maurício Vila,734.507.619-94,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP5,,SP,
+70,Maurício Vila,734.507.619-94,,Física,Maurício Vila,734.507.619-94,,Física,MLO3215,LAMBORGHINI/Gallardo Spider LP5,,SP,
+71,Michele Campos,463.020.307-90,,Física,Michele Campos,463.020.307-90,,Física,KKA3204,Mazda/MX-5 Mec,,SP,
+71,Michele Campos,463.020.307-90,,Física,Michele Campos,463.020.307-90,,Física,KKA3204,Mazda/MX-5 Mec,,SP,
+71,Michele Campos,463.020.307-90,,Física,Michele Campos,463.020.307-90,,Física,KKA3204,Mazda/MX-5 Mec,,SP,
+71,Michele Campos,463.020.307-90,,Física,Michele Campos,463.020.307-90,,Física,KKA3204,Mazda/MX-5 Mec,,SP,
+71,Michele Campos,463.020.307-90,,Física,Michele Campos,463.020.307-90,,Física,KKA3204,Mazda/MX-5 Mec,,SP,
+72,Moacir Arruda,031.954.289-03,,Física,Moacir Arruda,031.954.289-03,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2,,SP,
+72,Moacir Arruda,031.954.289-03,,Física,Moacir Arruda,031.954.289-03,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2,,SP,
+72,Moacir Arruda,031.954.289-03,,Física,Moacir Arruda,031.954.289-03,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2,,SP,
+72,Moacir Arruda,031.954.289-03,,Física,Moacir Arruda,031.954.289-03,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2,,SP,
+72,Moacir Arruda,031.954.289-03,,Física,Moacir Arruda,031.954.289-03,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2,,SP,
+73,Neto Ferreira,454.326.826-13,,Física,Neto Ferreira,454.326.826-13,,Física,NFB4339,Matra/Pick-Up CD 4x2,,SP,
+73,Neto Ferreira,454.326.826-13,,Física,Neto Ferreira,454.326.826-13,,Física,NFB4339,Matra/Pick-Up CD 4x2,,SP,
+73,Neto Ferreira,454.326.826-13,,Física,Neto Ferreira,454.326.826-13,,Física,NFB4339,Matra/Pick-Up CD 4x2,,SP,
+73,Neto Ferreira,454.326.826-13,,Física,Neto Ferreira,454.326.826-13,,Física,NFB4339,Matra/Pick-Up CD 4x2,,SP,
+73,Neto Ferreira,454.326.826-13,,Física,Neto Ferreira,454.326.826-13,,Física,NFB4339,Matra/Pick-Up CD 4x2,,SP,
+74,Nina Prestes,547.266.678-31,,Física,Nina Prestes,547.266.678-31,,Física,JMU6059,WAKE/Way 1.6 Total Flex,,SP,
+74,Nina Prestes,547.266.678-31,,Física,Nina Prestes,547.266.678-31,,Física,JMU6059,WAKE/Way 1.6 Total Flex,,SP,
+74,Nina Prestes,547.266.678-31,,Física,Nina Prestes,547.266.678-31,,Física,JMU6059,WAKE/Way 1.6 Total Flex,,SP,
+74,Nina Prestes,547.266.678-31,,Física,Nina Prestes,547.266.678-31,,Física,JMU6059,WAKE/Way 1.6 Total Flex,,SP,
+74,Nina Prestes,547.266.678-31,,Física,Nina Prestes,547.266.678-31,,Física,JMU6059,WAKE/Way 1.6 Total Flex,,SP,
+75,Jorge Fernandes,,,,Jorge Fernandes,,,,LCT2216,Lada/Samara 1.3/ 1.5,,,Média
+75,Jorge Fernandes,,,,Jorge Fernandes,,,,LCT2216,Lada/Samara 1.3/ 1.5,,,Média
+75,Jorge Fernandes,,,,Jorge Fernandes,,,,LCT2216,Lada/Samara 1.3/ 1.5,,,Média
+75,Jorge Fernandes,,,,Jorge Fernandes,,,,LCT2216,Lada/Samara 1.3/ 1.5,,,Média
+75,Jorge Fernandes,,,,Jorge Fernandes,,,,LCT2216,Lada/Samara 1.3/ 1.5,,,Média
+76,,,,,,,,,MZR1199,GREAT WALL/,,,
+76,,,,,,,,,MZR1199,GREAT WALL/,,,
+76,,,,,,,,,MZR1199,GREAT WALL/,,,
+76,,,,,,,,,MZR1199,GREAT WALL/,,,
+76,,,,,,,,,MZR1199,GREAT WALL/,,,
+77,,,,,,,,,AXT6289,PORSCHE/,,,
+77,,,,,,,,,AXT6289,PORSCHE/,,,
+77,,,,,,,,,AXT6289,PORSCHE/,,,
+77,,,,,,,,,AXT6289,PORSCHE/,,,
+77,,,,,,,,,AXT6289,PORSCHE/,,,
+78,,,,,,,,,KFA3460,LADA/,,,
+78,,,,,,,,,KFA3460,LADA/,,,
+78,,,,,,,,,KFA3460,LADA/,,,
+78,,,,,,,,,KFA3460,LADA/,,,
+78,,,,,,,,,KFA3460,LADA/,,,
+79,,,,,,,,,KMW1529,ENVERNO/,,,
+79,,,,,,,,,KMW1529,ENVERNO/,,,
+79,,,,,,,,,KMW1529,ENVERNO/,,,
+79,,,,,,,,,KMW1529,ENVERNO/,,,
+79,,,,,,,,,KMW1529,ENVERNO/,,,
+80,Magali Morais,,,,Magali Morais,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+80,Magali Morais,,,,Magali Morais,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+80,Magali Morais,,,,Magali Morais,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+80,Magali Morais,,,,Magali Morais,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+80,Magali Morais,,,,Magali Morais,,,,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,,Média
+81,Maiara Borba,,,,Maiara Borba,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+81,Maiara Borba,,,,Maiara Borba,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+81,Maiara Borba,,,,Maiara Borba,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+81,Maiara Borba,,,,Maiara Borba,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+81,Maiara Borba,,,,Maiara Borba,,,,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,,Média
+82,Maiara Flores,,,,Maiara Flores,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+82,Maiara Flores,,,,Maiara Flores,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+82,Maiara Flores,,,,Maiara Flores,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+82,Maiara Flores,,,,Maiara Flores,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+82,Maiara Flores,,,,Maiara Flores,,,,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,,Média
+83,Kléber Siqueira,,,,Kléber Siqueira,,,,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,,Média
+83,Kléber Siqueira,,,,Kléber Siqueira,,,,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,,Média
+83,Kléber Siqueira,,,,Kléber Siqueira,,,,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,,Média
+83,Kléber Siqueira,,,,Kléber Siqueira,,,,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,,Média
+83,Kléber Siqueira,,,,Kléber Siqueira,,,,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),,,Média
+84,Lavínia Couto,,,,Lavínia Couto,,,,MNX1171,Volvo/C30 2.4 170cv Aut,,,Média
+84,Lavínia Couto,,,,Lavínia Couto,,,,MNX1171,Volvo/C30 2.4 170cv Aut,,,Média
+84,Lavínia Couto,,,,Lavínia Couto,,,,MNX1171,Volvo/C30 2.4 170cv Aut,,,Média
+84,Lavínia Couto,,,,Lavínia Couto,,,,MNX1171,Volvo/C30 2.4 170cv Aut,,,Média
+84,Lavínia Couto,,,,Lavínia Couto,,,,MNX1171,Volvo/C30 2.4 170cv Aut,,,Média
+85,Cícero Menezes,882.531.366-76,,Física,Cícero Menezes,882.531.366-76,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+85,Cícero Menezes,882.531.366-76,,Física,Cícero Menezes,882.531.366-76,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+85,Cícero Menezes,882.531.366-76,,Física,Cícero Menezes,882.531.366-76,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+85,Cícero Menezes,882.531.366-76,,Física,Cícero Menezes,882.531.366-76,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+85,Cícero Menezes,882.531.366-76,,Física,Cícero Menezes,882.531.366-76,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+86,Agildo Fonseca,451.327.939-75,,Física,Agildo Fonseca,451.327.939-75,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+86,Agildo Fonseca,451.327.939-75,,Física,Agildo Fonseca,451.327.939-75,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+86,Agildo Fonseca,451.327.939-75,,Física,Agildo Fonseca,451.327.939-75,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+86,Agildo Fonseca,451.327.939-75,,Física,Agildo Fonseca,451.327.939-75,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+86,Agildo Fonseca,451.327.939-75,,Física,Agildo Fonseca,451.327.939-75,,Física,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,ES,
+87,Carina Nakata,421.923.516-74,,Física,Carina Nakata,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,ES,
+87,Carina Nakata,421.923.516-74,,Física,Carina Nakata,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,ES,
+87,Carina Nakata,421.923.516-74,,Física,Carina Nakata,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,ES,
+87,Carina Nakata,421.923.516-74,,Física,Carina Nakata,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,ES,
+87,Carina Nakata,421.923.516-74,,Física,Carina Nakata,421.923.516-74,,Física,KKA3204,Mazda/MX-5 Mec,,ES,
+88,Caio Teixeira,338.735.631-50,,Física,Caio Teixeira,338.735.631-50,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+88,Caio Teixeira,338.735.631-50,,Física,Caio Teixeira,338.735.631-50,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+88,Caio Teixeira,338.735.631-50,,Física,Caio Teixeira,338.735.631-50,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+88,Caio Teixeira,338.735.631-50,,Física,Caio Teixeira,338.735.631-50,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+88,Caio Teixeira,338.735.631-50,,Física,Caio Teixeira,338.735.631-50,,Física,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,ES,
+89,Arlene Pinheiro,614.324.381-66,,Física,Arlene Pinheiro,614.324.381-66,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+89,Arlene Pinheiro,614.324.381-66,,Física,Arlene Pinheiro,614.324.381-66,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+89,Arlene Pinheiro,614.324.381-66,,Física,Arlene Pinheiro,614.324.381-66,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+89,Arlene Pinheiro,614.324.381-66,,Física,Arlene Pinheiro,614.324.381-66,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+89,Arlene Pinheiro,614.324.381-66,,Física,Arlene Pinheiro,614.324.381-66,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+90,Daniel Fontana,288.125.321-01,,Física,Daniel Fontana,288.125.321-01,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,3256325344,AL,Média
+90,Daniel Fontana,288.125.321-01,,Física,Daniel Fontana,288.125.321-01,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,3256325344,AL,Média
+90,Daniel Fontana,288.125.321-01,,Física,Daniel Fontana,288.125.321-01,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,3256325344,AL,Média
+90,Daniel Fontana,288.125.321-01,,Física,Daniel Fontana,288.125.321-01,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,3256325344,AL,Média
+90,Daniel Fontana,288.125.321-01,,Física,Daniel Fontana,288.125.321-01,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,3256325344,AL,Média
+91,Danila Macedo,611.117.625-03,,Física,Danila Macedo,611.117.625-03,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,Média
+91,Danila Macedo,611.117.625-03,,Física,Danila Macedo,611.117.625-03,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,Média
+91,Danila Macedo,611.117.625-03,,Física,Danila Macedo,611.117.625-03,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,Média
+91,Danila Macedo,611.117.625-03,,Física,Danila Macedo,611.117.625-03,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,Média
+91,Danila Macedo,611.117.625-03,,Física,Danila Macedo,611.117.625-03,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,3256325344,AL,Média
+92,Davi Guerra,214.623.386-90,,Física,Davi Guerra,214.623.386-90,,Física,MXH5004,Acura/Integra GS 1.8,3256325344,AL,Média
+92,Davi Guerra,214.623.386-90,,Física,Davi Guerra,214.623.386-90,,Física,MXH5004,Acura/Integra GS 1.8,3256325344,AL,Média
+92,Davi Guerra,214.623.386-90,,Física,Davi Guerra,214.623.386-90,,Física,MXH5004,Acura/Integra GS 1.8,3256325344,AL,Média
+92,Davi Guerra,214.623.386-90,,Física,Davi Guerra,214.623.386-90,,Física,MXH5004,Acura/Integra GS 1.8,3256325344,AL,Média
+92,Davi Guerra,214.623.386-90,,Física,Davi Guerra,214.623.386-90,,Física,MXH5004,Acura/Integra GS 1.8,3256325344,AL,Média
+93,Darcy Furtado,664.954.519-89,,Física,Darcy Furtado,664.954.519-89,,Física,LCT2216,Lada/Outback Samara 1.3/ 1.5,3256325344,AL,Média
+93,Darcy Furtado,664.954.519-89,,Física,Darcy Furtado,664.954.519-89,,Física,LCT2216,Lada/Outback Samara 1.3/ 1.5,3256325344,AL,Média
+93,Darcy Furtado,664.954.519-89,,Física,Darcy Furtado,664.954.519-89,,Física,LCT2216,Lada/Outback Samara 1.3/ 1.5,3256325344,AL,Média
+93,Darcy Furtado,664.954.519-89,,Física,Darcy Furtado,664.954.519-89,,Física,LCT2216,Lada/Outback Samara 1.3/ 1.5,3256325344,AL,Média
+93,Darcy Furtado,664.954.519-89,,Física,Darcy Furtado,664.954.519-89,,Física,LCT2216,Lada/Outback Samara 1.3/ 1.5,3256325344,AL,Média
+94,Ester Silva,938.727.378-48,,Física,Ester Silva,938.727.378-48,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,2114684790,AL,Média
+94,Ester Silva,938.727.378-48,,Física,Ester Silva,938.727.378-48,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,2114684790,AL,Média
+94,Ester Silva,938.727.378-48,,Física,Ester Silva,938.727.378-48,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,2114684790,AL,Média
+94,Ester Silva,938.727.378-48,,Física,Ester Silva,938.727.378-48,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,2114684790,AL,Média
+94,Ester Silva,938.727.378-48,,Física,Ester Silva,938.727.378-48,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,2114684790,AL,Média
+95,Marli Cavalcanti,194.724.355-13,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+95,Marli Cavalcanti,194.724.355-13,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+95,Marli Cavalcanti,194.724.355-13,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+95,Marli Cavalcanti,194.724.355-13,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+95,Marli Cavalcanti,194.724.355-13,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+96,Marília Medeiras,684.356.754-16,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+96,Marília Medeiras,684.356.754-16,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+96,Marília Medeiras,684.356.754-16,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+96,Marília Medeiras,684.356.754-16,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+96,Marília Medeiras,684.356.754-16,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+97,Marta Nunes,636.871.602-97,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+97,Marta Nunes,636.871.602-97,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+97,Marta Nunes,636.871.602-97,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+97,Marta Nunes,636.871.602-97,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+97,Marta Nunes,636.871.602-97,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+98,Mateus Guedes,668.826.212-68,,Física,Mateus Guedes,668.826.212-68,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,SP,
+98,Mateus Guedes,668.826.212-68,,Física,Mateus Guedes,668.826.212-68,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,SP,
+98,Mateus Guedes,668.826.212-68,,Física,Mateus Guedes,668.826.212-68,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,SP,
+98,Mateus Guedes,668.826.212-68,,Física,Mateus Guedes,668.826.212-68,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,SP,
+98,Mateus Guedes,668.826.212-68,,Física,Mateus Guedes,668.826.212-68,,Física,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,SP,
+99,Mateus Guedes,668.826.212-68,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+99,Mateus Guedes,668.826.212-68,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+99,Mateus Guedes,668.826.212-68,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+99,Mateus Guedes,668.826.212-68,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+99,Mateus Guedes,668.826.212-68,,Física,Rogério Ito,276.274.536-58,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+100,,,,,,,,,HEU1387,SSANGYONG/,,,
+100,,,,,,,,,HEU1387,SSANGYONG/,,,
+100,,,,,,,,,HEU1387,SSANGYONG/,,,
+100,,,,,,,,,HEU1387,SSANGYONG/,,,
+100,,,,,,,,,HEU1387,SSANGYONG/,,,
+101,,,,,,,,,MNX1171,Volvo/,,,
+101,,,,,,,,,MNX1171,Volvo/,,,
+101,,,,,,,,,MNX1171,Volvo/,,,
+101,,,,,,,,,MNX1171,Volvo/,,,
+101,,,,,,,,,MNX1171,Volvo/,,,
+102,,,,,,,,,MXG6654,Land Rover/,,,
+102,,,,,,,,,MXG6654,Land Rover/,,,
+102,,,,,,,,,MXG6654,Land Rover/,,,
+102,,,,,,,,,MXG6654,Land Rover/,,,
+102,,,,,,,,,MXG6654,Land Rover/,,,
+103,,,,,,,,,MWZ6550,Fyber/,,,
+103,,,,,,,,,MWZ6550,Fyber/,,,
+103,,,,,,,,,MWZ6550,Fyber/,,,
+103,,,,,,,,,MWZ6550,Fyber/,,,
+103,,,,,,,,,MWZ6550,Fyber/,,,
+104,,,,,,,,,MLO3215,LAMBORGHINI/,,,
+104,,,,,,,,,MLO3215,LAMBORGHINI/,,,
+104,,,,,,,,,MLO3215,LAMBORGHINI/,,,
+104,,,,,,,,,MLO3215,LAMBORGHINI/,,,
+104,,,,,,,,,MLO3215,LAMBORGHINI/,,,
+105,,,,,,,,,KKA3204,Mazda/,,,
+105,,,,,,,,,KKA3204,Mazda/,,,
+105,,,,,,,,,KKA3204,Mazda/,,,
+105,,,,,,,,,KKA3204,Mazda/,,,
+105,,,,,,,,,KKA3204,Mazda/,,,
+106,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+106,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+106,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+106,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+106,Frederico Nakata,731.211.343-53,,Física,Frederico Nakata,731.211.343-53,,Física,DPQ8378,Jaguar/X-Type ESTATE 3.0 24V 230cv,2114684790,AL,Média
+107,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+107,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+107,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+107,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+107,Giovana Rosa,886.345.558-95,,Física,Giovana Rosa,886.345.558-95,,Física,HMH5586,SHINERAY/SY1020 T20 TRUCKS,2114684790,AL,Média
+108,Douglas Maciel,818.556.242-30,,Física,Douglas Maciel,818.556.242-30,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,3256325344,AL,Média
+108,Douglas Maciel,818.556.242-30,,Física,Douglas Maciel,818.556.242-30,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,3256325344,AL,Média
+108,Douglas Maciel,818.556.242-30,,Física,Douglas Maciel,818.556.242-30,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,3256325344,AL,Média
+108,Douglas Maciel,818.556.242-30,,Física,Douglas Maciel,818.556.242-30,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,3256325344,AL,Média
+108,Douglas Maciel,818.556.242-30,,Física,Douglas Maciel,818.556.242-30,,Física,NEY7045,AM Gen/Hummer Hard-Top 6.5 4x4 Diesel TB,3256325344,AL,Média
+109,Edgar Maldonado,362.825.377-20,,Física,Edgar Maldonado,362.825.377-20,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),3256325344,AL,Média
+109,Edgar Maldonado,362.825.377-20,,Física,Edgar Maldonado,362.825.377-20,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),3256325344,AL,Média
+109,Edgar Maldonado,362.825.377-20,,Física,Edgar Maldonado,362.825.377-20,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),3256325344,AL,Média
+109,Edgar Maldonado,362.825.377-20,,Física,Edgar Maldonado,362.825.377-20,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),3256325344,AL,Média
+109,Edgar Maldonado,362.825.377-20,,Física,Edgar Maldonado,362.825.377-20,,Física,BMV5105,CHANA/Cargo CD 1.0 8V 53cv (Pick-Up),3256325344,AL,Média
+110,Edgar Nakamura,757.712.288-26,,Física,Edgar Nakamura,757.712.288-26,,Física,MNX1171,Volvo/C30 2.4 170cv Aut,3256325344,AL,Média
+110,Edgar Nakamura,757.712.288-26,,Física,Edgar Nakamura,757.712.288-26,,Física,MNX1171,Volvo/C30 2.4 170cv Aut,3256325344,AL,Média
+110,Edgar Nakamura,757.712.288-26,,Física,Edgar Nakamura,757.712.288-26,,Física,MNX1171,Volvo/C30 2.4 170cv Aut,3256325344,AL,Média
+110,Edgar Nakamura,757.712.288-26,,Física,Edgar Nakamura,757.712.288-26,,Física,MNX1171,Volvo/C30 2.4 170cv Aut,3256325344,AL,Média
+110,Edgar Nakamura,757.712.288-26,,Física,Edgar Nakamura,757.712.288-26,,Física,MNX1171,Volvo/C30 2.4 170cv Aut,3256325344,AL,Média
+111,Marcos Martins,167.547.131-27,,Física,Marcos Martins,167.547.131-27,,Física,ISB1587,Honda/HR-V LX 1.8 Flexone,,SP,
+111,Marcos Martins,167.547.131-27,,Física,Marcos Martins,167.547.131-27,,Física,ISB1587,Honda/HR-V LX 1.8 Flexone,,SP,
+111,Marcos Martins,167.547.131-27,,Física,Marcos Martins,167.547.131-27,,Física,ISB1587,Honda/HR-V LX 1.8 Flexone,,SP,
+111,Marcos Martins,167.547.131-27,,Física,Marcos Martins,167.547.131-27,,Física,ISB1587,Honda/HR-V LX 1.8 Flexone,,SP,
+111,Marcos Martins,167.547.131-27,,Física,Marcos Martins,167.547.131-27,,Física,ISB1587,Honda/HR-V LX 1.8 Flexone,,SP,
+112,Márcio Guerra,181.282.176-07,,Física,Renato Velho,124.495.707-05,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+112,Márcio Guerra,181.282.176-07,,Física,Renato Velho,124.495.707-05,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+112,Márcio Guerra,181.282.176-07,,Física,Renato Velho,124.495.707-05,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+112,Márcio Guerra,181.282.176-07,,Física,Renato Velho,124.495.707-05,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+112,Márcio Guerra,181.282.176-07,,Física,Renato Velho,124.495.707-05,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+113,Marília Álves,256.486.738-33,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+113,Marília Álves,256.486.738-33,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+113,Marília Álves,256.486.738-33,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+113,Marília Álves,256.486.738-33,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+113,Marília Álves,256.486.738-33,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+114,Márcio Rosário,503.366.651-72,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+114,Márcio Rosário,503.366.651-72,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+114,Márcio Rosário,503.366.651-72,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+114,Márcio Rosário,503.366.651-72,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+114,Márcio Rosário,503.366.651-72,,Física,Rita Cardoso,185.022.685-70,,Física,MXH5004,Acura/Integra GS 1.8,,SP,
+115,Ricardo Nazário,590.783.233-96,,Física,Ricardo Nazário,590.783.233-96,,Física,MUB6296,FOTON/AUMARK 3.50AK 2.8,,SP,
+115,Ricardo Nazário,590.783.233-96,,Física,Ricardo Nazário,590.783.233-96,,Física,MUB6296,FOTON/AUMARK 3.50AK 2.8,,SP,
+115,Ricardo Nazário,590.783.233-96,,Física,Ricardo Nazário,590.783.233-96,,Física,MUB6296,FOTON/AUMARK 3.50AK 2.8,,SP,
+115,Ricardo Nazário,590.783.233-96,,Física,Ricardo Nazário,590.783.233-96,,Física,MUB6296,FOTON/AUMARK 3.50AK 2.8,,SP,
+115,Ricardo Nazário,590.783.233-96,,Física,Ricardo Nazário,590.783.233-96,,Física,MUB6296,FOTON/AUMARK 3.50AK 2.8,,SP,
+116,Cláudia Gomes,786.765.608-11,,Física,Cláudia Gomes,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+116,Cláudia Gomes,786.765.608-11,,Física,Cláudia Gomes,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+116,Cláudia Gomes,786.765.608-11,,Física,Cláudia Gomes,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+116,Cláudia Gomes,786.765.608-11,,Física,Cláudia Gomes,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+116,Cláudia Gomes,786.765.608-11,,Física,Cláudia Gomes,786.765.608-11,,Física,MUR2946,Rolls-Royce/Wraith 6.6 V12 Aut.,,ES,
+117,Conrado Moraes,541.387.528-20,,Física,Conrado Moraes,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,
+117,Conrado Moraes,541.387.528-20,,Física,Conrado Moraes,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,
+117,Conrado Moraes,541.387.528-20,,Física,Conrado Moraes,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,
+117,Conrado Moraes,541.387.528-20,,Física,Conrado Moraes,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,
+117,Conrado Moraes,541.387.528-20,,Física,Conrado Moraes,541.387.528-20,,Física,MVZ7754,Rover/Mini Cooper 1.3,,ES,
+118,Conrado Salgado,336.889.657-10,,Física,Conrado Salgado,336.889.657-10,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+118,Conrado Salgado,336.889.657-10,,Física,Conrado Salgado,336.889.657-10,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+118,Conrado Salgado,336.889.657-10,,Física,Conrado Salgado,336.889.657-10,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+118,Conrado Salgado,336.889.657-10,,Física,Conrado Salgado,336.889.657-10,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+118,Conrado Salgado,336.889.657-10,,Física,Conrado Salgado,336.889.657-10,,Física,JBQ0688,Mitsubishi/L200 Savana 2.5 4x4 121cv CD DTI  Dies.,,ES,
+119,Armando Tavares,289.824.273-09,,Física,Armando Tavares,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,ES,
+119,Armando Tavares,289.824.273-09,,Física,Armando Tavares,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,ES,
+119,Armando Tavares,289.824.273-09,,Física,Armando Tavares,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,ES,
+119,Armando Tavares,289.824.273-09,,Física,Armando Tavares,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,ES,
+119,Armando Tavares,289.824.273-09,,Física,Armando Tavares,289.824.273-09,,Física,MQU9147,Subaru/Outback 3.0 H6 SW 245cv Aut.,,ES,
+120,Armando Sá,431.789.221-99,,Física,Armando Sá,431.789.221-99,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,ES,
+120,Armando Sá,431.789.221-99,,Física,Armando Sá,431.789.221-99,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,ES,
+120,Armando Sá,431.789.221-99,,Física,Armando Sá,431.789.221-99,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,ES,
+120,Armando Sá,431.789.221-99,,Física,Armando Sá,431.789.221-99,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,ES,
+120,Armando Sá,431.789.221-99,,Física,Armando Sá,431.789.221-99,,Física,MXT0314,HAFEI/Towner Jr. Pick-up Ba,,ES,
+121,Leandro Lemos,,,,Leandro Lemos,,,,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,,Média
+121,Leandro Lemos,,,,Leandro Lemos,,,,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,,Média
+121,Leandro Lemos,,,,Leandro Lemos,,,,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,,Média
+121,Leandro Lemos,,,,Leandro Lemos,,,,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,,Média
+121,Leandro Lemos,,,,Leandro Lemos,,,,MXG6654,Land Rover/Defender 90 TDI CSW Diesel,,,Média
+122,Leonardo Justino,,,,Leonardo Justino,,,,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,,Média
+122,Leonardo Justino,,,,Leonardo Justino,,,,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,,Média
+122,Leonardo Justino,,,,Leonardo Justino,,,,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,,Média
+122,Leonardo Justino,,,,Leonardo Justino,,,,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,,Média
+122,Leonardo Justino,,,,Leonardo Justino,,,,MWZ6550,Fyber/Buggy 2000W 1.6 8V,,,Média
+123,Lorena Fraga,,,,Lorena Fraga,,,,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,,,Média
+123,Lorena Fraga,,,,Lorena Fraga,,,,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,,,Média
+123,Lorena Fraga,,,,Lorena Fraga,,,,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,,,Média
+123,Lorena Fraga,,,,Lorena Fraga,,,,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,,,Média
+123,Lorena Fraga,,,,Lorena Fraga,,,,MLO3215,LAMBORGHINI/Gallardo Spider LP560-4,,,Média
+124,Lúcia Justino,,,,Lúcia Justino,,,,KKA3204,Mazda/MX-5 Mec,,,Média
+124,Lúcia Justino,,,,Lúcia Justino,,,,KKA3204,Mazda/MX-5 Mec,,,Média
+124,Lúcia Justino,,,,Lúcia Justino,,,,KKA3204,Mazda/MX-5 Mec,,,Média
+124,Lúcia Justino,,,,Lúcia Justino,,,,KKA3204,Mazda/MX-5 Mec,,,Média
+124,Lúcia Justino,,,,Lúcia Justino,,,,KKA3204,Mazda/MX-5 Mec,,,Média
+125,Lúcia Queiroz,,,,Lúcia Queiroz,,,,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,,Média
+125,Lúcia Queiroz,,,,Lúcia Queiroz,,,,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,,Média
+125,Lúcia Queiroz,,,,Lúcia Queiroz,,,,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,,Média
+125,Lúcia Queiroz,,,,Lúcia Queiroz,,,,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,,Média
+125,Lúcia Queiroz,,,,Lúcia Queiroz,,,,NAL8619,JINBEI/TOPIC VAN SL 2.2 8V/ 2.0 16V 4p,,,Média
