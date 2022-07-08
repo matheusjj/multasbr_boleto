@@ -1,5 +1,10 @@
 env
-imagens
+imagens/ModelosNotificação
+imagens/Notificacoes
+imagens/notificacoes_teste/**/*.jpg
+imagens/notificacoes_teste/**/*.png
+fixtures/*
+!fixtures/palavras_teste_final.pickle
 .idea
 __pycache__/
 */__pycache__/
