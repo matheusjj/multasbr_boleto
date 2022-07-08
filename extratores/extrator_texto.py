@@ -4,6 +4,10 @@ from pytesseract import Output
 from entidades.palavra import Palavra
 from doctr.models import ocr_predictor
 
+'''
+Classes responsáveis por realizar o OCR com diferentes Engines
+Retorna List<Palavra>
+'''
 
 class TorchOCR:
     def __call__(self, img) -> list:

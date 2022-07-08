@@ -14,13 +14,13 @@ from entidades.quadrilatero import Quadrilatero
 from entidades.saturacao import Saturacao
 from detectores.detector_texto import DetectorProjecao
 
-import matplotlib.pyplot as plt
 '''
 Classes responsáveis para a determinação da região do documento na imagem.
 Retorna uma instância da classe Quadrilatero ou None. 
 '''
 
 
+# Pré-processamento para realização do Canny.
 def pre_processamento_deteccao(imagem) -> list:
     cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(cinza, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
@@ -39,6 +39,7 @@ def pre_processamento_deteccao(imagem) -> list:
     return imutils.auto_canny(blur, sigma=0.5)
 
 
+# Detecção do documento utilizando detecção de fronteira Canny.
 class DetectorDocumentoCanny:
     def __init__(self) -> None:
         pass
@@ -65,6 +66,7 @@ class DetectorDocumentoCanny:
             return None
 
 
+# Detector de documento utilizando técnica Hough
 class DetectorDocumentoHough:
     def __init__(
             self,
@@ -73,7 +75,7 @@ class DetectorDocumentoHough:
             votos_hough=30,
             ang_diagonal_inf=40.0,
             ang_diagonal_sup=50.0
-        ) -> None:
+    ) -> None:
         self.angulo_agudo = angulo_agudo_lim
         self.angulo_obtuso = angulo_obtuso_lim
         self.votos_hough = votos_hough
@@ -278,6 +280,16 @@ class DetectorDocumentoHough:
         return [x0, y0]
 
 
+# Detector de documento utilizando LRDE
+# Etapas:
+# -> Verificaçao da saturaçao
+# -> Segmentaçao de fronteiras
+# -> Segmentaçao de regioes
+# -> Determinar retas das fronteiras das regiões criadas
+# -> Determinar intersecççoes entre as retas
+# -> Criar quadrilatero a partir das intersecçoes
+# -> Criar mascaras a partir das retas
+# -> Construir Região de interesse a partir da região restante
 class DetectorLRDECustomizado:
     def __init__(self) -> None:
         self.angulo_reta_vertical_inf = 45
@@ -304,23 +316,18 @@ class DetectorLRDECustomizado:
         lab = cv2.split(cv2.cvtColor(mean, cv2.COLOR_BGR2LAB))
 
         if nivel_saturacao is Saturacao.BAIXA:
-            # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-            # morph_l = cv2.morphologyEx(lab[0], cv2.MORPH_CLOSE, kernel)
             morph_l = ndi.binary_fill_holes(
                 cv2.threshold(lab[0], 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
             ).astype(int)
             morph_l = np.array(morph_l, dtype='uint8')
-            # morph_l[morph_l == 1] = 255
 
             kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
             morph_a = cv2.morphologyEx(lab[1], cv2.MORPH_ERODE, kernel)
 
-            # morph_b = cv2.GaussianBlur(lab[2], (5, 5), 0)
             morph_b = ndi.binary_fill_holes(
                 cv2.threshold(lab[2], 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
             ).astype(int)
             morph_b = np.array(morph_b, dtype='uint8')
-            # morph_b[morph_b == 1] = 255
 
             l_somado = np.sum(morph_l) / (img.shape[0] * img.shape[1])
             b_somado = np.sum(morph_b) / (img.shape[0] * img.shape[1])
@@ -337,7 +344,7 @@ class DetectorLRDECustomizado:
                         mask=cv2.bitwise_and(
                             np.array(morph_l, dtype='uint8'),
                             np.array(morph_b, dtype='uint8'))
-                        )
+                    )
                     lb_somado = np.sum(lb_somado) / (img.shape[0] * img.shape[1])
 
                     l_lb_razao, b_lb_razao = abs(l_somado / lb_somado - 1), abs(b_somado / lb_somado - 1)
@@ -378,14 +385,6 @@ class DetectorLRDECustomizado:
         markers = rank.gradient(gradiente, disk(5)) < 10
         markers = ndi.label(markers)[0]
 
-        # labels_background = np.unique(
-        #     np.array([item for elem in [markers[0, :],
-        #                                 markers[-1, :],
-        #                                 markers[:, 0],
-        #                                 markers[:, -1]] for item in elem]))
-        # for l in labels_background:
-        #     markers[markers == l] = 0
-
         labels = watershed(gradiente, markers)
 
         areas = thresh if \
@@ -412,12 +411,10 @@ class DetectorLRDECustomizado:
 
         ponto_label = self.encontrar_vertices(intersecoes_gradiente)
 
-        # cv2.circle(img, (int(ponto_label[0][0]), int(ponto_label[0][1])), 10, 255, -1)
-
         label_documento = np.unique(labels[int(ponto_label[0][1]) - self.regiao_label:
                                            int(ponto_label[0][1]) + self.regiao_label,
-                                           int(ponto_label[0][0]) - self.regiao_label:
-                                           int(ponto_label[0][0]) + self.regiao_label]
+                                    int(ponto_label[0][0]) - self.regiao_label:
+                                    int(ponto_label[0][0]) + self.regiao_label]
                                     .flatten())
 
         labels_relevantes = []
@@ -448,56 +445,6 @@ class DetectorLRDECustomizado:
         gradiente_sem_noise = cv2.threshold(mascara_dilate, 0, 255,
                                             cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
-        # fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 8), sharex=True, sharey=True)
-        # ax = axes.ravel()
-        # ax[0].imshow(areas, cmap=plt.cm.gray)
-        # ax[0].set_title("Morph L")
-        # for a in ax:
-        #     a.axis('off')
-        # fig.tight_layout()
-        # plt.savefig('Teste.png', format='png')
-
-        # fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(8, 8), sharex=True, sharey=True)
-        # ax = axes.ravel()
-        #
-        # ax[0].imshow(morph_l, cmap=plt.cm.gray)
-        # ax[0].set_title("Morph L")
-        #
-        # ax[1].imshow(morph_a, cmap=plt.cm.gray)
-        # ax[1].set_title("Morph A")
-        #
-        # ax[2].imshow(morph_b, cmap=plt.cm.gray)
-        # ax[2].set_title("Morph B")
-        #
-        # ax[3].imshow(morph_l_grad, cmap=plt.cm.gray)
-        # ax[3].set_title("Morph L Grad")
-        #
-        # ax[4].imshow(morph_a_grad, cmap=plt.cm.gray)
-        # ax[4].set_title("Morph A Grad")
-        #
-        # ax[5].imshow(morph_b_grad, cmap=plt.cm.gray)
-        # ax[5].set_title("Morph B Grad")
-        #
-        # ax[6].imshow(markers, cmap=plt.cm.nipy_spectral)
-        # ax[6].set_title("Markers")
-        #
-        # ax[7].imshow(img, cmap=plt.cm.gray)
-        # ax[7].imshow(labels, cmap=plt.cm.nipy_spectral, alpha=.5)
-        # ax[7].set_title("Labels")
-        #
-        # # ty = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # # ty = cv2.GaussianBlur(ty, (7, 7), 0)
-        # # ty = imutils.auto_canny(ty)
-        # # b = cv2.morphologyEx(b, cv2.MORPH_CLOSE, (28, 7))
-        # ax[8].imshow(b, cmap=plt.cm.gray)
-        # ax[8].set_title("Gradiente Final")
-        #
-        # for a in ax:
-        #     a.axis('off')
-        #
-        # fig.tight_layout()
-        # plt.savefig('Teste.png', format='png')
-
         # Determinar retas de grad sem áreas internas e externas
         retas = cv2.HoughLines(gradiente_sem_noise, 1, np.pi / 180, 90)
 
@@ -518,8 +465,8 @@ class DetectorLRDECustomizado:
             return self.otimizar_vertices(vertices, img)
 
         vertices_grad_sem_noise = \
-            self.encontrar_vertices(intersecoes_grad_sem_noise, clusters=4) if\
-            len(intersecoes_grad_sem_noise) >= 4 else intersecoes_grad_sem_noise
+            self.encontrar_vertices(intersecoes_grad_sem_noise, clusters=4) if \
+                len(intersecoes_grad_sem_noise) >= 4 else intersecoes_grad_sem_noise
 
         vertices_grad_sem_noise = self.determinar_vertices_proximos(vertices_grad_sem_noise)
         return self.otimizar_vertices(vertices_grad_sem_noise, img)
@@ -796,4 +743,3 @@ class DetectorLRDECustomizado:
             vertices_final.append(vertice[0])
 
         return vertices_final
-

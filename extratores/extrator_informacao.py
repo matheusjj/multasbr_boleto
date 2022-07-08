@@ -4,15 +4,18 @@ import copy
 import unicodedata
 from entidades.palavra import Palavra
 
+'''
+Classe responsável por filtrar as informações relevantes para o preenchimento do formulário do MultasBR
+Retorna self
+'''
 
 class IERegrado:
     def __init__(self):
         self.e_pesquisa_vertical = True
         self.estado_re = re.compile(r"[A-Z]{2}\b")
-        self.cpf_re = re.compile(r"\d{3}[.]\d{3}[.]\d{3}[-]\d{2}")
-        # self.cpf_re = re.compile(r"\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}")
-        self.cnpj_re = re.compile(r"\d{2}[.]?\d{3}[.]?\d{3}[/]?\d{4}[-]?\d{2}")
-        self.placa_re = re.compile(r"\D{3}[-]?\d{4}|\D{3}\d\D\d{2}")
+        self.cpf_re = re.compile(r"^\d{3}[.]\d{3}[.]\d{3}[-]\d{2}$")
+        self.cnpj_re = re.compile(r"^\d{2}[.]?\d{3}[.]?\d{3}[/]?\d{4}[-]?\d{2}$")
+        self.placa_re = re.compile(r"^[A-Za-z]{3}[-]?\d{4}$|^[A-Za-z]{3}\d[A-Za-z]\d{2}$")
         self.gravidades_re = re.compile(r"leve|m[eé]dia|grave|grav[ií]ssima|3|4|5|7", flags=re.I)
         self.estados_brasileiros_re = re.compile(
             r"RR|AP|AM|PA|AC|RO|TO|MA|PI|CE|RN|PB|PE|AL|SE|BA|MT|DF|GO|MS|MG|ES|RJ|SP|PR|SC|RS")
@@ -30,6 +33,7 @@ class IERegrado:
             'gravidade': ['gravidade', 'categoria', 'natureza', 'pontuacao']
         }
         self.informacoes_formulario = {chv: list() for chv in self.palavras_chave.keys()}
+        self.informacao_desempenho = {chv: False for chv in self.palavras_chave.keys()}
 
     def __call__(self, palavras, img):
         self.palavras = palavras
@@ -51,6 +55,16 @@ class IERegrado:
         self.informacoes_formulario = self.preenchimento_final(copy.deepcopy(self.informacoes_formulario))
         self.informacoes_formulario = self.determinar_pessoa(copy.deepcopy(self.informacoes_formulario))
 
+        if self.informacao_desempenho['proprietario_cpf'] or self.informacao_desempenho['proprietario_cnpj']:
+            self.informacao_desempenho['proprietario_pessoa'] = True
+        else:
+            self.informacao_desempenho['proprietario_pessoa'] = False
+
+        if self.informacao_desempenho['condutor_cpf'] or self.informacao_desempenho['condutor_cnpj']:
+            self.informacao_desempenho['condutor_pessoa'] = True
+        else:
+            self.informacao_desempenho['condutor_pessoa'] = False
+
     def pesquisar(self, chv_dicio, chv):
         resultado = list()
         chave_auxiliar = None
@@ -69,6 +83,7 @@ class IERegrado:
                 palavras_campo = self.filtrar_palavras_encontradas(chv)
 
                 if len(palavras_campo) != 0:
+                    self.informacao_desempenho[chv_dicio] = True
                     locais_interesse = self.determinar_conjunto_proximo(palavras_auxiliares, palavras_campo)
                     resultado.append(self.preenche_informacao(locais_interesse, chv_dicio))
 
@@ -205,27 +220,66 @@ class IERegrado:
             return palavras
 
     def marcar_palavras(self):
-        for chave, valor in zip(self.informacoes_formulario.keys(), self.informacoes_formulario.values()):
+        cores = [
+            (153, 0, 0),
+            (153, 76, 0),
+            (153, 153, 0),
+            (76, 153, 0),
+            (0, 153, 0),
+            (0, 153, 76),
+            (0, 153, 153),
+            (0, 76, 153),
+            (0, 0, 153),
+            (76, 0, 153),
+            (153, 0, 153),
+            (153, 0, 76),
+            (0, 0, 0),
+        ]
+
+        chvs = list(self.informacoes_formulario.keys())
+        for idx in range(0, len(chvs)):
+            chv = chvs[idx]
+            valor = self.informacoes_formulario[chv]
+            cor = cores[idx]
+
             if len(valor.texto) == 0:
                 continue
 
-            cv2.rectangle(
-                self.img,
-                valor.localizacao[0],
-                valor.localizacao[1],
-                (255, 0, 0),
-                2,
-            )
-            cv2.putText(
-                self.img,
-                chave,
-                valor.localizacao[0],
-                cv2.FONT_HERSHEY_SIMPLEX,
-                1,
-                (255, 0, 0),
-                2,
-                cv2.LINE_AA
-            )
+            ja_preenchido = False
+            for alt_chv in chvs[0:idx]:
+                if self.informacoes_formulario[alt_chv].localizacao == valor.localizacao:
+                    ja_preenchido = True
+                    break
+
+            if ja_preenchido:
+                cv2.putText(
+                    self.img,
+                    '*',
+                    (valor.localizacao[0][0] - 20, valor.localizacao[0][1]),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    cor,
+                    2,
+                    cv2.LINE_AA
+                )
+            else:
+                cv2.rectangle(
+                        self.img,
+                        valor.localizacao[0],
+                        valor.localizacao[1],
+                        cor,
+                        2,
+                    )
+                cv2.putText(
+                    self.img,
+                    chv,
+                    valor.localizacao[0],
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    cor,
+                    2,
+                    cv2.LINE_AA
+                )
 
     @staticmethod
     def comparar_proprietario_condutor(dicio):

@@ -9,6 +9,7 @@ Retorna um tuple com tuples dentro com as coordenadas do ponto do topo esquerdo 
 '''
 
 
+# Não estou utilizando as classes neste documento
 class DetectorProjecao:
     def __init__(self, proporcao_intervalo=0.1) -> None:
         self.proporcao_intervalo = proporcao_intervalo

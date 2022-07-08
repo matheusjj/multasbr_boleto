@@ -1,3 +1,9 @@
+"""
+Classe para armazenar as informações das palavras encontradas no documento.
+Retorna self
+"""
+
+
 class Palavra:
     def __init__(self, valor, localizacao, linha, linha_localizacao, bloco):
         self.texto = valor

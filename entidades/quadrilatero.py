@@ -1,6 +1,11 @@
 import numpy as np
 from itertools import combinations
 
+'''
+Classe utilizada para facilitar a criação de um ROI (Região de Interesse)
+Retorna self
+'''
+
 
 class Quadrilatero:
     def __init__(self, vertices=None) -> None:
@@ -41,6 +46,7 @@ class Quadrilatero:
             dist_bd_te = int(np.sqrt(((self.te[0] - self.bd[0]) ** 2) + ((self.te[1] - self.bd[1]) ** 2)))
             return dist_be_te + dist_be_bd <= dist_bd_te
 
+    # Determina se os pontos formam um quadrilátero
     def e_quad(self) -> bool:
         combinacoes = combinations(range(4), 2)
         verts = [self.te, self.td, self.bd, self.be]
@@ -68,6 +74,7 @@ class Quadrilatero:
     def y_diff(self) -> tuple:
         return self.td[1] - self.te[1], self.bd[1] - self.td[1], self.be[1] - self.bd[1], self.te[1] - self.be[1]
 
+    # Ordena os pontos encontrados em Esq-Sup, Dir-Sup, Dir-Inf, Esq-Inf
     @staticmethod
     def ordenar_pontos(vertices):
         vertices_ret = np.zeros((4, 2), dtype='float32')
@@ -89,9 +96,13 @@ class Quadrilatero:
         vertices_superiores.sort(key=lambda x: x[0])
         vertices_inferiores.sort(key=lambda x: x[0])
 
-        vertices_ret[0] = vertices_superiores[0] if vertices_superiores[0] is not None else [0, 0]
-        vertices_ret[1] = vertices_superiores[1] if vertices_superiores[1] is not None else [0, 0]
-        vertices_ret[2] = vertices_inferiores[1] if vertices_inferiores[1] is not None else [0, 0]
-        vertices_ret[3] = vertices_inferiores[0] if vertices_inferiores[0] is not None else [0, 0]
+        vertices_ret[0] = vertices_superiores[0] \
+            if (len(vertices_superiores) > 0 and vertices_superiores[0] is not None) else [0, 0]
+        vertices_ret[1] = vertices_superiores[1] \
+            if (len(vertices_superiores) > 1 and vertices_superiores[1] is not None) else [0, 0]
+        vertices_ret[2] = vertices_inferiores[1] \
+            if (len(vertices_inferiores) > 1 and vertices_inferiores[1] is not None) else [0, 0]
+        vertices_ret[3] = vertices_inferiores[0] \
+            if (len(vertices_inferiores) > 0 and vertices_inferiores[0] is not None) else [0, 0]
 
         return vertices_ret

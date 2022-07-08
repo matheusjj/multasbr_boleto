@@ -3,13 +3,17 @@ import numpy as np
 from entidades.roi_ajustavel import RoiAjustavel, arrastar_quad
 
 
+# Classe para retornar a parte da imagem original selecionada pelo ROI (automatica ou manualmente).
 class ExtratorDocumento:
     roi_selecionada = None
 
     def __init__(self, nome_janela='Selecao') -> None:
         self.nome_janela = nome_janela
 
-    def __call__(self, imagem, quadrilatero, imagem_original, ratio):
+    def __call__(self, imagem, quadrilatero, imagem_original, ratio, e_teste=False):
+        if e_teste:
+            return self.__transformacao_quatro_vertices(imagem_original, quadrilatero, ratio, e_teste)
+
         cv2.imshow(self.nome_janela, imagem)
         roi = RoiAjustavel(imagem, self.nome_janela, imagem.shape[1], imagem.shape[0], quadrilatero)
         cv2.setMouseCallback(self.nome_janela, arrastar_quad, roi)
@@ -18,11 +22,14 @@ class ExtratorDocumento:
         quadrilatero_roi = roi.selecionar_roi(imagem)
 
         return self.__transformacao_quatro_vertices(imagem_original, quadrilatero_roi, ratio)
-        # return self.__transformacao_quatro_vertices(imagem_original, quadrilatero, ratio)
 
     @staticmethod
-    def __transformacao_quatro_vertices(imagem, roi, ratio):
+    def __transformacao_quatro_vertices(imagem, roi, ratio, e_teste=False):
         pontos_ajustados = roi.retornar_vertices() * ratio
+
+        if e_teste:
+            return pontos_ajustados
+
         (tl, tr, br, bl) = pontos_ajustados
 
         # Determina as larguras do retângulo e determina o maior
@@ -47,4 +54,3 @@ class ExtratorDocumento:
         deslocado = cv2.warpPerspective(imagem, matriz_transf, (largura_max, altura_max))
 
         return deslocado
-        # return pontos_ajustados

@@ -1,5 +1,9 @@
 import statistics
 
+'''
+Classe utilizada para a extração das palavras encontradas no texto após OCR
+CLASSE NÃO ESTÁ SENDO UTILIZADA NO MOMENTO
+'''
 
 class InformacaoRelevante:
     def __init__(self, texto, num_linha, num_palavra, topo, esquerda, largura):

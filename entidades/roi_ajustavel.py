@@ -2,6 +2,11 @@ import cv2 as cv2
 import numpy as np
 from entidades.quadrilatero import Quadrilatero
 
+'''
+Classe para a criação e manipulação do ROI pelo usuário
+Retorna um RoiAjustavel utilizado na extração do documento da imagem selecionada
+'''
+
 
 class RoiAjustavel:
     # Dimensões do canvas
