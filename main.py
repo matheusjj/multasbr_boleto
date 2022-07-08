@@ -1,29 +1,69 @@
-import cv2
-from pre_processadores.pre_processador import PreProcessador
-from detectores.detector_documento import DetectorLRDECustomizado
-from extratores.extrator_documento import ExtratorDocumento
-from extratores.extrator_texto import TorchOCR, PytesseractOCR
-from extratores.extrator_informacao import IERegrado
+import glob
+import argparse
+from entidades.informações_recurso import InformacoesRecurso
 
 
-class RetirarDadosNotificacao:
-    def __init__(self):
-        self.pre_processamento = PreProcessador()  # Operações morfológicas de pre-processamento da imagem
-        self.detector_documento = DetectorLRDECustomizado()  # Instância do Detector de documento por Hough
-        self.extrator_documento = ExtratorDocumento()  # Instância do extrator do documento da imagem
-        self.extrator_texto = PytesseractOCR()  # Instância do extrator de texto no documento
-        self.extrator_informacao = IERegrado()  # Instância de extrator de informações relevantes
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('-c', '--caminho', required=True,
+                    help='Caminho da(s) imagem(ns)')
+    ap.add_argument('-p', '--pasta', default=0,
+                    help='Determina se deve selecionar todos os arquivos da pasta')
+    ap.add_argument('-tm', '--teste-mascara', default=0,
+                    help='Produz as máscaras binárias')
+    ap.add_argument('-iou', '--medir-iou', default=0,
+                    help='Salva um arquivo csv com valores do IOU')
+    ap.add_argument('-sp', '--salvar-palavras', default=0,
+                    help='Realiza a captura das palavras')
+    ap.add_argument('-ai', '--ajustar-imagens', default=0,
+                    help='Ajusta a imagem de acordo com o ROI escolhido pelo usuário')
+    ap.add_argument('-do', '--desempenho-ocr', default=0,
+                    help='Salva arquivo com os valores relevantes as palavras')
+    ap.add_argument('-mc', '--marcar-chaves', default=0,
+                    help='Marca palavras do formulário nas imagens')
+    args = vars(ap.parse_args())
 
-    def __call__(self, caminho):
-        img_original = cv2.imread(caminho)
+    arquivos = []
 
-        img, ratio = self.pre_processamento(img_original)
-        vertices = self.detector_documento(img.copy())
-        documento = self.extrator_documento(img, vertices, img_original, ratio)
-        palavras = self.extrator_texto(documento)
-        palavras = self.extrator_texto(img_original)
-        return palavras
+    if args['pasta']:
+        caminho = args['caminho'] if args['caminho'].endswith('/') else args['caminho'] + '/'
+        extensoes = ('*.jpeg', '*.jpg', '*.png')
+        for ext in extensoes:
+            arquivos.extend(glob.glob(caminho + '*' + ext))
+    else:
+        arquivos.append(args['caminho'])
+
+    if args['teste_mascara']:
+        for arquivo in arquivos:
+            info_recurso = InformacoesRecurso()
+            info_recurso(arquivo, teste_mascara=True)
+    elif args['medir_iou']:
+        info_recurso = InformacoesRecurso()
+        info_recurso.iou('imagens/notificacoes_teste/', True, True)
+    elif args['ajustar_imagens']:
+        for arquivo in arquivos:
+            info_recurso = InformacoesRecurso()
+            info_recurso(arquivo, teste_ajuste_roi=True)
+    elif args['desempenho_ocr']:
+        info_recurso = InformacoesRecurso()
+        info_recurso.desempenho_ocr()
+    elif args['marcar_chaves']:
+        info_recurso = InformacoesRecurso()
+        info_recurso.marcar_chaves()
+    elif args['salvar_palavras']:
+        resultado = dict()
+
+        for arquivo in arquivos:
+            nome_arquivo = arquivo.split('/')[-1]
+            info_recurso = InformacoesRecurso()
+            palavras = info_recurso(arquivo)
+            resultado[nome_arquivo] = {'palavras': palavras}
+
+        info_recurso.salvar_palavras(resultado, 'fixtures/', 'palavras_teste_final')
+    else:
+        for arquivo in arquivos:
+            info_recurso = InformacoesRecurso()
+            info_recurso(arquivo)
 
 
-devolve = RetirarDadosNotificacao()
-devolve('imagens/Notificacoes/1.png')
+main()
